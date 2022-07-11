@@ -7,14 +7,35 @@
 
 #import "DealsViewController.h"
 #import "DealCell.h"
+#import "DatabaseManager.h"
+#import "APIManager.h"
 
 @interface DealsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSMutableArray *deals;
 
 @end
 
 @implementation DealsViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    
+//    [APIManager fetchDealsFromEbayAPI];
+    [APIManager fetchDealsFromUPCDatabase];
+    [APIManager fetchDealsFromSearchUPCAPI];
+//    [APIManager fetchDealsFromEbayAPI];
+    //    [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+//        if (deals.count > 0) {
+//            self.deals = (NSMutableArray *) deals;
+//            [self.tableView reloadData];
+//        }
+//        else {
+//            NSLog(@"error %@", error.localizedDescription);
+//        }
+//    }];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DealCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DealCell"];

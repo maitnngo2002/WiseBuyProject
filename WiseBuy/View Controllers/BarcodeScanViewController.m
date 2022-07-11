@@ -37,32 +37,6 @@ NSString *const dealsSegue = @"dealsSegue";
     [super viewDidAppear:animated];
 
     [self checkPermissions];
-
-//    self.captureSession = [AVCaptureSession new];
-//    self.captureSession.sessionPreset = AVCaptureSessionPreset1280x720;
-//
-//    AVCaptureDevice *phoneCamera = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-//    if (!phoneCamera) {
-//        return;
-//    }
-//    NSError *error;
-//    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:phoneCamera error:&error];
-//    if (!error) {
-//        self.videoDataOutput = [AVCaptureVideoDataOutput new];
-//        NSDictionary *newSettings = @{(NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA) };
-//        self.videoDataOutput.videoSettings = newSettings;
-//        [self.videoDataOutput setAlwaysDiscardsLateVideoFrames:YES];
-//        if ([self.captureSession canAddInput:input] && [self.captureSession canAddOutput:self.videoDataOutput]) {
-//            [self.captureSession addInput:input];
-//            [self.captureSession addOutput:self.videoDataOutput];
-//            dispatch_queue_t videoDataOutputQueue = dispatch_queue_create("VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL);
-//            [self.videoDataOutput setSampleBufferDelegate:self queue:videoDataOutputQueue];
-//            [self setupLivePreview];
-//        }
-//    }
-//    else {
-//        NSLog(@"Error initializing the phone camera: %@", error.localizedDescription);
-//    }
 }
 
 - (void)dealloc
@@ -104,7 +78,6 @@ NSString *const dealsSegue = @"dealsSegue";
     
     AVCaptureDevice *backCamera = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     if (!backCamera) {
-        NSLog(@"Unable to access back camera!");
         return;
     }
     
@@ -144,7 +117,6 @@ NSString *const dealsSegue = @"dealsSegue";
         }
         if (barcodes.count > 0) {
             self.barcode = barcodes.firstObject.rawValue;
-            [APIManager fetchDealsFromEbayAPI];
             [self performSegueWithIdentifier:dealsSegue sender:nil];
         }
         else {

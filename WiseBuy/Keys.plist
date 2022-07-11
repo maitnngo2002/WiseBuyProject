@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>appSecurityName</key>
+	<string>MaiNgo-WiseBuy-PRD-ab14cffb5-c6af5e0d</string>
+	<key>upcDatabase_userKey</key>
+	<string>24e1854e584fa477a09c096e23176723</string>
+	<key>searchUPC_userKey</key>
+	<string>24e1854e584fa477a09c096e23176723</string>
 	<key>client_Key</key>
 	<string>662DZzjwqIaQV9yvtaLpozpk8xk58H4fKQZoRb9N</string>
 	<key>application_Id</key>

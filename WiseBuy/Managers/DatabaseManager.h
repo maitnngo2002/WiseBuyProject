@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 +(void)loginUser:(NSString *)username password:(NSString *)password withCompletion:(void(^)(BOOL success, NSError *error))completion;
 +(void)registerUser:(User *)user withCompletion:(void(^)(BOOL success, NSError *error))completion;
+//+ (void)fechDeals:(NSString *)barcode viewController:(UIViewController *)vc withCompletion:(void(^)(NSArray *deals,NSError *error))completion;
 
 @end
 
