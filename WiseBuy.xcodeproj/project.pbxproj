@@ -1,0 +1,1029 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A0B39C0F3D2696119A7399B8 /* Pods_WiseBuy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40C25439A09BC95754D400F1 /* Pods_WiseBuy.framework */; };
+		D629139F2874BAA500CC7ABA /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = D629139E2874BAA500CC7ABA /* Keys.plist */; };
+		D62913A32874D13B00CC7ABA /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913A22874D13B00CC7ABA /* Deal.m */; };
+		D62913A62874D14300CC7ABA /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913A52874D14300CC7ABA /* User.m */; };
+		D62913A92874D15000CC7ABA /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913A82874D15000CC7ABA /* Item.m */; };
+		D62913AD2874D38D00CC7ABA /* DatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913AC2874D38D00CC7ABA /* DatabaseManager.m */; };
+		D62913B02874D39500CC7ABA /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913AF2874D39500CC7ABA /* APIManager.m */; };
+		D62913B52874E9E000CC7ABA /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913B42874E9E000CC7ABA /* AlertManager.m */; };
+		D69854822874AB2400F79721 /* DealsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D69854812874AB2400F79721 /* DealsViewController.m */; };
+		D69854852874B0C300F79721 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D69854842874B0C300F79721 /* HistoryViewController.m */; };
+		D69854882874B11D00F79721 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D69854872874B11D00F79721 /* SettingsViewController.m */; };
+		D698548B2874B75100F79721 /* FindSimilarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D698548A2874B75100F79721 /* FindSimilarViewController.m */; };
+		D6D4072728749EB900B34995 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4072628749EB900B34995 /* AppDelegate.m */; };
+		D6D4072A28749EB900B34995 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4072928749EB900B34995 /* SceneDelegate.m */; };
+		D6D4073028749EB900B34995 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D4072E28749EB900B34995 /* Main.storyboard */; };
+		D6D4073228749EBB00B34995 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6D4073128749EBB00B34995 /* Assets.xcassets */; };
+		D6D4073528749EBB00B34995 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D4073328749EBB00B34995 /* LaunchScreen.storyboard */; };
+		D6D4073828749EBB00B34995 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4073728749EBB00B34995 /* main.m */; };
+		D6D4074228749EBB00B34995 /* WiseBuyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4074128749EBB00B34995 /* WiseBuyTests.m */; };
+		D6D4074C28749EBB00B34995 /* WiseBuyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4074B28749EBB00B34995 /* WiseBuyUITests.m */; };
+		D6D4074E28749EBB00B34995 /* WiseBuyUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4074D28749EBB00B34995 /* WiseBuyUITestsLaunchTests.m */; };
+		D6D4075C2874A64900B34995 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4075B2874A64900B34995 /* LoginViewController.m */; };
+		D6D4075F2874A65200B34995 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4075E2874A65200B34995 /* RegisterViewController.m */; };
+		D6D407622874A65F00B34995 /* BarcodeScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D407612874A65F00B34995 /* BarcodeScanViewController.m */; };
+		D6D407652874A66F00B34995 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D407642874A66F00B34995 /* DetailsViewController.m */; };
+		D6D407692874A81700B34995 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D407682874A81700B34995 /* ProfileViewController.m */; };
+		D6F206B128764D2100EE72FD /* DealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6F206B028764D2100EE72FD /* DealCell.m */; };
+		F17D94E2900B6E954BBB80AC /* Pods_WiseBuy_WiseBuyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7B8A1134FC6BEBF85060B3 /* Pods_WiseBuy_WiseBuyUITests.framework */; };
+		F84FBA8A4FB5229C31A4BDD4 /* Pods_WiseBuyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92EF19107C0D1C1240BE074 /* Pods_WiseBuyTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D6D4073E28749EBB00B34995 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D6D4071A28749EB900B34995 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6D4072128749EB900B34995;
+			remoteInfo = WiseBuy;
+		};
+		D6D4074828749EBB00B34995 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D6D4071A28749EB900B34995 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6D4072128749EB900B34995;
+			remoteInfo = WiseBuy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		19C10320BE41C3DC262CFD46 /* Pods-WiseBuy-WiseBuyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WiseBuy-WiseBuyUITests.debug.xcconfig"; path = "Target Support Files/Pods-WiseBuy-WiseBuyUITests/Pods-WiseBuy-WiseBuyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		2ACAE6C98BCC60EAAFF468AA /* Pods-WiseBuy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WiseBuy.release.xcconfig"; path = "Target Support Files/Pods-WiseBuy/Pods-WiseBuy.release.xcconfig"; sourceTree = "<group>"; };
+		40C25439A09BC95754D400F1 /* Pods_WiseBuy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WiseBuy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A7B8A1134FC6BEBF85060B3 /* Pods_WiseBuy_WiseBuyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WiseBuy_WiseBuyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AF9A902D3D675BF53E151B8 /* Pods-WiseBuyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WiseBuyTests.debug.xcconfig"; path = "Target Support Files/Pods-WiseBuyTests/Pods-WiseBuyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		956CFC663BA14A5530F883CD /* Pods-WiseBuy-WiseBuyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WiseBuy-WiseBuyUITests.release.xcconfig"; path = "Target Support Files/Pods-WiseBuy-WiseBuyUITests/Pods-WiseBuy-WiseBuyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		AF1CAE3DD22D5B83FAE5B743 /* Pods-WiseBuyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WiseBuyTests.release.xcconfig"; path = "Target Support Files/Pods-WiseBuyTests/Pods-WiseBuyTests.release.xcconfig"; sourceTree = "<group>"; };
+		BD4D6F6ADDE9163FD73D245F /* Pods-WiseBuy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WiseBuy.debug.xcconfig"; path = "Target Support Files/Pods-WiseBuy/Pods-WiseBuy.debug.xcconfig"; sourceTree = "<group>"; };
+		D629139E2874BAA500CC7ABA /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		D62913A12874D13B00CC7ABA /* Deal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Deal.h; sourceTree = "<group>"; };
+		D62913A22874D13B00CC7ABA /* Deal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Deal.m; sourceTree = "<group>"; };
+		D62913A42874D14300CC7ABA /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		D62913A52874D14300CC7ABA /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		D62913A72874D15000CC7ABA /* Item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		D62913A82874D15000CC7ABA /* Item.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		D62913AB2874D38D00CC7ABA /* DatabaseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatabaseManager.h; sourceTree = "<group>"; };
+		D62913AC2874D38D00CC7ABA /* DatabaseManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DatabaseManager.m; sourceTree = "<group>"; };
+		D62913AE2874D39500CC7ABA /* APIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIManager.h; sourceTree = "<group>"; };
+		D62913AF2874D39500CC7ABA /* APIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIManager.m; sourceTree = "<group>"; };
+		D62913B32874E9E000CC7ABA /* AlertManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertManager.h; sourceTree = "<group>"; };
+		D62913B42874E9E000CC7ABA /* AlertManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertManager.m; sourceTree = "<group>"; };
+		D69854802874AB2400F79721 /* DealsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DealsViewController.h; sourceTree = "<group>"; };
+		D69854812874AB2400F79721 /* DealsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DealsViewController.m; sourceTree = "<group>"; };
+		D69854832874B0C300F79721 /* HistoryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
+		D69854842874B0C300F79721 /* HistoryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
+		D69854862874B11D00F79721 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		D69854872874B11D00F79721 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		D69854892874B75100F79721 /* FindSimilarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindSimilarViewController.h; sourceTree = "<group>"; };
+		D698548A2874B75100F79721 /* FindSimilarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindSimilarViewController.m; sourceTree = "<group>"; };
+		D6D4072228749EB900B34995 /* WiseBuy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiseBuy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6D4072528749EB900B34995 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D6D4072628749EB900B34995 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D6D4072828749EB900B34995 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		D6D4072928749EB900B34995 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		D6D4072F28749EB900B34995 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D6D4073128749EBB00B34995 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D6D4073428749EBB00B34995 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D6D4073628749EBB00B34995 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6D4073728749EBB00B34995 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D6D4073D28749EBB00B34995 /* WiseBuyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WiseBuyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6D4074128749EBB00B34995 /* WiseBuyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WiseBuyTests.m; sourceTree = "<group>"; };
+		D6D4074728749EBB00B34995 /* WiseBuyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WiseBuyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6D4074B28749EBB00B34995 /* WiseBuyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WiseBuyUITests.m; sourceTree = "<group>"; };
+		D6D4074D28749EBB00B34995 /* WiseBuyUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WiseBuyUITestsLaunchTests.m; sourceTree = "<group>"; };
+		D6D4075A2874A64900B34995 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		D6D4075B2874A64900B34995 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		D6D4075D2874A65200B34995 /* RegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		D6D4075E2874A65200B34995 /* RegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		D6D407602874A65F00B34995 /* BarcodeScanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarcodeScanViewController.h; sourceTree = "<group>"; };
+		D6D407612874A65F00B34995 /* BarcodeScanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarcodeScanViewController.m; sourceTree = "<group>"; };
+		D6D407632874A66F00B34995 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		D6D407642874A66F00B34995 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		D6D407672874A81700B34995 /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		D6D407682874A81700B34995 /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		D6F206AF28764D2100EE72FD /* DealCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DealCell.h; sourceTree = "<group>"; };
+		D6F206B028764D2100EE72FD /* DealCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DealCell.m; sourceTree = "<group>"; };
+		E92EF19107C0D1C1240BE074 /* Pods_WiseBuyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WiseBuyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D6D4071F28749EB900B34995 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0B39C0F3D2696119A7399B8 /* Pods_WiseBuy.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6D4073A28749EBB00B34995 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F84FBA8A4FB5229C31A4BDD4 /* Pods_WiseBuyTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6D4074428749EBB00B34995 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F17D94E2900B6E954BBB80AC /* Pods_WiseBuy_WiseBuyUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		26AF3AE498A9C10ADF16BB36 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				40C25439A09BC95754D400F1 /* Pods_WiseBuy.framework */,
+				4A7B8A1134FC6BEBF85060B3 /* Pods_WiseBuy_WiseBuyUITests.framework */,
+				E92EF19107C0D1C1240BE074 /* Pods_WiseBuyTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7BD1550F47E6C84359D99B4F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BD4D6F6ADDE9163FD73D245F /* Pods-WiseBuy.debug.xcconfig */,
+				2ACAE6C98BCC60EAAFF468AA /* Pods-WiseBuy.release.xcconfig */,
+				19C10320BE41C3DC262CFD46 /* Pods-WiseBuy-WiseBuyUITests.debug.xcconfig */,
+				956CFC663BA14A5530F883CD /* Pods-WiseBuy-WiseBuyUITests.release.xcconfig */,
+				6AF9A902D3D675BF53E151B8 /* Pods-WiseBuyTests.debug.xcconfig */,
+				AF1CAE3DD22D5B83FAE5B743 /* Pods-WiseBuyTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D62913A02874D11B00CC7ABA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D62913A12874D13B00CC7ABA /* Deal.h */,
+				D62913A22874D13B00CC7ABA /* Deal.m */,
+				D62913A42874D14300CC7ABA /* User.h */,
+				D62913A52874D14300CC7ABA /* User.m */,
+				D62913A72874D15000CC7ABA /* Item.h */,
+				D62913A82874D15000CC7ABA /* Item.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D62913AA2874D37B00CC7ABA /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				D62913AB2874D38D00CC7ABA /* DatabaseManager.h */,
+				D62913AC2874D38D00CC7ABA /* DatabaseManager.m */,
+				D62913AE2874D39500CC7ABA /* APIManager.h */,
+				D62913AF2874D39500CC7ABA /* APIManager.m */,
+				D62913B32874E9E000CC7ABA /* AlertManager.h */,
+				D62913B42874E9E000CC7ABA /* AlertManager.m */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		D6D4071928749EB900B34995 = {
+			isa = PBXGroup;
+			children = (
+				D6D4072428749EB900B34995 /* WiseBuy */,
+				D6D4074028749EBB00B34995 /* WiseBuyTests */,
+				D6D4074A28749EBB00B34995 /* WiseBuyUITests */,
+				D6D4072328749EB900B34995 /* Products */,
+				7BD1550F47E6C84359D99B4F /* Pods */,
+				26AF3AE498A9C10ADF16BB36 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D6D4072328749EB900B34995 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D6D4072228749EB900B34995 /* WiseBuy.app */,
+				D6D4073D28749EBB00B34995 /* WiseBuyTests.xctest */,
+				D6D4074728749EBB00B34995 /* WiseBuyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D6D4072428749EB900B34995 /* WiseBuy */ = {
+			isa = PBXGroup;
+			children = (
+				D6F206B228764D2A00EE72FD /* Views */,
+				D62913AA2874D37B00CC7ABA /* Managers */,
+				D62913A02874D11B00CC7ABA /* Models */,
+				D6D407662874A67400B34995 /* View Controllers */,
+				D6D4072528749EB900B34995 /* AppDelegate.h */,
+				D6D4072628749EB900B34995 /* AppDelegate.m */,
+				D6D4072828749EB900B34995 /* SceneDelegate.h */,
+				D6D4072928749EB900B34995 /* SceneDelegate.m */,
+				D6D4072E28749EB900B34995 /* Main.storyboard */,
+				D6D4073128749EBB00B34995 /* Assets.xcassets */,
+				D6D4073328749EBB00B34995 /* LaunchScreen.storyboard */,
+				D6D4073628749EBB00B34995 /* Info.plist */,
+				D6D4073728749EBB00B34995 /* main.m */,
+				D629139E2874BAA500CC7ABA /* Keys.plist */,
+			);
+			path = WiseBuy;
+			sourceTree = "<group>";
+		};
+		D6D4074028749EBB00B34995 /* WiseBuyTests */ = {
+			isa = PBXGroup;
+			children = (
+				D6D4074128749EBB00B34995 /* WiseBuyTests.m */,
+			);
+			path = WiseBuyTests;
+			sourceTree = "<group>";
+		};
+		D6D4074A28749EBB00B34995 /* WiseBuyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D6D4074B28749EBB00B34995 /* WiseBuyUITests.m */,
+				D6D4074D28749EBB00B34995 /* WiseBuyUITestsLaunchTests.m */,
+			);
+			path = WiseBuyUITests;
+			sourceTree = "<group>";
+		};
+		D6D407662874A67400B34995 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D6D4075A2874A64900B34995 /* LoginViewController.h */,
+				D6D4075B2874A64900B34995 /* LoginViewController.m */,
+				D6D4075D2874A65200B34995 /* RegisterViewController.h */,
+				D6D4075E2874A65200B34995 /* RegisterViewController.m */,
+				D6D407602874A65F00B34995 /* BarcodeScanViewController.h */,
+				D6D407612874A65F00B34995 /* BarcodeScanViewController.m */,
+				D6D407632874A66F00B34995 /* DetailsViewController.h */,
+				D6D407642874A66F00B34995 /* DetailsViewController.m */,
+				D6D407672874A81700B34995 /* ProfileViewController.h */,
+				D6D407682874A81700B34995 /* ProfileViewController.m */,
+				D69854802874AB2400F79721 /* DealsViewController.h */,
+				D69854812874AB2400F79721 /* DealsViewController.m */,
+				D69854832874B0C300F79721 /* HistoryViewController.h */,
+				D69854842874B0C300F79721 /* HistoryViewController.m */,
+				D69854862874B11D00F79721 /* SettingsViewController.h */,
+				D69854872874B11D00F79721 /* SettingsViewController.m */,
+				D69854892874B75100F79721 /* FindSimilarViewController.h */,
+				D698548A2874B75100F79721 /* FindSimilarViewController.m */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		D6F206B228764D2A00EE72FD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D6F206AF28764D2100EE72FD /* DealCell.h */,
+				D6F206B028764D2100EE72FD /* DealCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D6D4072128749EB900B34995 /* WiseBuy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6D4075128749EBB00B34995 /* Build configuration list for PBXNativeTarget "WiseBuy" */;
+			buildPhases = (
+				37495A0A8DB5B8980882B27B /* [CP] Check Pods Manifest.lock */,
+				D6D4071E28749EB900B34995 /* Sources */,
+				D6D4071F28749EB900B34995 /* Frameworks */,
+				D6D4072028749EB900B34995 /* Resources */,
+				6DA3E9BC1E4B43DDBD2174FE /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WiseBuy;
+			productName = WiseBuy;
+			productReference = D6D4072228749EB900B34995 /* WiseBuy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D6D4073C28749EBB00B34995 /* WiseBuyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6D4075428749EBB00B34995 /* Build configuration list for PBXNativeTarget "WiseBuyTests" */;
+			buildPhases = (
+				F5F321F35AC51F67992E93F2 /* [CP] Check Pods Manifest.lock */,
+				D6D4073928749EBB00B34995 /* Sources */,
+				D6D4073A28749EBB00B34995 /* Frameworks */,
+				D6D4073B28749EBB00B34995 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D6D4073F28749EBB00B34995 /* PBXTargetDependency */,
+			);
+			name = WiseBuyTests;
+			productName = WiseBuyTests;
+			productReference = D6D4073D28749EBB00B34995 /* WiseBuyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D6D4074628749EBB00B34995 /* WiseBuyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6D4075728749EBB00B34995 /* Build configuration list for PBXNativeTarget "WiseBuyUITests" */;
+			buildPhases = (
+				B81EB48761439D9031D6EB0B /* [CP] Check Pods Manifest.lock */,
+				D6D4074328749EBB00B34995 /* Sources */,
+				D6D4074428749EBB00B34995 /* Frameworks */,
+				D6D4074528749EBB00B34995 /* Resources */,
+				057FA7883676EE77B09D3BDA /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D6D4074928749EBB00B34995 /* PBXTargetDependency */,
+			);
+			name = WiseBuyUITests;
+			productName = WiseBuyUITests;
+			productReference = D6D4074728749EBB00B34995 /* WiseBuyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D6D4071A28749EB900B34995 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					D6D4072128749EB900B34995 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					D6D4073C28749EBB00B34995 = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = D6D4072128749EB900B34995;
+					};
+					D6D4074628749EBB00B34995 = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = D6D4072128749EB900B34995;
+					};
+				};
+			};
+			buildConfigurationList = D6D4071D28749EB900B34995 /* Build configuration list for PBXProject "WiseBuy" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D6D4071928749EB900B34995;
+			productRefGroup = D6D4072328749EB900B34995 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D6D4072128749EB900B34995 /* WiseBuy */,
+				D6D4073C28749EBB00B34995 /* WiseBuyTests */,
+				D6D4074628749EBB00B34995 /* WiseBuyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D6D4072028749EB900B34995 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D629139F2874BAA500CC7ABA /* Keys.plist in Resources */,
+				D6D4073528749EBB00B34995 /* LaunchScreen.storyboard in Resources */,
+				D6D4073228749EBB00B34995 /* Assets.xcassets in Resources */,
+				D6D4073028749EB900B34995 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6D4073B28749EBB00B34995 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6D4074528749EBB00B34995 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		057FA7883676EE77B09D3BDA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WiseBuy-WiseBuyUITests/Pods-WiseBuy-WiseBuyUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WiseBuy-WiseBuyUITests/Pods-WiseBuy-WiseBuyUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WiseBuy-WiseBuyUITests/Pods-WiseBuy-WiseBuyUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		37495A0A8DB5B8980882B27B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WiseBuy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6DA3E9BC1E4B43DDBD2174FE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WiseBuy/Pods-WiseBuy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WiseBuy/Pods-WiseBuy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WiseBuy/Pods-WiseBuy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B81EB48761439D9031D6EB0B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WiseBuy-WiseBuyUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F5F321F35AC51F67992E93F2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WiseBuyTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D6D4071E28749EB900B34995 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D62913A92874D15000CC7ABA /* Item.m in Sources */,
+				D62913A32874D13B00CC7ABA /* Deal.m in Sources */,
+				D6D4075F2874A65200B34995 /* RegisterViewController.m in Sources */,
+				D6D4072728749EB900B34995 /* AppDelegate.m in Sources */,
+				D6D407692874A81700B34995 /* ProfileViewController.m in Sources */,
+				D69854852874B0C300F79721 /* HistoryViewController.m in Sources */,
+				D6D4073828749EBB00B34995 /* main.m in Sources */,
+				D69854822874AB2400F79721 /* DealsViewController.m in Sources */,
+				D6D407622874A65F00B34995 /* BarcodeScanViewController.m in Sources */,
+				D62913A62874D14300CC7ABA /* User.m in Sources */,
+				D698548B2874B75100F79721 /* FindSimilarViewController.m in Sources */,
+				D6D4072A28749EB900B34995 /* SceneDelegate.m in Sources */,
+				D62913B52874E9E000CC7ABA /* AlertManager.m in Sources */,
+				D6F206B128764D2100EE72FD /* DealCell.m in Sources */,
+				D62913AD2874D38D00CC7ABA /* DatabaseManager.m in Sources */,
+				D69854882874B11D00F79721 /* SettingsViewController.m in Sources */,
+				D6D4075C2874A64900B34995 /* LoginViewController.m in Sources */,
+				D62913B02874D39500CC7ABA /* APIManager.m in Sources */,
+				D6D407652874A66F00B34995 /* DetailsViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6D4073928749EBB00B34995 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6D4074228749EBB00B34995 /* WiseBuyTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6D4074328749EBB00B34995 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6D4074C28749EBB00B34995 /* WiseBuyUITests.m in Sources */,
+				D6D4074E28749EBB00B34995 /* WiseBuyUITestsLaunchTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D6D4073F28749EBB00B34995 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6D4072128749EB900B34995 /* WiseBuy */;
+			targetProxy = D6D4073E28749EBB00B34995 /* PBXContainerItemProxy */;
+		};
+		D6D4074928749EBB00B34995 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6D4072128749EB900B34995 /* WiseBuy */;
+			targetProxy = D6D4074828749EBB00B34995 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D6D4072E28749EB900B34995 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D6D4072F28749EB900B34995 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D6D4073328749EBB00B34995 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D6D4073428749EBB00B34995 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D6D4074F28749EBB00B34995 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D6D4075028749EBB00B34995 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D6D4075228749EBB00B34995 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD4D6F6ADDE9163FD73D245F /* Pods-WiseBuy.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 638Q29W3Q6;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 x86_64";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WiseBuy/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"Bolts\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreImage\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreMedia\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"CoreVideo\"",
+					"-framework",
+					"\"FBLPromises\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GTMSessionFetcher\"",
+					"-framework",
+					"\"GoogleDataTransport\"",
+					"-framework",
+					"\"GoogleToolboxForMac\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"GoogleUtilitiesComponents\"",
+					"-framework",
+					"\"LocalAuthentication\"",
+					"-framework",
+					"\"MLImage\"",
+					"-framework",
+					"\"MLKitBarcodeScanning\"",
+					"-framework",
+					"\"MLKitCommon\"",
+					"-framework",
+					"\"MLKitVision\"",
+					"-framework",
+					"\"Parse\"",
+					"-framework",
+					"\"Protobuf\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"nanopb\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"Social\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.maingo.WiseBuy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D6D4075328749EBB00B34995 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2ACAE6C98BCC60EAAFF468AA /* Pods-WiseBuy.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 638Q29W3Q6;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 x86_64";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WiseBuy/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"Bolts\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreImage\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreMedia\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"CoreVideo\"",
+					"-framework",
+					"\"FBLPromises\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GTMSessionFetcher\"",
+					"-framework",
+					"\"GoogleDataTransport\"",
+					"-framework",
+					"\"GoogleToolboxForMac\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"GoogleUtilitiesComponents\"",
+					"-framework",
+					"\"LocalAuthentication\"",
+					"-framework",
+					"\"MLImage\"",
+					"-framework",
+					"\"MLKitBarcodeScanning\"",
+					"-framework",
+					"\"MLKitCommon\"",
+					"-framework",
+					"\"MLKitVision\"",
+					"-framework",
+					"\"Parse\"",
+					"-framework",
+					"\"Protobuf\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"nanopb\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"Social\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.maingo.WiseBuy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D6D4075528749EBB00B34995 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6AF9A902D3D675BF53E151B8 /* Pods-WiseBuyTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maingo.WiseBuyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WiseBuy.app/WiseBuy";
+			};
+			name = Debug;
+		};
+		D6D4075628749EBB00B34995 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AF1CAE3DD22D5B83FAE5B743 /* Pods-WiseBuyTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maingo.WiseBuyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WiseBuy.app/WiseBuy";
+			};
+			name = Release;
+		};
+		D6D4075828749EBB00B34995 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 19C10320BE41C3DC262CFD46 /* Pods-WiseBuy-WiseBuyUITests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maingo.WiseBuyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = WiseBuy;
+			};
+			name = Debug;
+		};
+		D6D4075928749EBB00B34995 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 956CFC663BA14A5530F883CD /* Pods-WiseBuy-WiseBuyUITests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maingo.WiseBuyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = WiseBuy;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D6D4071D28749EB900B34995 /* Build configuration list for PBXProject "WiseBuy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6D4074F28749EBB00B34995 /* Debug */,
+				D6D4075028749EBB00B34995 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D6D4075128749EBB00B34995 /* Build configuration list for PBXNativeTarget "WiseBuy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6D4075228749EBB00B34995 /* Debug */,
+				D6D4075328749EBB00B34995 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D6D4075428749EBB00B34995 /* Build configuration list for PBXNativeTarget "WiseBuyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6D4075528749EBB00B34995 /* Debug */,
+				D6D4075628749EBB00B34995 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D6D4075728749EBB00B34995 /* Build configuration list for PBXNativeTarget "WiseBuyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6D4075828749EBB00B34995 /* Debug */,
+				D6D4075928749EBB00B34995 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D6D4071A28749EB900B34995 /* Project object */;
+}

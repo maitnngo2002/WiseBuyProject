@@ -1,0 +1,6 @@
+framework module Pods_WiseBuy_WiseBuyUITests {
+  umbrella header "Pods-WiseBuy-WiseBuyUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
