@@ -52,20 +52,12 @@
                                                                handler:^(UIAlertAction * _Nonnull action) {
         NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
         if ([[UIApplication sharedApplication] canOpenURL:settingsURL]) {
-            [UIApplication.sharedApplication openURL:settingsURL options:[NSDictionary dictionary] completionHandler:^(BOOL success) {
-                if (success) {
-                    NSLog(@"Opened settings action performed successfully.");
-                }
-                else {
-                    NSLog(@"Could not open settings.");
-                }
-            }];
+            [UIApplication.sharedApplication openURL:settingsURL options:[NSDictionary dictionary] completionHandler:^(BOOL success) {}];
         }
     }];
     
     [alert addAction:openSettingsAction];
     [vc presentViewController:alert animated:YES completion:^{
-        NSLog(@"Finished presenting alert");
     }];
 }
 @end
