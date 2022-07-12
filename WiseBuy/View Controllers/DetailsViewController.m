@@ -6,6 +6,7 @@
 //
 
 #import "DetailsViewController.h"
+#import "AlertManager.h"
 
 @interface DetailsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *itemName;
@@ -28,7 +29,18 @@
     self.descriptionLabel.text = self.deal.item.information;
 }
 - (IBAction)onTapBuy:(id)sender {
-    
+    if ([[UIApplication sharedApplication] canOpenURL:self.deal.itemURL]) {
+         [UIApplication.sharedApplication openURL:self.deal.itemURL options:[NSDictionary dictionary] completionHandler:^(BOOL success) {
+             if (success) {
+             }
+             else {
+                 [AlertManager cannotOpenLink:self];
+             }
+         }];
+     }
+    else {
+        [AlertManager cannotOpenLink:self];
+    }
 }
 - (IBAction)onTapSave:(id)sender {
 }
