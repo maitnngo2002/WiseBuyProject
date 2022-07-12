@@ -32,7 +32,10 @@
 
     NSString *fullBaseURL = [NSString stringWithFormat:@"%@%@%@", firstHalfBaseURL, appSecurityName, secondHalfBaseURL];
     
-    NSString *requestURL = [NSString stringWithFormat:@"%@%@", fullBaseURL, barcode];
+    // for testing purpose
+    NSString *testBarcode = @"53039031";
+    
+    NSString *requestURL = [NSString stringWithFormat:@"%@%@", fullBaseURL, testBarcode];
     NSLog(@"%@", requestURL);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestURL]
       cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -47,10 +50,49 @@
         NSLog(@"%@", error);
         dispatch_semaphore_signal(sema);
       } else {
-//            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
             NSError *parseError = nil;
             NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-            NSLog(@"%@",responseDictionary);
+          
+          NSDictionary *finalResponseDic = responseDictionary[@"findItemsByProductResponse"][0][@"searchResult"][0];
+          NSArray *offerLists = finalResponseDic[@"item"];
+          for (NSDictionary* offer in offerLists)
+          {
+              NSString *price = offer[@"sellingStatus"][0][@"convertedCurrentPrice"][0][@"__value__"];
+              NSString *title = offer[@"title"][0];
+              
+            
+              NSString *itemUrl = offer[@"viewItemURL"][0];
+              NSString *imageUrl = offer[@"galleryURL"][0];
+              
+              NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+              f.numberStyle = NSNumberFormatterDecimalStyle;
+              NSNumber *priceNumber = [f numberFromString:price];
+              
+              Item *newItem = [Item new];
+              newItem[@"name"] = title;
+              newItem[@"description"] = offer[@"condition"][0][@"conditionDisplayName"][0];
+              
+              newItem[@"barcode"] = offer[@"productId"][0][@"__value__"];
+
+              NSURL *imageurl = [NSURL URLWithString: responseDictionary[@"items"][0][@"images"][0]];
+              NSLog(@"%@", imageurl);
+              
+              NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
+              newItem[@"image"] = [PFFileObject fileObjectWithData:imageData];
+              
+              NSLog(@"%@", newItem);
+              [newItem saveInBackground];
+
+              Deal *newDeal = [Deal new];
+              newDeal[@"item"] = newItem;
+              newDeal[@"sellerName"] = @"Ebay";
+              newDeal[@"price"] = priceNumber;
+              newDeal[@"link"] = itemUrl;
+              [newDeal saveInBackground];          }
+          
+          
+          NSLog(@"%@", offerLists[0]);
+//          NSLog(@"%@", price);
             dispatch_semaphore_signal(sema);
             
       }
@@ -64,7 +106,7 @@
     
     NSString *baseURL = @"https://api.upcitemdb.com/prod/v1/lookup?upc=";
 
-    NSString *fullBaseURL = [NSString stringWithFormat:@"%@%@", baseURL, barcode];
+    NSString *fullBaseURL = [NSString stringWithFormat:@"%@%@", baseURL, @"085239058152"];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:fullBaseURL]
       cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -98,25 +140,22 @@
           
           NSInteger count = [responseDictionary[@"items"][0][@"offers"] count];
           int x;
-          for (x = 0;x <= count; x++)
+          for (x = 0;x <= count - 1; x++)
           {
               NSDictionary *offer = [responseDictionary[@"items"][0][@"offers"] objectAtIndex:x];
-              NSLog(@"%@", responseDictionary[@"items"][0]);
-              NSLog(@"%@", responseDictionary[@"items"][0]);
-                    NSLog(@"%@", responseDictionary[@"items"][0][@"description"]);
-              NSLog(@"%@", responseDictionary[@"items"][0][@"images"][0]);
               
               Item *newItem = [Item new];
               newItem[@"name"] = responseDictionary[@"items"][0][@"title"];
               newItem[@"description"] = responseDictionary[@"items"][0][@"description"];
-              newItem[@"barcode"] = responseDictionary[@"items"][0][@"description"][@"upc"];
+              newItem[@"barcode"] = responseDictionary[@"items"][0][@"upc"];
 
               NSURL *imageurl = [NSURL URLWithString: responseDictionary[@"items"][0][@"images"][0]];
               NSLog(@"%@", imageurl);
               
               NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: responseDictionary[@"items"][0][@"images"][0]]];
-              UIImage *image = [UIImage imageWithData: imageData];
-              newItem[@"image"] = [DatabaseManager getPFFileFromImage:image];
+              
+              newItem[@"image"] = [PFFileObject fileObjectWithData:imageData];
+                            
               NSLog(@"%@", newItem);
               [newItem saveInBackground];
 

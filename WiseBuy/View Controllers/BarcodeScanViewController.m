@@ -34,6 +34,8 @@ NSString *const dealsSegue = @"dealsSegue";
                                              selector:@selector(checkPermissions)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
+//    [APIManager fetchDealsFromEbayAPI:@"hi"];
+//    [APIManager fetchDealsFromUPCDatabase:@"he"];
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];

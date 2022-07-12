@@ -31,13 +31,14 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     
-//    [APIManager fetchDealsFromUPCDatabase:self.barcode];
+    [APIManager fetchDealsFromUPCDatabase:self.barcode];
 //    [APIManager fetchDealsFromSearchUPCAPI:self.barcode];
-//    [APIManager fetchDealsFromEbayAPI:self.barcode];
-    NSLog(@"%@", self.barcode);
+//    [APIManager fetchDealsFromEbayAPI:@"53039031"];
+
     [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
         if (deals.count > 0) {
             self.deals = (NSMutableArray *) deals;
+
             [self.tableView reloadData];
         }
         else {

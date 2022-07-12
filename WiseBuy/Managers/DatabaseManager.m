@@ -31,7 +31,6 @@
     newUser.email = user.email;
     newUser[@"first_name"] = user.firstName;
     newUser[@"last_name"] = user.lastName;
-//    newUser[@"image"] = [DatabaseManager getPFFileFromImage:user.profileImage];
     newUser[@"image"] = [DatabaseManager getPFFileFromImageData:user.profileImage];
 
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
@@ -44,7 +43,7 @@
 
 + (void)fetchItem:(NSString *)barcode viewController:(UIViewController *)vc withCompletion:(void(^)(NSArray *deals,NSError *error))completion {
     PFQuery *itemQuery = [Item query];
-    [itemQuery whereKey:@"barcode" equalTo:@"085239058152"];
+    [itemQuery whereKey:@"barcode" equalTo:barcode];
     [itemQuery getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (object != nil) {
             [DatabaseManager fetchDeals:object withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
@@ -54,14 +53,12 @@
                     }];
                 }
                 else {
-                    NSLog(@"COULDNOT FETCH ITEM");
 //                    [AlertManager dealNotFoundAlert:vc errorType:NoDealFoundError];
                 }
             }];
         }
         else {
             completion(nil, error);
-            NSLog(@"ERROR FETCHING ITEM");
 //            [AlertManager dealNotFoundAlert:vc errorType:NoItemFoundError];
         }
     }];
@@ -198,6 +195,11 @@
 }
 
 + (void)fetchDeals:(PFObject *)item withCompletion:(void(^)(NSArray *deals ,NSError *error))completion {
+    
+    PFQuery *setQuery = [Deal query];
+    [setQuery includeKey:@"link"];
+    [setQuery whereKey:@"link" equalTo:item];
+
     PFQuery *dealsQuery = [Deal query];
     [dealsQuery includeKey:@"item"];
     [dealsQuery whereKey:@"item" equalTo:item];
@@ -208,8 +210,6 @@
         }
         else {
             completion(nil, error);
-            NSLog(@"Error fetching deals");
-
         }
     }];
 }
