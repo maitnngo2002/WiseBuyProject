@@ -12,7 +12,7 @@
 @dynamic barcode;
 @dynamic name;
 @dynamic image;
-@dynamic description;
+@dynamic information;
 
 + (nonnull NSString *)parseClassName {
     return @"Item";

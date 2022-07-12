@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AppItem : NSObject
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *description;
+@property (nonatomic, strong) NSString *information;
 @property (nonatomic, strong) NSString *barcode;
 @property (nonatomic, strong) NSData *image;
 @property (nonatomic, strong) NSString *identifier;

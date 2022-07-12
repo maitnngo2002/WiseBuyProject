@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Item : PFObject<PFSubclassing>
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *description;
+@property (nonatomic, strong) NSString *information;
 @property (nonatomic, strong) NSString *barcode;
 @property (nonatomic, strong) PFFileObject *image;
 

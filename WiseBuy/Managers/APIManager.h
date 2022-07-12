@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface APIManager : NSObject
 
 + (void)fetchDealsFromEbayAPI:(NSString *)barcode;
-//+ (void)fetchDealsFromUPCDatabase:(NSString *)barcode;
-//+ (void)fetchDealsFromSearchUPCAPI:(NSString *)barcode;
++ (void)fetchDealsFromUPCDatabase:(NSString *)barcode;
++ (void)fetchDealsFromSearchUPCAPI:(NSString *)barcode;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,7 +11,6 @@
 #import "AlertManager.h"
 #import "DealsViewController.h"
 #import "APIManager.h"
-
 @interface BarcodeScanViewController () <AVCaptureVideoDataOutputSampleBufferDelegate>
 @property (weak, nonatomic) IBOutlet UIView *scanView;
 @property (nonatomic) AVCaptureSession *captureSession;
@@ -27,7 +26,8 @@ NSString *const dealsSegue = @"dealsSegue";
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    
+    Item *newItem = [Item new];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(checkPermissions)
                                                  name:UIApplicationDidBecomeActiveNotification

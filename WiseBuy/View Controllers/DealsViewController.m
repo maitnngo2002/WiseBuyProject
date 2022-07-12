@@ -9,6 +9,7 @@
 #import "DealCell.h"
 #import "DatabaseManager.h"
 #import "APIManager.h"
+#import "AppDeal.h"
 
 @interface DealsViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -22,16 +23,21 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     
-//    [APIManager fetchDealsFromEbayAPI];
-    [APIManager fetchDealsFromUPCDatabase];
-    [APIManager fetchDealsFromSearchUPCAPI];
-//    [APIManager fetchDealsFromEbayAPI];
-    //    [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+//    [APIManager fetchDealsFromUPCDatabase:self.barcode];
+//    [APIManager fetchDealsFromSearchUPCAPI:self.barcode];
+//    [APIManager fetchDealsFromEbayAPI:self.barcode];
+//    [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
 //        if (deals.count > 0) {
 //            self.deals = (NSMutableArray *) deals;
+////            NSLog(@"%@", self.deals[0]);
+//
+//            AppDeal *deal = self.deals[0];
+//
+//            NSLog(@"%@", deal.price);
 //            [self.tableView reloadData];
 //        }
 //        else {
+//            //alert
 //            NSLog(@"error %@", error.localizedDescription);
 //        }
 //    }];
@@ -39,6 +45,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DealCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DealCell"];
+    
     return cell;
 }
 
