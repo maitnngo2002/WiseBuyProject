@@ -10,6 +10,7 @@
 #import "DatabaseManager.h"
 #import "APIManager.h"
 #import "AppDeal.h"
+#import "DetailsViewController.h"
 
 @interface DealsViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -33,6 +34,7 @@
 //    [APIManager fetchDealsFromUPCDatabase:self.barcode];
 //    [APIManager fetchDealsFromSearchUPCAPI:self.barcode];
 //    [APIManager fetchDealsFromEbayAPI:self.barcode];
+    NSLog(@"%@", self.barcode);
     [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
         if (deals.count > 0) {
             self.deals = (NSMutableArray *) deals;
@@ -60,14 +62,16 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.deals.count;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+     if ([segue.identifier isEqualToString:@"detailsSegue"]) {
+         UITableViewCell *tappedCell = sender;
+         NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+         AppDeal *currentDeal = self.deals[indexPath.row];
+         DetailsViewController *detailsViewController = [segue destinationViewController];
+         detailsViewController.deal = currentDeal;
+         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+     }
 }
-*/
 
 @end
