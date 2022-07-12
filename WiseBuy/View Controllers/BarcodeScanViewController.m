@@ -18,6 +18,9 @@
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 
 @property (strong, nonatomic) NSString *barcode;
+
+@property BOOL alreadyScanned;
+
 @end
 
 NSString *const dealsSegue = @"dealsSegue";
@@ -26,7 +29,6 @@ NSString *const dealsSegue = @"dealsSegue";
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    Item *newItem = [Item new];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(checkPermissions)
@@ -36,6 +38,8 @@ NSString *const dealsSegue = @"dealsSegue";
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
 
+    self.alreadyScanned = NO;
+    
     [self checkPermissions];
 }
 
@@ -115,7 +119,7 @@ NSString *const dealsSegue = @"dealsSegue";
         if (error) {
             return;
         }
-        if (barcodes.count > 0) {
+        if (barcodes.count > 0 && !self.alreadyScanned) {
             self.barcode = barcodes.firstObject.rawValue;
             [self performSegueWithIdentifier:dealsSegue sender:nil];
         }
@@ -166,6 +170,7 @@ NSString *const dealsSegue = @"dealsSegue";
     if ([segue.identifier isEqualToString:@"dealsSegue"]) {
         DealsViewController *dealsController = [segue destinationViewController];
         dealsController.barcode = self.barcode;
+        self.alreadyScanned = YES;
     }
 }
 @end

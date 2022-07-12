@@ -20,37 +20,45 @@
 
 @implementation DealsViewController
 
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     
 //    [APIManager fetchDealsFromUPCDatabase:self.barcode];
 //    [APIManager fetchDealsFromSearchUPCAPI:self.barcode];
 //    [APIManager fetchDealsFromEbayAPI:self.barcode];
-//    [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
-//        if (deals.count > 0) {
-//            self.deals = (NSMutableArray *) deals;
-////            NSLog(@"%@", self.deals[0]);
-//
-//            AppDeal *deal = self.deals[0];
-//
-//            NSLog(@"%@", deal.price);
-//            [self.tableView reloadData];
-//        }
-//        else {
-//            //alert
-//            NSLog(@"error %@", error.localizedDescription);
-//        }
-//    }];
+    [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+        if (deals.count > 0) {
+            self.deals = (NSMutableArray *) deals;
+            [self.tableView reloadData];
+        }
+        else {
+            //alert
+            NSLog(@"error %@", error.localizedDescription);
+        }
+    }];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DealCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DealCell"];
     
+    AppDeal *deal = self.deals[indexPath.row];
+    cell.itemImage.image = [UIImage imageWithData:deal.item.image];
+    cell.itemName.text = deal.item.name;
+    cell.sellerName.text = deal.sellerName;
+    cell.price.text = [deal.price stringValue];
+    
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.deals.count;
 }
 /*
 #pragma mark - Navigation
