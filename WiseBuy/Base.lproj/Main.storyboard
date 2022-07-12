@@ -423,7 +423,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DealCell" rowHeight="231" id="fVU-i4-9SN">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DealCell" rowHeight="231" id="fVU-i4-9SN" customClass="DealCell">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="231"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fVU-i4-9SN" id="vMU-vt-ues">
@@ -458,6 +458,10 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="itemImage" destination="VBd-oo-OIT" id="5fm-XF-fXc"/>
+                                            <outlet property="itemName" destination="EPf-JF-iXK" id="98Y-mH-D9j"/>
+                                            <outlet property="price" destination="Gh7-zK-ahh" id="86m-Nx-Y7v"/>
+                                            <outlet property="sellerName" destination="gV9-ii-FOY" id="12p-ur-DNN"/>
                                             <segue destination="yWf-Lb-TPU" kind="show" identifier="detailsSegue" id="QzF-qF-glc"/>
                                         </connections>
                                     </tableViewCell>
