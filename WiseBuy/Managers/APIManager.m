@@ -213,7 +213,6 @@
                   
                   [newItem saveInBackground];
                   
-                  NSInteger count = [responseDictionary count];
                   for (id key in responseDictionary)
                   {
                       NSDictionary *offer = [responseDictionary objectForKey:key];
