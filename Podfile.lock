@@ -30,6 +30,7 @@ PODS:
   - GoogleUtilitiesComponents (1.1.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.7.2)
+  - JGProgressHUD (2.2)
   - MLImage (1.0.0-beta3)
   - MLKitBarcodeScanning (2.1.0):
     - MLKitCommon (~> 7.0)
@@ -64,6 +65,7 @@ PODS:
 
 DEPENDENCIES:
   - GoogleMLKit/BarcodeScanning
+  - JGProgressHUD
   - Parse
 
 SPEC REPOS:
@@ -75,6 +77,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GoogleUtilitiesComponents
     - GTMSessionFetcher
+    - JGProgressHUD
     - MLImage
     - MLKitBarcodeScanning
     - MLKitCommon
@@ -92,6 +95,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
+  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   MLImage: 489dfec109f21da8621b28d476401aaf7a0d4ff4
   MLKitBarcodeScanning: 74f43c38f3f85b3f3f332006b20a1a22f404256c
   MLKitCommon: 20f4aca0ec2bb37cef2b9c211b50586817bac5d3
@@ -101,6 +105,6 @@ SPEC CHECKSUMS:
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   Protobuf: 818c6a87e44193a77f56b87c6a1c106efda7e062
 
-PODFILE CHECKSUM: 9f7c5401ecebbe2dfdf46b4f79278887487bfbed
+PODFILE CHECKSUM: b20023c96684b4016ce65768205197a3d97fbc79
 
 COCOAPODS: 1.11.3

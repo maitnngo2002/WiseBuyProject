@@ -8,6 +8,7 @@ target 'WiseBuy' do
   # Pods for WiseBuy
   pod 'Parse'
   pod 'GoogleMLKit/BarcodeScanning'
+  pod 'JGProgressHUD'
   
   target 'WiseBuyTests' do
     inherit! :search_paths

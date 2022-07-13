@@ -11,6 +11,7 @@
 #import "APIManager.h"
 #import "AppDeal.h"
 #import "DetailsViewController.h"
+#import "JGProgressHUD/JGProgressHUD.h"
 
 @interface DealsViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -38,18 +39,41 @@
         [APIManager fetchDealsFromUPCDatabase:self.barcode];
         [APIManager fetchDealsFromSearchUPCAPI:self.barcode];
     }
+    JGProgressHUD *HUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
+    HUD.textLabel.text = @"Waiting for deals to be displayed";
+    [HUD showInView:self.view];
+    
+    [self setLoadingState:YES viewController:self];
     
     [DatabaseManager fetchItem:@"53039031" viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
         if (deals.count > 0) {
             self.deals = (NSMutableArray *) deals;
 
             [self.tableView reloadData];
+            
+            [HUD dismissAfterDelay:0.1 animated:YES];
+            [self setLoadingState:NO viewController:self];
         }
         else {
             //alert
             NSLog(@"error %@", error.localizedDescription);
         }
     }];
+}
+
+- (void)setLoadingState:(BOOL)isFetching viewController:(UIViewController *)vc {
+    if (isFetching) {
+        vc.view.userInteractionEnabled = NO;
+        vc.view.alpha = 0.5f;
+        [vc.navigationController setNavigationBarHidden:YES];
+        [vc.tabBarController.tabBar setHidden:YES];
+    }
+    else {
+        vc.view.userInteractionEnabled = YES;
+        [vc.navigationController setNavigationBarHidden:NO];
+        [vc.tabBarController.tabBar setHidden:NO];
+        vc.view.alpha = 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
