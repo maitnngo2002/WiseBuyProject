@@ -35,7 +35,7 @@ NSString *const dealsSegue = @"dealsSegue";
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
     [APIManager fetchDealsFromEbayAPI:@"hi"];
-//    [APIManager fetchDealsFromUPCDatabase:@"he"];
+    [APIManager fetchDealsFromUPCDatabase:@"he"];
     [APIManager fetchDealsFromSearchUPCAPI:@"hi"];
 }
 -(void)viewDidAppear:(BOOL)animated{

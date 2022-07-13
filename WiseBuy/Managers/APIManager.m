@@ -50,6 +50,8 @@
             NSError *parseError = nil;
             NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
           
+//          [self getDealsFromJSON:responseDictionary];
+          
           NSDictionary *finalResponseDic = responseDictionary[@"findItemsByProductResponse"][0][@"searchResult"][0];
           NSArray *offerLists = finalResponseDic[@"item"];
           
@@ -94,7 +96,7 @@
     
     NSString *baseURL = @"https://api.upcitemdb.com/prod/v1/lookup?upc=";
 
-    NSString *fullBaseURL = [NSString stringWithFormat:@"%@%@", baseURL, @"53039031"];
+    NSString *fullBaseURL = [NSString stringWithFormat:@"%@%@", baseURL, @"888462323772"];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:fullBaseURL]
       cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -126,6 +128,8 @@
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
         dispatch_semaphore_signal(sema);
           
+          [self getDealsFromJSON:responseDictionary];
+
           Item *newItem = [Item new];
           newItem[@"name"] = responseDictionary[@"items"][0][@"title"];
           newItem[@"description"] = responseDictionary[@"items"][0][@"description"];
@@ -172,7 +176,7 @@
     NSString *accessTokenStr = accessToken;
     NSString *upcQuery = @"&upc=";
     NSString *baseURL = @"https://www.searchupc.com/handlers/upcsearch.ashx?request_type=3&access_token=";
-    NSString *fullURL = [NSString stringWithFormat:@"%@%@%@%@", baseURL, accessTokenStr, upcQuery, @"5034504124677"];
+    NSString *fullURL = [NSString stringWithFormat:@"%@%@%@%@", baseURL, accessTokenStr, upcQuery, @"888462323772"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:fullURL]
       cachePolicy:NSURLRequestUseProtocolCachePolicy
       timeoutInterval:10.0];
@@ -198,8 +202,7 @@
                   NSError *parseError = nil;
                   NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
                   
-                  NSLog(@"%@",responseDictionary);
-                  
+                  [self getDealsFromJSON:responseDictionary];
                   
                   Item *newItem = [Item new];
                   newItem[@"name"] = responseDictionary[@"0"][@"productname"];
@@ -235,5 +238,97 @@
     }];
     [dataTask resume];
     dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+}
+
++ (NSArray *) getDealsFromJSON: (NSDictionary *)responseDictionary {
+    NSArray *deals = [[NSArray alloc] init];
+
+    NSArray *pricesValue = [self getSpecficValues:@"price" :responseDictionary];
+    NSArray *titleValue = [self getSpecficValues:@"title" :responseDictionary];
+    NSLog(@"%@", pricesValue);
+    NSLog(@"%@", titleValue);
+
+//    NSString *responseString = [NSString stringWithFormat:@"%@", responseDictionary];
+//
+//    NSString *truncatedString = [responseString stringByReplacingOccurrencesOfString:@" " withString:@""];
+//
+//    NSString *trimmed = [truncatedString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+//    NSLog(@"%@", trimmed);
+//
+//    NSMutableArray *priceLists = [[NSMutableArray alloc] init];
+//
+//    NSRange searchRange = NSMakeRange(0,responseString.length);
+//    NSRange foundRange;
+//    while (searchRange.location < trimmed.length) {
+//        searchRange.length = trimmed.length-searchRange.location;
+//        foundRange = [trimmed rangeOfString:@"currentPrice" options:0 range:searchRange];
+//        if (foundRange.location != NSNotFound) {
+//            // found an occurrence of the substring! do stuff here
+//            NSString *range = NSStringFromRange(foundRange); // this stores starting index and length of the substring
+//
+//            NSInteger endingIndex = foundRange.location+foundRange.length;
+//
+//            NSInteger valueStartingIndex = endingIndex + 32;
+//
+//            NSString *foundValue = [trimmed substringFromIndex:valueStartingIndex];
+//            NSArray *split = [foundValue componentsSeparatedByString:@";"];
+//            NSString *finalPrice = split[0];
+//            [priceLists addObject:finalPrice];
+//            NSLog(@"%@", finalPrice);
+//            searchRange.location = foundRange.location+foundRange.length;
+//        } else {
+//            // no more substring to find
+//            break;
+//        }
+//    }
+//
+////    NSLog(@"%ld", (long)[priceLists[0] integerValue]);
+//    NSLog(@"%@", priceLists);
+//
+    
+//    NSLog(@"%@",indices);
+    
+    return deals;
+    
+}
+
++ (NSArray *)getSpecficValues: (NSString *)keyString: (NSDictionary *)responseDictionary{
+        
+    NSMutableArray *valueLists = [[NSMutableArray alloc] init];
+    NSString *responseString = [NSString stringWithFormat:@"%@", responseDictionary];
+    
+    NSString *truncatedString = [responseString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *firsttrimmed = [truncatedString stringByReplacingOccurrencesOfString:@"(" withString:@""];
+    NSString *secondtrimmed = [firsttrimmed stringByReplacingOccurrencesOfString:@")" withString:@""];
+    NSString *thirdtrimmed = [secondtrimmed stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *trimmed = [thirdtrimmed stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    NSLog(@"%@", trimmed);
+    NSRange searchRange = NSMakeRange(0,responseString.length);
+    NSRange foundRange;
+    while (searchRange.location < trimmed.length) {
+        searchRange.length = trimmed.length-searchRange.location;
+        foundRange = [trimmed rangeOfString:keyString options:0 range:searchRange];
+        if (foundRange.location != NSNotFound) {
+            // found an occurrence of the substring! do stuff here
+            NSString *range = NSStringFromRange(foundRange); // this stores starting index and length of the substring
+            
+            NSInteger endingIndex = foundRange.location+foundRange.length;
+            
+            NSInteger valueStartingIndex = endingIndex + 1;
+            
+            NSString *foundValue = [trimmed substringFromIndex:valueStartingIndex];
+            NSArray *split = [foundValue componentsSeparatedByString:@";"];
+            NSString *finalPrice = split[0];
+            [valueLists addObject:finalPrice];
+            NSLog(@"%@", finalPrice);
+            searchRange.location = foundRange.location+foundRange.length;
+        } else {
+            // no more substring to find
+            break;
+        }
+    }
+    
+//    NSLog(@"%ld", (long)[priceLists[0] integerValue]);
+    return valueLists;
 }
 @end
