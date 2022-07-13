@@ -15,7 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 +(void)loginUser:(NSString *)username password:(NSString *)password withCompletion:(void(^)(BOOL success, NSError *error))completion;
 +(void)registerUser:(User *)user withCompletion:(void(^)(BOOL success, NSError *error))completion;
-
++ (void)fetchItem:(NSString *)barcode viewController:(UIViewController *)vc withCompletion:(void(^)(NSArray *deals,NSError *error))completion;
++ (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image;
++ (PFFileObject *)getPFFileFromImageData: (NSData *)imageData;
++ (BOOL)checkIfItemAlreadyExist:(NSString *)barcode;
 @end
 
 NS_ASSUME_NONNULL_END

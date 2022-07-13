@@ -60,4 +60,35 @@
     [vc presentViewController:alert animated:YES completion:^{
     }];
 }
+
++ (void)dealsNotFoundAlert:(UIViewController *)vc errorType:(dealErrorType)error {
+    UIAlertController *alert;
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {
+        [vc.navigationController popToRootViewControllerAnimated:YES];
+    }];
+    
+  
+    alert = [UIAlertController alertControllerWithTitle:@"No Deals Found"
+                                                        message:@"Could not find any deals for this item."
+                                                 preferredStyle:(UIAlertControllerStyleAlert)];
+    [alert addAction:okAction];
+    
+    [vc presentViewController:alert animated:YES completion:nil];
+}
+
++ (void)cannotOpenLink:(UIViewController *)vc {
+    UIAlertController *alert;
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {
+        [vc.navigationController popToRootViewControllerAnimated:YES];
+    }];
+    alert = [UIAlertController alertControllerWithTitle:@"Error redirecting to the seller website"
+                                                message:@"An error ocurred when redirecting to the link."
+                                         preferredStyle:(UIAlertControllerStyleAlert)];
+    [alert addAction:okAction];
+    [vc presentViewController:alert animated:YES completion:nil];
+}
 @end

@@ -18,8 +18,15 @@ typedef NS_ENUM(NSInteger, errorType) {
     ServerError
 };
 
+typedef NS_ENUM(NSInteger, dealErrorType) {
+    NoDealFoundError,
+    NoItemFoundError
+};
+
 + (void)loginAlert:(errorType)error errorString:(nullable NSString *) errorString viewController:(UIViewController *)vc;
 + (void)videoPermissionAlert:(UIViewController *)vc;
++ (void)dealsNotFoundAlert:(UIViewController *)vc errorType:(dealErrorType)error;
++ (void)cannotOpenLink:(UIViewController *)vc;
 
 @end
 

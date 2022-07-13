@@ -11,7 +11,6 @@
 #import "AlertManager.h"
 #import "DealsViewController.h"
 #import "APIManager.h"
-
 @interface BarcodeScanViewController () <AVCaptureVideoDataOutputSampleBufferDelegate>
 @property (weak, nonatomic) IBOutlet UIView *scanView;
 @property (nonatomic) AVCaptureSession *captureSession;
@@ -19,6 +18,9 @@
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 
 @property (strong, nonatomic) NSString *barcode;
+
+@property BOOL alreadyScanned;
+
 @end
 
 NSString *const dealsSegue = @"dealsSegue";
@@ -27,42 +29,21 @@ NSString *const dealsSegue = @"dealsSegue";
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(checkPermissions)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
+    [APIManager fetchDealsFromEbayAPI:@"hi"];
+//    [APIManager fetchDealsFromUPCDatabase:@"he"];
+    [APIManager fetchDealsFromSearchUPCAPI:@"hi"];
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
 
+    self.alreadyScanned = NO;
+    
     [self checkPermissions];
-
-//    self.captureSession = [AVCaptureSession new];
-//    self.captureSession.sessionPreset = AVCaptureSessionPreset1280x720;
-//
-//    AVCaptureDevice *phoneCamera = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-//    if (!phoneCamera) {
-//        return;
-//    }
-//    NSError *error;
-//    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:phoneCamera error:&error];
-//    if (!error) {
-//        self.videoDataOutput = [AVCaptureVideoDataOutput new];
-//        NSDictionary *newSettings = @{(NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA) };
-//        self.videoDataOutput.videoSettings = newSettings;
-//        [self.videoDataOutput setAlwaysDiscardsLateVideoFrames:YES];
-//        if ([self.captureSession canAddInput:input] && [self.captureSession canAddOutput:self.videoDataOutput]) {
-//            [self.captureSession addInput:input];
-//            [self.captureSession addOutput:self.videoDataOutput];
-//            dispatch_queue_t videoDataOutputQueue = dispatch_queue_create("VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL);
-//            [self.videoDataOutput setSampleBufferDelegate:self queue:videoDataOutputQueue];
-//            [self setupLivePreview];
-//        }
-//    }
-//    else {
-//        NSLog(@"Error initializing the phone camera: %@", error.localizedDescription);
-//    }
 }
 
 - (void)dealloc
@@ -104,7 +85,6 @@ NSString *const dealsSegue = @"dealsSegue";
     
     AVCaptureDevice *backCamera = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     if (!backCamera) {
-        NSLog(@"Unable to access back camera!");
         return;
     }
     
@@ -142,9 +122,8 @@ NSString *const dealsSegue = @"dealsSegue";
         if (error) {
             return;
         }
-        if (barcodes.count > 0) {
+        if (barcodes.count > 0 && !self.alreadyScanned) {
             self.barcode = barcodes.firstObject.rawValue;
-            [APIManager fetchDealsFromEbayAPI];
             [self performSegueWithIdentifier:dealsSegue sender:nil];
         }
         else {
@@ -194,6 +173,7 @@ NSString *const dealsSegue = @"dealsSegue";
     if ([segue.identifier isEqualToString:@"dealsSegue"]) {
         DealsViewController *dealsController = [segue destinationViewController];
         dealsController.barcode = self.barcode;
+        self.alreadyScanned = YES;
     }
 }
 @end
