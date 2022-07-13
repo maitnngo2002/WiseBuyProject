@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)fetchItem:(NSString *)barcode viewController:(UIViewController *)vc withCompletion:(void(^)(NSArray *deals,NSError *error))completion;
 + (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image;
 + (PFFileObject *)getPFFileFromImageData: (NSData *)imageData;
++ (BOOL)checkIfItemAlreadyExist:(NSString *)barcode;
 @end
 
 NS_ASSUME_NONNULL_END
