@@ -12,11 +12,13 @@
 #import "AppDeal.h"
 #import "DetailsViewController.h"
 #import "JGProgressHUD/JGProgressHUD.h"
+#import "AlertManager.h"
 
 @interface DealsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *deals;
+@property (strong, nonatomic) NSMutableArray *savedDeals;
 
 @end
 
@@ -31,32 +33,30 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    NSLog(@"%@", self.barcode);
-//    [APIManager fetchDealsFromUPCDatabase:@"53039031"];
-
-//    if (![DatabaseManager checkIfItemAlreadyExist:@"888462323772"]) {
-//        [APIManager fetchDealsFromEbayAPI:@"888462323772"];
-//        [APIManager fetchDealsFromUPCDatabase:@"888462323772"];
-//        [APIManager fetchDealsFromSearchUPCAPI:@"888462323772"];
-//    }
+    
+    if (![DatabaseManager checkIfItemAlreadyExist:self.barcode]) {
+        [APIManager fetchDealsFromEbayAPI:self.barcode];
+        [APIManager fetchDealsFromUPCDatabase:self.barcode];
+        [APIManager fetchDealsFromSearchUPCAPI:self.barcode];
+    }
     JGProgressHUD *HUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
     
     HUD.textLabel.text = @"Waiting for deals to be displayed";
-//    [HUD showInView:self.view];
+    [HUD showInView:self.view];
 
-//    [self setLoadingState:YES viewController:self];
+    [self setLoadingState:YES viewController:self];
     
+    // TODO: Hard-code barcode value for testing purpose. Remove later.
     [DatabaseManager fetchItem:@"888462323772" viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
         if (deals.count > 0) {
             self.deals = (NSMutableArray *) deals;
 
             NSLog(@"%lu", (unsigned long)self.deals.count);
             [self.tableView reloadData];
-//            [HUD dismissAfterDelay:0.1 animated:YES];
-//                [self setLoadingState:NO viewController:self];
+            [HUD dismissAfterDelay:0.1 animated:YES];
+                [self setLoadingState:NO viewController:self];
         }
         else {
-            //alert
             NSLog(@"error %@", error.localizedDescription);
         }
     }];
@@ -91,6 +91,57 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.deals.count;
+}
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AppDeal *deal = self.deals[indexPath.row];
+
+    UIContextualAction *saveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Save" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        [DatabaseManager saveDeal:deal withCompletion:^(NSError * _Nonnull error) {
+            if (error) {
+                NSLog(@"%@", error.localizedDescription);
+                [AlertManager cannotSaveDeal:self];
+            }
+            completionHandler(YES);
+        }];
+        if (self.savedDeals.count == 0) {
+            self.savedDeals = [NSMutableArray array];
+        }
+        [self.savedDeals addObject:deal];
+        [self.tableView reloadData];
+    }];
+
+    UIContextualAction *unsaveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Unsave" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        [DatabaseManager unsaveDeal:deal withCompletion:^(NSError * _Nonnull error) {
+            if (error) {
+                NSLog(@"%@", error.localizedDescription);
+                [AlertManager cannotSaveDeal:self];
+            }
+            completionHandler(YES);
+        }];
+        [self.tableView reloadData];
+    }];
+
+    if ([self alreadySaved:deal]) {
+        UISwipeActionsConfiguration *actionConfigurations = [UISwipeActionsConfiguration configurationWithActions:@[unsaveAction]];
+        return actionConfigurations;
+    }
+    else {
+        UISwipeActionsConfiguration *actionConfigurations = [UISwipeActionsConfiguration configurationWithActions:@[saveAction]];
+        return actionConfigurations;
+    }
+}
+
+- (BOOL)alreadySaved:(AppDeal *)deal {
+    if (self.savedDeals.count == 0) {
+        return NO;
+    }
+    for (AppDeal *savedDeal in self.savedDeals) {
+        if ([deal.identifier isEqualToString:savedDeal.identifier]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

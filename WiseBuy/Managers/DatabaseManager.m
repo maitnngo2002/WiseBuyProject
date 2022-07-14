@@ -209,4 +209,69 @@
     
     return NO;
 }
+
++ (void)saveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion {
+    PFUser *user = [PFUser currentUser];
+    PFRelation *relation = [user relationForKey:@"savedDeals"];
+    [DatabaseManager getPFObjectFromAppDeal:appDeal withCompletion:^(PFObject *object) {
+        if (object != nil) {
+            [relation addObject:object];
+            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                    completion(nil);
+                }
+                else {
+                    completion(error);
+                }
+            }];
+        }
+    }];
+}
+
++ (void)unsaveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion {
+    PFUser *user = [PFUser currentUser];
+    PFRelation *relation = [user relationForKey:@"savedDeals"];
+    [DatabaseManager getPFObjectFromAppDeal:appDeal withCompletion:^(PFObject *object) {
+        if (object != nil) {
+            [relation removeObject:object];
+            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                    completion(nil);
+                }
+                else {
+                    completion(error);
+                }
+            }];
+        }
+    }];
+}
+
++ (void)fetchSavedDeals:(PFObject *)item withCompletion:(void(^)(NSArray *deals ,NSError *error))completion {
+
+    PFUser *user = [PFUser currentUser];
+    PFRelation *relation = [user relationForKey:@"savedDeals"];
+    PFQuery *query = [relation query];
+    [query includeKey:@"savedDeals.item"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (objects.count > 0) {
+            completion(objects, nil);
+        }
+        else {
+            completion(nil, error);
+        }
+    }];
+}
+
++ (void)getPFObjectFromAppDeal:(AppDeal *)appDeal withCompletion:(void(^)(PFObject *object))completion {
+    PFQuery *dealQuery = [Deal query];
+    [dealQuery getObjectInBackgroundWithId:appDeal.identifier block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if (!error) {
+            completion(object);
+        }
+        else {
+            completion(nil);
+        }
+    }];
+}
+
 @end

@@ -92,4 +92,15 @@
     [vc presentViewController:alert animated:YES completion:nil];
 }
 
++ (void)cannotSaveDeal:(UIViewController *)vc {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error saving the deal"
+                                                                   message:@"An occur occurred. Please try again."
+                                                            preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                            style:UIAlertActionStyleCancel
+                                                          handler:nil];
+    [alert addAction:cancelAction];
+    [vc presentViewController:alert animated:YES completion:nil];
+}
+
 @end

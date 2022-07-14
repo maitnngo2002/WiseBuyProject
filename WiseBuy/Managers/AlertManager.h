@@ -27,6 +27,8 @@ typedef NS_ENUM(NSInteger, dealErrorType) {
 + (void)videoPermissionAlert:(UIViewController *)vc;
 + (void)dealsNotFoundAlert:(UIViewController *)vc errorType:(dealErrorType)error;
 + (void)cannotOpenLink:(UIViewController *)vc;
++ (void)cannotSaveDeal:(UIViewController *)vc;
+
 
 @end
 

@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "User.h"
 #import "Parse/Parse.h"
+#import "AppDeal.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image;
 + (PFFileObject *)getPFFileFromImageData: (NSData *)imageData;
 + (BOOL)checkIfItemAlreadyExist:(NSString *)barcode;
++ (void)saveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion;
++ (void)unsaveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion;
 @end
 
 NS_ASSUME_NONNULL_END
