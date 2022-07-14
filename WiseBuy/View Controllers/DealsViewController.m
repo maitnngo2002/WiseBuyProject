@@ -51,7 +51,6 @@
         if (deals.count > 0) {
             self.deals = (NSMutableArray *) deals;
 
-            NSLog(@"%lu", (unsigned long)self.deals.count);
             [self.tableView reloadData];
             [HUD dismissAfterDelay:0.1 animated:YES];
                 [self setLoadingState:NO viewController:self];

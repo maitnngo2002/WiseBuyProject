@@ -32,8 +32,8 @@
 
     NSString *fullBaseURL = [NSString stringWithFormat:@"%@%@%@", firstHalfBaseURL, appSecurityName, secondHalfBaseURL];
     
-    NSString *requestURL = [NSString stringWithFormat:@"%@%@", fullBaseURL, @"53039031"];
-
+    NSString *requestURL = [NSString stringWithFormat:@"%@%@", fullBaseURL, barcode];
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestURL]
       cachePolicy:NSURLRequestUseProtocolCachePolicy
       timeoutInterval:10.0];
@@ -49,9 +49,7 @@
       } else {
             NSError *parseError = nil;
             NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-          
-//          [self getDealsFromJSON:responseDictionary];
-          
+                    
           NSDictionary *finalResponseDic = responseDictionary[@"findItemsByProductResponse"][0][@"searchResult"][0];
           NSArray *offerLists = finalResponseDic[@"item"];
           
@@ -163,7 +161,6 @@
                   NSError *parseError = nil;
                   NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
                   
-//                  [self getDealsFromJSON:responseDictionary:barcode];
                   Item *newItem = [self createItem:responseDictionary[@"0"][@"productname"] :responseDictionary[@"0"][@"storename"] :barcode :responseDictionary[@"0"][@"imageurl"]];
                   
                   for (id key in responseDictionary)
@@ -270,12 +267,9 @@
             NSLog(@"%@", finalPrice);
             searchRange.location = foundRange.location+foundRange.length;
         } else {
-            // no more substring to find
             break;
         }
     }
-    
-//    NSLog(@"%ld", (long)[priceLists[0] integerValue]);
     return valueLists;
 }
 @end

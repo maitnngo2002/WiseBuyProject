@@ -262,6 +262,64 @@
     }];
 }
 
++ (void)createDealFromObjectWithBlock:(PFObject *)object withCompletion:(void(^)(Deal *deal))completion {
+    Deal *deal = [Deal new];
+    if (object[@"sellerName"] != nil && [object[@"sellerName"] isKindOfClass:[NSString class]]) {
+        deal.sellerName = object[@"sellerName"];
+    }
+    else {
+        completion(nil);
+    }
+    if (object[@"price"] != nil && [object[@"price"] isKindOfClass:[NSNumber class]]) {
+        deal.price = object[@"price"];
+    }
+    else {
+        completion(nil);
+    }
+    if (object[@"link"] != nil && [object[@"link"] isKindOfClass:[NSString class]]) {
+        deal.itemURL = object[@"link"];
+    }
+    else {
+        completion(nil);
+    }
+    if (object[@"item"] != nil && [object[@"item"] isKindOfClass:[PFObject class]]) {
+        [DatabaseManager createServerItemFromPFObjectWithBlock:object[@"item"] withCompletion:^(Item *item) {
+            if (item != nil) {
+                deal.item = item;
+                deal.objectId = object.objectId;
+                completion(deal);
+            }
+            else {
+                completion(nil);
+            }
+        }];
+    }
+    else {
+        completion(nil);
+    }
+}
+
++ (void)createServerItemFromPFObjectWithBlock:(PFObject *)serverObject withCompletion:(void(^)(Item *item))completion {
+    Item *serverItem = [Item new];
+    PFQuery *itemQuery = [Item query];
+    [itemQuery getObjectInBackgroundWithId:serverObject.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if (object[@"name"] != nil && [object[@"name"] isKindOfClass:[NSString class]]) {
+            serverItem.name = object[@"name"];
+        }
+        if (object[@"info"] != nil && [object[@"info"] isKindOfClass:[NSString class]]) {
+            serverItem.information = object[@"info"];
+        }
+        if (object[@"barcode"] != nil && [object[@"barcode"] isKindOfClass:[NSString class]]) {
+            serverItem.barcode = object[@"barcode"];
+        }
+        if (object[@"image"] != nil) {
+            serverItem.image = object[@"image"];
+        }
+        serverItem.objectId = object.objectId;
+        completion(serverItem);
+    }];
+}
+
 + (void)getPFObjectFromAppDeal:(AppDeal *)appDeal withCompletion:(void(^)(PFObject *object))completion {
     PFQuery *dealQuery = [Deal query];
     [dealQuery getObjectInBackgroundWithId:appDeal.identifier block:^(PFObject * _Nullable object, NSError * _Nullable error) {
