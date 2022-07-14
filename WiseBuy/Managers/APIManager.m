@@ -31,7 +31,7 @@
     NSString *secondHalfBaseURL = @"&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=2&productId.@type=ReferenceID&productId=";
 
     NSString *fullBaseURL = [NSString stringWithFormat:@"%@%@%@", firstHalfBaseURL, appSecurityName, secondHalfBaseURL];
-        
+    
     NSString *requestURL = [NSString stringWithFormat:@"%@%@", fullBaseURL, @"53039031"];
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestURL]
@@ -55,35 +55,12 @@
           NSDictionary *finalResponseDic = responseDictionary[@"findItemsByProductResponse"][0][@"searchResult"][0];
           NSArray *offerLists = finalResponseDic[@"item"];
           
-          Item *newItem = [Item new];
-          newItem[@"name"] = offerLists[0][@"title"][0];
-          newItem[@"description"] = offerLists[0][@"condition"][0][@"conditionDisplayName"][0];
-          
-          newItem[@"barcode"] = offerLists[0][@"productId"][0][@"__value__"];
-          
-          NSString *itemUrl = offerLists[0][@"viewItemURL"][0];
-          NSString *imageUrl = offerLists[0][@"galleryURL"][0];
-                    
-          NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
-          newItem[@"image"] = [PFFileObject fileObjectWithData:imageData];
-          
-          [newItem saveInBackground];
+          Item *newItem = [self createItem:offerLists[0][@"title"][0] :offerLists[0][@"condition"][0][@"conditionDisplayName"][0] :barcode :offerLists[0][@"galleryURL"][0]];
           
           for (NSDictionary* offer in offerLists) {
-              NSString *price = offer[@"sellingStatus"][0][@"convertedCurrentPrice"][0][@"__value__"];
-              
-              NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-              f.numberStyle = NSNumberFormatterDecimalStyle;
-              NSNumber *priceNumber = [f numberFromString:price];
-
-              Deal *newDeal = [Deal new];
-              newDeal[@"item"] = newItem;
-              newDeal[@"sellerName"] = @"Ebay";
-              newDeal[@"price"] = priceNumber;
-              newDeal[@"link"] = itemUrl;
-              [newDeal saveInBackground];
+              [self createDeal:newItem :@"Ebay" :offer[@"sellingStatus"][0][@"convertedCurrentPrice"][0][@"__value__"] :offer[@"viewItemURL"][0]];
           }
-            dispatch_semaphore_signal(sema);
+        dispatch_semaphore_signal(sema);
             
       }
     }];
@@ -127,19 +104,9 @@
         NSError *parseError = nil;
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
         dispatch_semaphore_signal(sema);
-          
-          [self getDealsFromJSON:responseDictionary];
 
-          Item *newItem = [Item new];
-          newItem[@"name"] = responseDictionary[@"items"][0][@"title"];
-          newItem[@"description"] = responseDictionary[@"items"][0][@"description"];
-          newItem[@"barcode"] = responseDictionary[@"items"][0][@"upc"];
           
-          NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: responseDictionary[@"items"][0][@"images"][0]]];
-          
-          newItem[@"image"] = [PFFileObject fileObjectWithData:imageData];
-                        
-          [newItem saveInBackground];
+          Item *newItem = [self createItem:responseDictionary[@"items"][0][@"title"] :responseDictionary[@"items"][0][@"description"] :responseDictionary[@"items"][0][@"upc"] :responseDictionary[@"items"][0][@"images"][0]];
           
           NSInteger count = [responseDictionary[@"items"][0][@"offers"] count];
           int x;
@@ -147,13 +114,7 @@
           {
               NSDictionary *offer = [responseDictionary[@"items"][0][@"offers"] objectAtIndex:x];
               
-              Deal *newDeal = [Deal new];
-              
-              newDeal[@"item"] = newItem;
-              newDeal[@"sellerName"] = offer[@"merchant"];
-              newDeal[@"price"] = offer[@"price"];
-              newDeal[@"link"] = offer[@"link"];
-              [newDeal saveInBackground];
+              [self createDeal:newItem :offer[@"merchant"] :offer[@"price"] :offer[@"link"]];
           }
           
       }
@@ -202,36 +163,15 @@
                   NSError *parseError = nil;
                   NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
                   
-                  [self getDealsFromJSON:responseDictionary];
-                  
-                  Item *newItem = [Item new];
-                  newItem[@"name"] = responseDictionary[@"0"][@"productname"];
-                  newItem[@"description"] = responseDictionary[@"0"][@"storename"];
-                  newItem[@"barcode"] = @"5034504124677";
-                  
-                  NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: responseDictionary[@"0"][@"imageurl"]]];
-                  
-                  NSLog(@"%@", responseDictionary[@"0"][@"imageurl"]);
-                  newItem[@"image"] = [PFFileObject fileObjectWithData:imageData];
-                  
-                  [newItem saveInBackground];
+//                  [self getDealsFromJSON:responseDictionary:barcode];
+                  Item *newItem = [self createItem:responseDictionary[@"0"][@"productname"] :responseDictionary[@"0"][@"storename"] :barcode :responseDictionary[@"0"][@"imageurl"]];
                   
                   for (id key in responseDictionary)
                   {
                       NSDictionary *offer = [responseDictionary objectForKey:key];
                       
-                      NSString *price = offer[@"price"];
-                      NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-                      f.numberStyle = NSNumberFormatterDecimalStyle;
-                      NSNumber *priceNumber = [f numberFromString:price];
+                      [self createDeal:newItem :offer[@"storename"] :offer[@"price"] :offer[@"link"]];
                       
-                      Deal *newDeal = [Deal new];
-                      
-                      newDeal[@"item"] = newItem;
-                      newDeal[@"sellerName"] = offer[@"storename"];
-                      newDeal[@"price"] = priceNumber;
-                      newDeal[@"link"] = offer[@"producturl"];
-                      [newDeal saveInBackground];
                   }
                   dispatch_semaphore_signal(sema);
               }
@@ -240,78 +180,85 @@
     dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
 }
 
-+ (NSArray *) getDealsFromJSON: (NSDictionary *)responseDictionary {
-    NSArray *deals = [[NSArray alloc] init];
++ (void) getDealsFromJSON: (NSDictionary *)responseDictionary : (NSString *)barcode {
+    NSMutableArray *prices = [[NSMutableArray alloc] init];
+    NSMutableArray *links = [[NSMutableArray alloc] init];
+    NSMutableArray *titles = [[NSMutableArray alloc] init];
+    NSMutableArray *sellers = [[NSMutableArray alloc] init];
 
-    NSArray *pricesValue = [self getSpecficValues:@"price" :responseDictionary];
-    NSArray *titleValue = [self getSpecficValues:@"title" :responseDictionary];
-    NSLog(@"%@", pricesValue);
-    NSLog(@"%@", titleValue);
+    prices = [self getSpecficValues:@"price" :responseDictionary];
+    NSMutableArray *to_delete = [[NSMutableArray alloc] init];
 
-//    NSString *responseString = [NSString stringWithFormat:@"%@", responseDictionary];
-//
-//    NSString *truncatedString = [responseString stringByReplacingOccurrencesOfString:@" " withString:@""];
-//
-//    NSString *trimmed = [truncatedString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-//    NSLog(@"%@", trimmed);
-//
-//    NSMutableArray *priceLists = [[NSMutableArray alloc] init];
-//
-//    NSRange searchRange = NSMakeRange(0,responseString.length);
-//    NSRange foundRange;
-//    while (searchRange.location < trimmed.length) {
-//        searchRange.length = trimmed.length-searchRange.location;
-//        foundRange = [trimmed rangeOfString:@"currentPrice" options:0 range:searchRange];
-//        if (foundRange.location != NSNotFound) {
-//            // found an occurrence of the substring! do stuff here
-//            NSString *range = NSStringFromRange(foundRange); // this stores starting index and length of the substring
-//
-//            NSInteger endingIndex = foundRange.location+foundRange.length;
-//
-//            NSInteger valueStartingIndex = endingIndex + 32;
-//
-//            NSString *foundValue = [trimmed substringFromIndex:valueStartingIndex];
-//            NSArray *split = [foundValue componentsSeparatedByString:@";"];
-//            NSString *finalPrice = split[0];
-//            [priceLists addObject:finalPrice];
-//            NSLog(@"%@", finalPrice);
-//            searchRange.location = foundRange.location+foundRange.length;
-//        } else {
-//            // no more substring to find
-//            break;
-//        }
-//    }
-//
-////    NSLog(@"%ld", (long)[priceLists[0] integerValue]);
-//    NSLog(@"%@", priceLists);
-//
+    for (NSString *price in prices) {
+        if ([price  isEqual: @""]) {
+            [to_delete addObject:price];
+        }
+    }
+    for (NSString *price in to_delete) {
+        [prices removeObject:price];
+    }
+    titles = [self getSpecficValues:@"title" :responseDictionary];
     
-//    NSLog(@"%@",indices);
+    NSString *descriptions = [[self getSpecficValues:@"description" :responseDictionary] firstObject]; // get the description of the item
     
-    return deals;
+    links = [self getSpecficValues:@"link" :responseDictionary];
+
+    sellers = [self getSpecficValues:@"merchant" :responseDictionary]; // check for several keywords such as merchant, sellerStore, seller
     
+    NSLog(@"%lu", (unsigned long)links.count);
+    NSLog(@"%lu", (unsigned long)prices.count);
+    NSLog(@"%lu", (unsigned long)sellers.count);
 }
 
-+ (NSArray *)getSpecficValues: (NSString *)keyString: (NSDictionary *)responseDictionary{
+
++ (Item *)createItem: (NSString *)name : (NSString *)description : (NSString *)barcode : (NSString *)imageUrl {
+    Item *newItem = [Item new];
+    newItem[@"name"] = name;
+    newItem[@"description"] = description;
+    newItem[@"barcode"] = barcode;
+    
+    NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
+    
+    newItem[@"image"] = [PFFileObject fileObjectWithData:imageData];
+    
+    [newItem saveInBackground];
+    
+    return newItem;
+}
+
++ (void)createDeal: (Item *)item : (NSString *)sellerName : (NSString *)price : (NSString *)link {
+    Deal *newDeal = [Deal new];
+    
+    newDeal[@"item"] = item;
+    newDeal[@"sellerName"] = sellerName;
+    
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *priceNumber = [f numberFromString:price];
+    
+    newDeal[@"price"] = priceNumber;
+    
+    newDeal[@"link"] = link;
+    [newDeal saveInBackground];
+}
+
++ (NSMutableArray *)getSpecficValues: (NSString *)keyString : (NSDictionary *)responseDictionary{
         
     NSMutableArray *valueLists = [[NSMutableArray alloc] init];
     NSString *responseString = [NSString stringWithFormat:@"%@", responseDictionary];
     
-    NSString *truncatedString = [responseString stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSString *firsttrimmed = [truncatedString stringByReplacingOccurrencesOfString:@"(" withString:@""];
-    NSString *secondtrimmed = [firsttrimmed stringByReplacingOccurrencesOfString:@")" withString:@""];
-    NSString *thirdtrimmed = [secondtrimmed stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    NSString *trimmed = [thirdtrimmed stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-    NSLog(@"%@", trimmed);
+    NSArray *removeKeys = @[@" ", @"(", @")", @"\n", @"highest_recorded_price", @"lowest_recorded_price", @"lowest_recorded_price", @"list_price", @"\""]; // for getting prices
+    
+    NSString *trimmed;
+    for (NSString *key in removeKeys) {
+        trimmed = [responseString stringByReplacingOccurrencesOfString:key withString:@""];
+    }
     NSRange searchRange = NSMakeRange(0,responseString.length);
     NSRange foundRange;
     while (searchRange.location < trimmed.length) {
         searchRange.length = trimmed.length-searchRange.location;
         foundRange = [trimmed rangeOfString:keyString options:0 range:searchRange];
         if (foundRange.location != NSNotFound) {
-            // found an occurrence of the substring! do stuff here
-            NSString *range = NSStringFromRange(foundRange); // this stores starting index and length of the substring
-            
             NSInteger endingIndex = foundRange.location+foundRange.length;
             
             NSInteger valueStartingIndex = endingIndex + 1;

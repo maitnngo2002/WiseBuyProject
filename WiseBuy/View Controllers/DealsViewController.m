@@ -34,25 +34,26 @@
     NSLog(@"%@", self.barcode);
 //    [APIManager fetchDealsFromUPCDatabase:@"53039031"];
 
-    if (![DatabaseManager checkIfItemAlreadyExist:@"888462323772"]) {
-        [APIManager fetchDealsFromEbayAPI:@"888462323772"];
-        [APIManager fetchDealsFromUPCDatabase:self.barcode];
-        [APIManager fetchDealsFromSearchUPCAPI:self.barcode];
-    }
+//    if (![DatabaseManager checkIfItemAlreadyExist:@"888462323772"]) {
+//        [APIManager fetchDealsFromEbayAPI:@"888462323772"];
+//        [APIManager fetchDealsFromUPCDatabase:@"888462323772"];
+//        [APIManager fetchDealsFromSearchUPCAPI:@"888462323772"];
+//    }
     JGProgressHUD *HUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
     
     HUD.textLabel.text = @"Waiting for deals to be displayed";
-    [HUD showInView:self.view];
+//    [HUD showInView:self.view];
 
-    [self setLoadingState:YES viewController:self];
+//    [self setLoadingState:YES viewController:self];
     
     [DatabaseManager fetchItem:@"888462323772" viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
         if (deals.count > 0) {
             self.deals = (NSMutableArray *) deals;
 
+            NSLog(@"%lu", (unsigned long)self.deals.count);
             [self.tableView reloadData];
-            [HUD dismissAfterDelay:0.1 animated:YES];
-                        [self setLoadingState:NO viewController:self];
+//            [HUD dismissAfterDelay:0.1 animated:YES];
+//                [self setLoadingState:NO viewController:self];
         }
         else {
             //alert
