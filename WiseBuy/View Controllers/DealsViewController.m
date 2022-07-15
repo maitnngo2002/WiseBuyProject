@@ -30,9 +30,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    NSLog(@"%@", self.barcode);
-//    [APIManager fetchDealsFromUPCDatabase:@"53039031"];
 
+    // TODO: Hard-code for testing purpose. Remove later
     if (![DatabaseManager checkIfItemAlreadyExist:@"53039031"]) {
         [APIManager fetchDealsFromEbayAPI:@"53039031"];
         [APIManager fetchDealsFromUPCDatabase:self.barcode];

@@ -108,7 +108,7 @@
         userKey = [[NSUserDefaults standardUserDefaults] stringForKey:@"upcDatabase_userKey"];
     }
     NSDictionary *headers = @{
-      @"user_key": @"38ece1f67747388f5034080aeebc2dc9"
+      @"user_key": userKey
     };
 
     [request setAllHTTPHeaderFields:headers];
@@ -213,7 +213,6 @@
                   
                   [newItem saveInBackground];
                   
-                  NSInteger count = [responseDictionary count];
                   for (id key in responseDictionary)
                   {
                       NSDictionary *offer = [responseDictionary objectForKey:key];
