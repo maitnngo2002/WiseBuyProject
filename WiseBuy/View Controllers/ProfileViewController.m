@@ -11,12 +11,22 @@
 
 @end
 
+static NSString *const settingsSegue = @"settingsSegue";
+static NSString *const historySegue = @"historySegue";
+
 @implementation ProfileViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
+- (IBAction)didTapSettings:(id)sender {
+    [self performSegueWithIdentifier:settingsSegue sender:sender];
+}
+- (IBAction)didTapHistory:(id)sender {
+    [self performSegueWithIdentifier:historySegue sender:sender];
+}
+
 
 /*
 #pragma mark - Navigation

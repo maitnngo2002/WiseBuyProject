@@ -9,6 +9,7 @@
 #import "Deal.h"
 #import "AlertManager.h"
 #import "AppDeal.h"
+#import "SceneDelegate.h"
 
 @implementation DatabaseManager
 
@@ -38,6 +39,22 @@
             NSLog(@"Error: %@", error.localizedDescription);
         }
         completion(succeeded, error);
+    }];
+}
+
++ (void)logoutUser:(UIViewController *)vc {
+    SceneDelegate *sceneDelegate = (SceneDelegate *) vc.view.window.windowScene.delegate;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *initialNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"InitialNavigationController"];
+    sceneDelegate.window.rootViewController = initialNavigationController;
+    
+    [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
+        else {
+            NSLog(@"Logout successful!");
+        }
     }];
 }
 

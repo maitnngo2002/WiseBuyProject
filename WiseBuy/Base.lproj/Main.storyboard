@@ -34,7 +34,7 @@
                                 <rect key="frame" x="65" y="431" width="283" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6s-7U-kdy">
                                 <rect key="frame" x="161" y="517" width="83" height="31"/>
@@ -164,7 +164,8 @@
                                 <buttonConfiguration key="configuration" style="plain" title="History"/>
                             </button>
                             <connections>
-                                <segue destination="3Hz-br-QUn" kind="show" identifier="historySegue" id="9pI-RC-Uey"/>
+                                <action selector="didTapHistory:" destination="PxE-vW-kjZ" id="coo-ZT-QGe"/>
+                                <segue destination="3Hz-br-QUn" kind="show" identifier="historySegue" id="dpm-pk-VHE"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Settings" style="plain" id="Bbr-iQ-ghy">
@@ -173,9 +174,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Settings"/>
+                                <connections>
+                                    <action selector="didTapSettings:" destination="PxE-vW-kjZ" eventType="touchUpInside" id="uUa-U1-zUx"/>
+                                </connections>
                             </button>
                             <connections>
-                                <segue destination="c1A-j5-ZeS" kind="show" identifier="settingsSegue" id="h88-SW-0JX"/>
+                                <action selector="didTapSetting:" destination="PxE-vW-kjZ" id="i2l-zC-CjU"/>
+                                <segue destination="c1A-j5-ZeS" kind="show" identifier="settingsSegue" id="8Ye-KB-TBc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -209,10 +214,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H9P-Oe-Uxp">
-                                <rect key="frame" x="56" y="113" width="145" height="59"/>
+                                <rect key="frame" x="135" y="622" width="145" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Log Out"/>
+                                <connections>
+                                    <action selector="didTapLogOut:" destination="c1A-j5-ZeS" eventType="touchUpInside" id="Qnk-Wm-qxH"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zpN-aA-WRk"/>
@@ -235,7 +243,7 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yHI-Wm-Dgd">
                                 <rect key="frame" x="0.0" y="56" width="414" height="647"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemCyanColor"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2ga-B7-40T"/>
@@ -322,7 +330,7 @@
                                 <rect key="frame" x="82" y="629" width="272" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DGy-gP-S1y">
                                 <rect key="frame" x="146" y="711" width="101" height="31"/>
@@ -376,7 +384,7 @@
         <!--Navigation Controller-->
         <scene sceneID="qg5-tX-6kZ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Pjv-5s-q2H" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="InitialNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Pjv-5s-q2H" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xp8-PM-190">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -595,17 +603,17 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="5RV-yV-aN8"/>
+        <segue reference="O6z-yW-iyv"/>
     </inferredMetricsTieBreakers>
     <resources>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemCyanColor">
-            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

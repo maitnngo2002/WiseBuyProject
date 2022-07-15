@@ -6,6 +6,7 @@
 //
 
 #import "AlertManager.h"
+#import "DatabaseManager.h"
 
 @implementation AlertManager
 
@@ -42,6 +43,24 @@
     [vc presentViewController:alert animated:YES completion:^{}];
 }
 
++ (void)logoutAlert:(UIViewController *)vc {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Logout"
+                                                                   message:@"Are you sure you want to log out of your account?"
+                                                            preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                            style:UIAlertActionStyleCancel
+                                                          handler:nil];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Logout"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {
+        [DatabaseManager logoutUser:vc];
+    }];
+    
+    [alert addAction:okAction];
+    [alert addAction:cancelAction];
+    [vc presentViewController:alert animated:YES completion:nil];
+}
 + (void)videoPermissionAlert:(UIViewController *)vc {
     UIAlertController *alert =  [UIAlertController alertControllerWithTitle:@"Unable to Continue"
                                                                     message:@"Enable camera access to continue."
