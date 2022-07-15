@@ -76,7 +76,7 @@
     
     NSString *baseURL = @"https://api.upcitemdb.com/prod/v1/lookup?upc=";
 
-    NSString *fullBaseURL = [NSString stringWithFormat:@"%@%@", baseURL, @"888462323772"];
+    NSString *fullBaseURL = [NSString stringWithFormat:@"%@%@", baseURL, barcode];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:fullBaseURL]
       cachePolicy:NSURLRequestUseProtocolCachePolicy
