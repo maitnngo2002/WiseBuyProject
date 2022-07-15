@@ -108,7 +108,7 @@
         userKey = [[NSUserDefaults standardUserDefaults] stringForKey:@"upcDatabase_userKey"];
     }
     NSDictionary *headers = @{
-      @"user_key": @"38ece1f67747388f5034080aeebc2dc9"
+      @"user_key": userKey
     };
 
     [request setAllHTTPHeaderFields:headers];
@@ -198,9 +198,6 @@
                   NSError *parseError = nil;
                   NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
                   
-                  NSLog(@"%@",responseDictionary);
-                  
-                  
                   Item *newItem = [Item new];
                   newItem[@"name"] = responseDictionary[@"0"][@"productname"];
                   newItem[@"description"] = responseDictionary[@"0"][@"storename"];
@@ -208,12 +205,10 @@
                   
                   NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: responseDictionary[@"0"][@"imageurl"]]];
                   
-                  NSLog(@"%@", responseDictionary[@"0"][@"imageurl"]);
                   newItem[@"image"] = [PFFileObject fileObjectWithData:imageData];
                   
                   [newItem saveInBackground];
                   
-                  NSInteger count = [responseDictionary count];
                   for (id key in responseDictionary)
                   {
                       NSDictionary *offer = [responseDictionary objectForKey:key];

@@ -30,8 +30,6 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    NSLog(@"%@", self.barcode);
-//    [APIManager fetchDealsFromUPCDatabase:@"53039031"];
 
     if (![DatabaseManager checkIfItemAlreadyExist:@"53039031"]) {
         [APIManager fetchDealsFromEbayAPI:@"53039031"];
@@ -46,7 +44,6 @@
             [self.tableView reloadData];
         }
         else {
-            //alert
             NSLog(@"error %@", error.localizedDescription);
         }
     }];
