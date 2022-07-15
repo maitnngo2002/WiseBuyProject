@@ -28,6 +28,8 @@
     self.priceLabel.text = [NSNumberFormatter localizedStringFromNumber:self.deal.price numberStyle:NSNumberFormatterCurrencyStyle];
     self.descriptionLabel.text = self.deal.item.information;
 }
+
+
 - (IBAction)onTapBuy:(id)sender {
     if ([[UIApplication sharedApplication] canOpenURL:self.deal.itemURL]) {
          [UIApplication.sharedApplication openURL:self.deal.itemURL options:[NSDictionary dictionary] completionHandler:^(BOOL success) {
@@ -43,6 +45,34 @@
     }
 }
 - (IBAction)onTapSave:(id)sender {
+}
+- (IBAction)onTapImage:(id)sender {
+    UIImageView *fullScreenImageView = [[UIImageView alloc] initWithImage:self.itemImageView.image];
+    fullScreenImageView.frame = [[UIScreen mainScreen] bounds];
+    fullScreenImageView.backgroundColor = [UIColor blackColor];
+    fullScreenImageView.contentMode = UIViewContentModeScaleAspectFit;
+    fullScreenImageView.userInteractionEnabled = YES;
+    
+    UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissFullScreenImage:)];
+    swipeRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+    [fullScreenImageView addGestureRecognizer:swipeRecognizer];
+    fullScreenImageView.alpha = 0;
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.view addSubview:fullScreenImageView];
+        [self.navigationController setNavigationBarHidden:YES];
+        [self.tabBarController.tabBar setHidden:YES];
+        fullScreenImageView.alpha = 1;
+    }];
+}
+
+- (void)dismissFullScreenImage:(UISwipeGestureRecognizer *)sender {
+    self.view.alpha = 0;
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.navigationController setNavigationBarHidden:NO];
+        [self.tabBarController.tabBar setHidden:NO];
+        [sender.view removeFromSuperview];
+        self.view.alpha = 1;
+    }];
 }
 
 /*

@@ -34,25 +34,44 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     
+    // TODO: Fix this code later to get rid of the long-running operation executed on the main thread warning
     if (![DatabaseManager checkIfItemAlreadyExist:self.barcode]) {
         [APIManager fetchDealsFromAPIs:self.barcode];
     }
+    [APIManager fetchDealsFromAPIs:self.barcode];
+
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        if (![DatabaseManager checkIfItemAlreadyExist:self.barcode]) {
+                [APIManager fetchDealsFromAPIs:self.barcode];
+            }
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            
+        });
+    });
+//    
+    JGProgressHUD *progressHUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
     
-    JGProgressHUD *HUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
-    
-    HUD.textLabel.text = @"Waiting for deals to be displayed";
-    [HUD showInView:self.view];
+    progressHUD.textLabel.text = @"Waiting for deals to be displayed";
+    [progressHUD showInView:self.view];
 
     [self setLoadingState:YES viewController:self];
     
     // TODO: Hard-code barcode value for testing purpose. Remove later.
-    [DatabaseManager fetchItem:@"888462323772" viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+    [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
         if (deals.count > 0) {
             self.deals = (NSMutableArray *) deals;
-
-            [self.tableView reloadData];
-            [HUD dismissAfterDelay:0.1 animated:YES];
+            [DatabaseManager fetchSavedDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+                if (self.deals.count == 0) {
+                    self.savedDeals = [NSMutableArray array];
+                }
+                else {
+                    self.savedDeals = (NSMutableArray *) deals;
+                }
+                [self.tableView reloadData];
+                
+                [progressHUD dismissAfterDelay:0.1 animated:YES];
                 [self setLoadingState:NO viewController:self];
+            }];
         }
         else {
             NSLog(@"error %@", error.localizedDescription);

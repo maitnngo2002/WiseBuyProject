@@ -103,26 +103,22 @@
     Deal *deal = [Deal new];
     if (object[@"sellerName"] != nil && [object[@"sellerName"] isKindOfClass:[NSString class]]) {
         deal.sellerName = object[@"sellerName"];
-    }
-    else {
+    } else {
         return nil;
     }
     if (object[@"price"] != nil && [object[@"price"] isKindOfClass:[NSNumber class]]) {
         deal.price = object[@"price"];
-    }
-    else {
+    } else {
         return nil;
     }
     if (object[@"item"] != nil && [object[@"item"] isKindOfClass:[PFObject class]]) {
         deal.item = [DatabaseManager createServerItemFromPFObject:object[@"item"]];
-    }
-    else {
+    } else {
         return nil;
     }
     if (object[@"link"] != nil && [object[@"link"] isKindOfClass:[NSString class]]) {
         deal.itemURL = object[@"link"];
-    }
-    else {
+    } else {
         return nil;
     }
     return deal;
@@ -263,8 +259,7 @@
     }];
 }
 
-+ (void)fetchSavedDeals:(PFObject *)item withCompletion:(void(^)(NSArray *deals ,NSError *error))completion {
-
++ (void)fetchSavedDeals:(void(^)(NSArray *deals, NSError *error))completion {
     PFUser *user = [PFUser currentUser];
     PFRelation *relation = [user relationForKey:@"savedDeals"];
     PFQuery *query = [relation query];

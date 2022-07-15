@@ -90,7 +90,7 @@
         userKey = [[NSUserDefaults standardUserDefaults] stringForKey:@"upcDatabase_userKey"];
     }
     NSDictionary *headers = @{
-      @"user_key": @"38ece1f67747388f5034080aeebc2dc9"
+      @"user_key": userKey
     };
 
     [request setAllHTTPHeaderFields:headers];
@@ -140,7 +140,7 @@
     NSString *accessTokenStr = accessToken;
     NSString *upcQuery = @"&upc=";
     NSString *baseURL = @"https://www.searchupc.com/handlers/upcsearch.ashx?request_type=3&access_token=";
-    NSString *fullURL = [NSString stringWithFormat:@"%@%@%@%@", baseURL, accessTokenStr, upcQuery, @"888462323772"];
+    NSString *fullURL = [NSString stringWithFormat:@"%@%@%@%@", baseURL, accessTokenStr, upcQuery, barcode];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:fullURL]
       cachePolicy:NSURLRequestUseProtocolCachePolicy
       timeoutInterval:10.0];
@@ -212,16 +212,27 @@
     NSLog(@"%lu", (unsigned long)sellers.count);
 }
 
-
 + (Item *)createItem: (NSString *)name : (NSString *)description : (NSString *)barcode : (NSString *)imageUrl {
     Item *newItem = [Item new];
     newItem[@"name"] = name;
     newItem[@"description"] = description;
     newItem[@"barcode"] = barcode;
     
-    NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
+    NSURL *url = [NSURL URLWithString:imageUrl];
+//    NSData *imageData = [NSData dataWithContentsOfURL:url];
     
-    newItem[@"image"] = [PFFileObject fileObjectWithData:imageData];
+    NSLog(@"%@", imageUrl);
+    
+    NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
+    NSLog(@"%@", imageData);
+    
+    // TODO: Check if the image url is valid before setting the imageUrl
+    NSData *data = [NSData dataWithContentsOfFile:imageUrl];
+    NSLog(@"%@", data);
+
+//    newItem[@"image"] = [NSData dataWithContentsOfFile:@""];
+    
+    newItem[@"image"] = [DatabaseManager getPFFileFromImage:[UIImage imageNamed: @"2x.png"]];
     
     [newItem saveInBackground];
     
@@ -233,12 +244,16 @@
     
     newDeal[@"item"] = item;
     newDeal[@"sellerName"] = sellerName;
-    
+    NSLog(@"%@", [price class]);
+
+    // TODO: convert the price input to NSNumber before passing it to this function
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     NSNumber *priceNumber = [f numberFromString:price];
     
-    newDeal[@"price"] = priceNumber;
+    NSLog(@"%@", priceNumber);
+    
+    newDeal[@"price"] = price;
     
     newDeal[@"link"] = link;
     [newDeal saveInBackground];

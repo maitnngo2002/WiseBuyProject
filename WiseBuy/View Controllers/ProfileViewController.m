@@ -8,6 +8,7 @@
 #import "ProfileViewController.h"
 
 @interface ProfileViewController ()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 

@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)checkIfItemAlreadyExist:(NSString *)barcode;
 + (void)saveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion;
 + (void)unsaveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion;
++ (void)fetchSavedDeals:(void(^)(NSArray *deals, NSError *error))completion;
 @end
 
 NS_ASSUME_NONNULL_END

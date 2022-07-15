@@ -33,6 +33,7 @@
 		D6D407622874A65F00B34995 /* BarcodeScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D407612874A65F00B34995 /* BarcodeScanViewController.m */; };
 		D6D407652874A66F00B34995 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D407642874A66F00B34995 /* DetailsViewController.m */; };
 		D6D407692874A81700B34995 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D407682874A81700B34995 /* ProfileViewController.m */; };
+		D6D5AD2B2881E33A00CF359B /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D5AD2A2881E33A00CF359B /* UserCell.m */; };
 		D6DC7673287CA03A000E08A4 /* AppDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DC7672287CA03A000E08A4 /* AppDeal.m */; };
 		D6DC7676287CA042000E08A4 /* AppItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DC7675287CA042000E08A4 /* AppItem.m */; };
 		D6DC767A287D8E6B000E08A4 /* 2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6DC7679287D8E6B000E08A4 /* 2x.png */; };
@@ -113,6 +114,8 @@
 		D6D407642874A66F00B34995 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		D6D407672874A81700B34995 /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		D6D407682874A81700B34995 /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		D6D5AD292881E33A00CF359B /* UserCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
+		D6D5AD2A2881E33A00CF359B /* UserCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
 		D6DC7671287CA03A000E08A4 /* AppDeal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDeal.h; sourceTree = "<group>"; };
 		D6DC7672287CA03A000E08A4 /* AppDeal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDeal.m; sourceTree = "<group>"; };
 		D6DC7674287CA042000E08A4 /* AppItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppItem.h; sourceTree = "<group>"; };
@@ -295,6 +298,8 @@
 			children = (
 				D6F206AF28764D2100EE72FD /* DealCell.h */,
 				D6F206B028764D2100EE72FD /* DealCell.m */,
+				D6D5AD292881E33A00CF359B /* UserCell.h */,
+				D6D5AD2A2881E33A00CF359B /* UserCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -559,6 +564,7 @@
 				D69854882874B11D00F79721 /* SettingsViewController.m in Sources */,
 				D6D4075C2874A64900B34995 /* LoginViewController.m in Sources */,
 				D62913B02874D39500CC7ABA /* APIManager.m in Sources */,
+				D6D5AD2B2881E33A00CF359B /* UserCell.m in Sources */,
 				D6D407652874A66F00B34995 /* DetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
