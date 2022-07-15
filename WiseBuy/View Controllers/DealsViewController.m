@@ -31,11 +31,9 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    NSLog(@"%@", self.barcode);
-//    [APIManager fetchDealsFromUPCDatabase:@"53039031"];
 
-    if (![DatabaseManager checkIfItemAlreadyExist:@"53039031"]) {
-        [APIManager fetchDealsFromEbayAPI:@"53039031"];
+    if (![DatabaseManager checkIfItemAlreadyExist:self.barcode]) {
+        [APIManager fetchDealsFromEbayAPI:self.barcode];
         [APIManager fetchDealsFromUPCDatabase:self.barcode];
         [APIManager fetchDealsFromSearchUPCAPI:self.barcode];
     }
@@ -45,7 +43,7 @@
     
     [self setLoadingState:YES viewController:self];
     
-    [DatabaseManager fetchItem:@"53039031" viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+    [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
         if (deals.count > 0) {
             self.deals = (NSMutableArray *) deals;
 
@@ -55,7 +53,6 @@
             [self setLoadingState:NO viewController:self];
         }
         else {
-            //alert
             NSLog(@"error %@", error.localizedDescription);
         }
     }];
