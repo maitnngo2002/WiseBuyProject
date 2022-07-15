@@ -53,13 +53,13 @@
                     }];
                 }
                 else {
-//                    [AlertManager dealNotFoundAlert:vc errorType:NoDealFoundError];
+                    [AlertManager dealsNotFoundAlert:vc errorType:NoDealFoundError];
                 }
             }];
         }
         else {
             completion(nil, error);
-//            [AlertManager dealNotFoundAlert:vc errorType:NoItemFoundError];
+            [AlertManager dealsNotFoundAlert:vc errorType:NoItemFoundError];
         }
     }];
 }
@@ -95,21 +95,15 @@
         deal.price = object[@"price"];
     }
     else {
-        NSLog(@"error create deal from object");
-
         return nil;
     }
     if (object[@"item"] != nil && [object[@"item"] isKindOfClass:[PFObject class]]) {
         deal.item = [DatabaseManager createServerItemFromPFObject:object[@"item"]];
     }
     else {
-        NSLog(@"error create deal from object");
-
         return nil;
     }
     if (object[@"link"] != nil && [object[@"link"] isKindOfClass:[NSString class]]) {
-//        NSLog(@"error create deal from object");
-
         deal.itemURL = object[@"link"];
     }
     else {
@@ -139,15 +133,12 @@
     
     if (object[@"name"] != nil && [object[@"name"] isKindOfClass:[NSString class]]) {
         serverItem.name = object[@"name"];
-        NSLog(@"%@",serverItem.name);
     }
     if (object[@"information"] != nil && [object[@"information"] isKindOfClass:[NSString class]]) {
         serverItem.information = object[@"information"];
-        NSLog(@"%@",serverItem.information);
     }
     if (object[@"barcode"] != nil && [object[@"barcode"] isKindOfClass:[NSString class]]) {
         serverItem.barcode = object[@"barcode"];
-        NSLog(@"%@",serverItem.barcode);
     }
     if (object[@"image"] != nil) {
         serverItem.image = object[@"image"];
@@ -165,7 +156,6 @@
     item.identifier = serverItem.objectId;
     [serverItem.image getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
         if (error) {
-            NSLog(@"eror create item with block");
             completion(nil,error);
         }
         else {

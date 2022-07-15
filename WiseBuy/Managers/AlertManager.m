@@ -66,7 +66,6 @@
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
                                                        style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"OK action performed.");
         [vc.navigationController popToRootViewControllerAnimated:YES];
     }];
     

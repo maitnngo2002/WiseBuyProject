@@ -36,7 +36,7 @@
     NSString *testBarcode = @"53039031";
     
     NSString *requestURL = [NSString stringWithFormat:@"%@%@", fullBaseURL, testBarcode];
-    NSLog(@"%@", requestURL);
+
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestURL]
       cachePolicy:NSURLRequestUseProtocolCachePolicy
       timeoutInterval:10.0];
@@ -47,7 +47,6 @@
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
       if (error) {
-        NSLog(@"%@", error);
         dispatch_semaphore_signal(sema);
       } else {
             NSError *parseError = nil;
@@ -75,12 +74,10 @@
               newItem[@"barcode"] = offer[@"productId"][0][@"__value__"];
 
               NSURL *imageurl = [NSURL URLWithString: responseDictionary[@"items"][0][@"images"][0]];
-              NSLog(@"%@", imageurl);
               
               NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: imageUrl]];
               newItem[@"image"] = [PFFileObject fileObjectWithData:imageData];
               
-              NSLog(@"%@", newItem);
               [newItem saveInBackground];
 
               Deal *newDeal = [Deal new];
@@ -91,8 +88,6 @@
               [newDeal saveInBackground];          }
           
           
-          NSLog(@"%@", offerLists[0]);
-//          NSLog(@"%@", price);
             dispatch_semaphore_signal(sema);
             
       }
@@ -131,7 +126,6 @@
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
       if (error) {
-        NSLog(@"%@", error);
         dispatch_semaphore_signal(sema);
       } else {
         NSError *parseError = nil;
@@ -148,15 +142,11 @@
               newItem[@"name"] = responseDictionary[@"items"][0][@"title"];
               newItem[@"description"] = responseDictionary[@"items"][0][@"description"];
               newItem[@"barcode"] = responseDictionary[@"items"][0][@"upc"];
-
-              NSURL *imageurl = [NSURL URLWithString: responseDictionary[@"items"][0][@"images"][0]];
-              NSLog(@"%@", imageurl);
               
               NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: responseDictionary[@"items"][0][@"images"][0]]];
               
               newItem[@"image"] = [PFFileObject fileObjectWithData:imageData];
                             
-              NSLog(@"%@", newItem);
               [newItem saveInBackground];
 
               Deal *newDeal = [Deal new];
@@ -210,10 +200,8 @@
                   NSLog(@"%@", error);
                   dispatch_semaphore_signal(sema);
               } else {
-//                  NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
                   NSError *parseError = nil;
                   NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-                  NSLog(@"%@",responseDictionary);
                   dispatch_semaphore_signal(sema);
               }
     }];

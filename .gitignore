@@ -1,2 +1,5 @@
 
 Keys.plist
+xcuserdata/**   
+!xcuserdata/**/
+!xcuserdata/**/xcschemes/**

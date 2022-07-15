@@ -32,8 +32,8 @@
     [super viewWillAppear:YES];
     
     [APIManager fetchDealsFromUPCDatabase:self.barcode];
-//    [APIManager fetchDealsFromSearchUPCAPI:self.barcode];
-//    [APIManager fetchDealsFromEbayAPI:@"53039031"];
+    [APIManager fetchDealsFromSearchUPCAPI:self.barcode];
+    [APIManager fetchDealsFromEbayAPI:self.barcode];
 
     [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
         if (deals.count > 0) {
