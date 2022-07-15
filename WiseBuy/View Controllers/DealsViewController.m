@@ -35,10 +35,9 @@
     [super viewWillAppear:YES];
     
     if (![DatabaseManager checkIfItemAlreadyExist:self.barcode]) {
-        [APIManager fetchDealsFromEbayAPI:self.barcode];
-        [APIManager fetchDealsFromUPCDatabase:self.barcode];
-        [APIManager fetchDealsFromSearchUPCAPI:self.barcode];
+        [APIManager fetchDealsFromAPIs:self.barcode];
     }
+    
     JGProgressHUD *HUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
     
     HUD.textLabel.text = @"Waiting for deals to be displayed";

@@ -10,10 +10,15 @@
 #import "Deal.h"
 #import "Item.h"
 #import "Foundation/Foundation.h"
-#import "Parse/Parse.h"
 #import "DatabaseManager.h"
 
 @implementation APIManager
+
++ (void)fetchDealsFromAPIs: (NSString *)barcode {
+    [self fetchDealsFromEbayAPI:barcode];
+    [self fetchDealsFromUPCDatabase:barcode];
+    [self fetchDealsFromSearchUPCAPI:barcode];
+}
 
 + (void)fetchDealsFromEbayAPI:(NSString *)barcode {
     dispatch_semaphore_t sema = dispatch_semaphore_create(0);
