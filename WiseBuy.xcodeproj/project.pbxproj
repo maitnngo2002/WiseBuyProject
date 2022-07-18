@@ -15,6 +15,9 @@
 		D62913AD2874D38D00CC7ABA /* DatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913AC2874D38D00CC7ABA /* DatabaseManager.m */; };
 		D62913B02874D39500CC7ABA /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913AF2874D39500CC7ABA /* APIManager.m */; };
 		D62913B52874E9E000CC7ABA /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913B42874E9E000CC7ABA /* AlertManager.m */; };
+		D67B9D842884CD9200130189 /* RecommendationFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D67B9D832884CD9200130189 /* RecommendationFeedViewController.m */; };
+		D67B9D8728851A0700130189 /* FindConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D67B9D8628851A0700130189 /* FindConnectionsViewController.m */; };
+		D67B9D8A2885654100130189 /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D67B9D892885654100130189 /* ItemCollectionViewCell.m */; };
 		D69854822874AB2400F79721 /* DealsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D69854812874AB2400F79721 /* DealsViewController.m */; };
 		D69854852874B0C300F79721 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D69854842874B0C300F79721 /* HistoryViewController.m */; };
 		D69854882874B11D00F79721 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D69854872874B11D00F79721 /* SettingsViewController.m */; };
@@ -81,6 +84,12 @@
 		D62913AF2874D39500CC7ABA /* APIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIManager.m; sourceTree = "<group>"; };
 		D62913B32874E9E000CC7ABA /* AlertManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertManager.h; sourceTree = "<group>"; };
 		D62913B42874E9E000CC7ABA /* AlertManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertManager.m; sourceTree = "<group>"; };
+		D67B9D822884CD9200130189 /* RecommendationFeedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendationFeedViewController.h; sourceTree = "<group>"; };
+		D67B9D832884CD9200130189 /* RecommendationFeedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendationFeedViewController.m; sourceTree = "<group>"; };
+		D67B9D8528851A0700130189 /* FindConnectionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindConnectionsViewController.h; sourceTree = "<group>"; };
+		D67B9D8628851A0700130189 /* FindConnectionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindConnectionsViewController.m; sourceTree = "<group>"; };
+		D67B9D882885654100130189 /* ItemCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemCollectionViewCell.h; sourceTree = "<group>"; };
+		D67B9D892885654100130189 /* ItemCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemCollectionViewCell.m; sourceTree = "<group>"; };
 		D69854802874AB2400F79721 /* DealsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DealsViewController.h; sourceTree = "<group>"; };
 		D69854812874AB2400F79721 /* DealsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DealsViewController.m; sourceTree = "<group>"; };
 		D69854832874B0C300F79721 /* HistoryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
@@ -289,6 +298,10 @@
 				D69854872874B11D00F79721 /* SettingsViewController.m */,
 				D69854892874B75100F79721 /* FindSimilarViewController.h */,
 				D698548A2874B75100F79721 /* FindSimilarViewController.m */,
+				D67B9D822884CD9200130189 /* RecommendationFeedViewController.h */,
+				D67B9D832884CD9200130189 /* RecommendationFeedViewController.m */,
+				D67B9D8528851A0700130189 /* FindConnectionsViewController.h */,
+				D67B9D8628851A0700130189 /* FindConnectionsViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -300,6 +313,8 @@
 				D6F206B028764D2100EE72FD /* DealCell.m */,
 				D6D5AD292881E33A00CF359B /* UserCell.h */,
 				D6D5AD2A2881E33A00CF359B /* UserCell.m */,
+				D67B9D882885654100130189 /* ItemCollectionViewCell.h */,
+				D67B9D892885654100130189 /* ItemCollectionViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -544,11 +559,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D67B9D8A2885654100130189 /* ItemCollectionViewCell.m in Sources */,
 				D62913A92874D15000CC7ABA /* Item.m in Sources */,
 				D62913A32874D13B00CC7ABA /* Deal.m in Sources */,
 				D6D4075F2874A65200B34995 /* RegisterViewController.m in Sources */,
 				D6D4072728749EB900B34995 /* AppDelegate.m in Sources */,
 				D6D407692874A81700B34995 /* ProfileViewController.m in Sources */,
+				D67B9D8728851A0700130189 /* FindConnectionsViewController.m in Sources */,
 				D69854852874B0C300F79721 /* HistoryViewController.m in Sources */,
 				D6DC7676287CA042000E08A4 /* AppItem.m in Sources */,
 				D6D4073828749EBB00B34995 /* main.m in Sources */,
@@ -558,6 +575,7 @@
 				D62913A62874D14300CC7ABA /* User.m in Sources */,
 				D698548B2874B75100F79721 /* FindSimilarViewController.m in Sources */,
 				D6D4072A28749EB900B34995 /* SceneDelegate.m in Sources */,
+				D67B9D842884CD9200130189 /* RecommendationFeedViewController.m in Sources */,
 				D62913B52874E9E000CC7ABA /* AlertManager.m in Sources */,
 				D6F206B128764D2100EE72FD /* DealCell.m in Sources */,
 				D62913AD2874D38D00CC7ABA /* DatabaseManager.m in Sources */,

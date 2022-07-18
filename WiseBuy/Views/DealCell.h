@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDeal.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *itemName;
 @property (weak, nonatomic) IBOutlet UILabel *sellerName;
 @property (weak, nonatomic) IBOutlet UILabel *price;
+
+@property (strong, nonatomic) AppDeal *deal;
 
 @end
 

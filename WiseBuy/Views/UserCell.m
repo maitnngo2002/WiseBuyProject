@@ -6,18 +6,15 @@
 //
 
 #import "UserCell.h"
+#import "User.h"
 
 @implementation UserCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)setUser:(User *)user {
+    _user = user;
+    self.fullNameLabel.text = [User getFullName:_user];
+    self.usernameLabel.text = _user.username;
+    self.profileImageView.image = [UIImage imageWithData:_user.profileImage];
 }
 
 @end

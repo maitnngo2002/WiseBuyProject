@@ -60,6 +60,8 @@ PODS:
     - Parse/Core (= 1.19.3)
   - Parse/Core (1.19.3):
     - Bolts/Tasks (= 1.9.1)
+  - Parse/UI (1.19.3):
+    - Parse/Core
   - PromisesObjC (2.1.1)
   - Protobuf (3.21.2)
 
@@ -67,6 +69,7 @@ DEPENDENCIES:
   - GoogleMLKit/BarcodeScanning
   - JGProgressHUD
   - Parse
+  - Parse/UI
 
 SPEC REPOS:
   trunk:
@@ -105,6 +108,6 @@ SPEC CHECKSUMS:
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   Protobuf: 818c6a87e44193a77f56b87c6a1c106efda7e062
 
-PODFILE CHECKSUM: b20023c96684b4016ce65768205197a3d97fbc79
+PODFILE CHECKSUM: 06b7a9caec18ac262a16ef57baa5316b315e7910
 
 COCOAPODS: 1.11.3

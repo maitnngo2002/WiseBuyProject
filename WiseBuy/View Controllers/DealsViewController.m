@@ -32,51 +32,46 @@
     
 }
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
-    
-    // TODO: Fix this code later to get rid of the long-running operation executed on the main thread warning
-    if (![DatabaseManager checkIfItemAlreadyExist:self.barcode]) {
-        [APIManager fetchDealsFromAPIs:self.barcode];
-    }
-    [APIManager fetchDealsFromAPIs:self.barcode];
+    [self.tableView reloadData];
 
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         if (![DatabaseManager checkIfItemAlreadyExist:self.barcode]) {
                 [APIManager fetchDealsFromAPIs:self.barcode];
             }
         dispatch_async(dispatch_get_main_queue(), ^(void){
+            JGProgressHUD *progressHUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
             
-        });
-    });
-//    
-    JGProgressHUD *progressHUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
-    
-    progressHUD.textLabel.text = @"Waiting for deals to be displayed";
-    [progressHUD showInView:self.view];
+            progressHUD.textLabel.text = @"Waiting for deals to be displayed";
+            [progressHUD showInView:self.view];
 
-    [self setLoadingState:YES viewController:self];
-    
-    // TODO: Hard-code barcode value for testing purpose. Remove later.
-    [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
-        if (deals.count > 0) {
-            self.deals = (NSMutableArray *) deals;
-            [DatabaseManager fetchSavedDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
-                if (self.deals.count == 0) {
-                    self.savedDeals = [NSMutableArray array];
+            [self setLoadingState:YES viewController:self];
+            
+            [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+                if (deals.count > 0) {
+                    self.deals = (NSMutableArray *) deals;
+                    NSLog(@"%lu", (unsigned long)self.deals.count);
+
+                    [DatabaseManager fetchSavedDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+                        if (self.deals.count == 0) {
+                            self.savedDeals = [NSMutableArray array];
+                        }
+                        else {
+                            self.savedDeals = (NSMutableArray *) deals;
+                        }
+                        [self.tableView reloadData];
+                        
+                        [progressHUD dismissAfterDelay:0.1 animated:YES];
+                        [self setLoadingState:NO viewController:self];
+                    }];
                 }
                 else {
-                    self.savedDeals = (NSMutableArray *) deals;
+                    NSLog(@"error %@", error.localizedDescription);
                 }
-                [self.tableView reloadData];
-                
-                [progressHUD dismissAfterDelay:0.1 animated:YES];
-                [self setLoadingState:NO viewController:self];
             }];
-        }
-        else {
-            NSLog(@"error %@", error.localizedDescription);
-        }
-    }];
+        });
+    });
+    
+    
 }
 
 - (void)setLoadingState:(BOOL)isFetching viewController:(UIViewController *)vc {
@@ -98,10 +93,7 @@
     DealCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DealCell"];
     
     AppDeal *deal = self.deals[indexPath.row];
-    cell.itemImage.image = [UIImage imageWithData:deal.item.image];
-    cell.itemName.text = deal.item.name;
-    cell.sellerName.text = deal.sellerName;
-    cell.price.text = [deal.price stringValue];
+    [cell setDeal:deal];
     
     return cell;
 }
@@ -115,12 +107,15 @@
 
     UIContextualAction *saveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Save" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [DatabaseManager saveDeal:deal withCompletion:^(NSError * _Nonnull error) {
+            NSLog(@"@save");
             if (error) {
                 NSLog(@"%@", error.localizedDescription);
                 [AlertManager cannotSaveDeal:self];
             }
+            
             completionHandler(YES);
         }];
+        
         if (self.savedDeals.count == 0) {
             self.savedDeals = [NSMutableArray array];
         }
@@ -136,6 +131,7 @@
             }
             completionHandler(YES);
         }];
+        [self removeDealWithIdentifier:deal.identifier];
         [self.tableView reloadData];
     }];
 
@@ -147,6 +143,17 @@
         UISwipeActionsConfiguration *actionConfigurations = [UISwipeActionsConfiguration configurationWithActions:@[saveAction]];
         return actionConfigurations;
     }
+}
+
+- (void)removeDealWithIdentifier:(NSString *)identifier {
+    AppDeal *dealToDelete;
+    for (AppDeal *savedDeal in self.savedDeals) {
+        if ([savedDeal.identifier isEqualToString:identifier]) {
+            dealToDelete = savedDeal;
+            break;
+        }
+    }
+    [self.savedDeals removeObject:dealToDelete];
 }
 
 - (BOOL)alreadySaved:(AppDeal *)deal {

@@ -9,15 +9,16 @@
 
 @implementation DealCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
+- (void)setDeal:(AppDeal *)deal {
+    _deal = deal;
+    self.itemImage.image = [UIImage imageWithData:_deal.item.image];
+    self.itemName.text = _deal.item.name;
+    self.sellerName.text = _deal.sellerName;
+    self.price.text = [DealCell formattedPrice:_deal.price];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
++ (NSString *)formattedPrice:(NSNumber *)price {
+    return [NSNumberFormatter localizedStringFromNumber:price numberStyle:NSNumberFormatterCurrencyStyle];
 }
 
 @end

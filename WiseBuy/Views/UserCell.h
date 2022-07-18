@@ -7,12 +7,17 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
+@import Parse;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol UserCellDelegate;
 
 @interface UserCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
+@property (weak, nonatomic) IBOutlet UILabel *fullNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 
 @property (weak, nonatomic) id<UserCellDelegate> delegate;
 @property (strong, nonatomic) User *user;

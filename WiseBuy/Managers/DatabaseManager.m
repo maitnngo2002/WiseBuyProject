@@ -10,6 +10,7 @@
 #import "AlertManager.h"
 #import "AppDeal.h"
 #import "SceneDelegate.h"
+#import "User.h"
 
 @implementation DatabaseManager
 
@@ -58,11 +59,33 @@
     }];
 }
 
++ (void)getCurrentUser:(void(^)(User *user))completion {
+    PFUser *user = [PFUser currentUser];
+    User *currentUser = [User new];
+    currentUser.firstName = user[@"first_name"];
+    currentUser.lastName = user[@"last_name"];
+    currentUser.email = user[@"email"];
+    currentUser.username = user[@"username"];
+    PFFileObject *profileImage = user[@"image"];
+    [profileImage getDataInBackgroundWithBlock:^(NSData * _Nullable imageData, NSError * _Nullable error) {
+        if (!error) {
+            currentUser.profileImage = imageData;
+        }
+    }];
+    [DatabaseManager fetchSavedDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+        if (!error) {
+            currentUser.dealsSaved = (NSMutableArray *)deals;
+            completion(currentUser);
+        }
+    }];
+}
+
 + (void)fetchItem:(NSString *)barcode viewController:(UIViewController *)vc withCompletion:(void(^)(NSArray *deals,NSError *error))completion {
     PFQuery *itemQuery = [Item query];
     [itemQuery whereKey:@"barcode" equalTo:barcode];
     [itemQuery getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (object != nil) {
+            NSLog(@"%@", object);
             [DatabaseManager fetchDeals:object withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
                 if (deals.count > 0) {
                     [DatabaseManager createDealsFromFetchWithBlock:deals withCompletion:^(NSArray *appDeals) {
@@ -266,10 +289,68 @@
     [query includeKey:@"savedDeals.item"];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
+            [DatabaseManager createSavedDealsFromFetchWithBlock:objects withCompletion:^(NSArray *appDeals) {
+                completion(appDeals, nil);
+            }];
             completion(objects, nil);
         }
         else {
             completion(nil, error);
+        }
+    }];
+}
+
++ (void)fetchAllDeals:(void(^)(NSArray *deals ,NSError *error))completion {
+    PFQuery *dealsQuery = [Deal query];
+    [dealsQuery includeKey:@"item"];
+    [dealsQuery orderByAscending:@"price"];
+    
+    [dealsQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (objects.count > 0) {
+            [DatabaseManager createDealsFromFetchWithBlock:objects withCompletion:^(NSArray *appDeals) {
+                completion(appDeals, nil);
+            }];
+        }
+        else {
+            completion(nil, error);
+        }
+    }];
+}
+
++ (void)createSavedDealsFromFetchWithBlock:(NSArray *)serverDeals withCompletion:(void(^)(NSArray *appDeals))completion{
+    NSMutableArray *result = [NSMutableArray array];
+    dispatch_group_t group = dispatch_group_create();
+    for (PFObject *obj in serverDeals) {
+        dispatch_group_enter(group);
+        [DatabaseManager createDealFromObjectWithBlock:obj withCompletion:^(Deal *deal) {
+            if (deal != nil) {
+                [DatabaseManager createDealFromServerDealWithBlock:deal withCompletion:^(AppDeal *appDeal, NSError *error) {
+                    [result addObject:appDeal];
+                    dispatch_group_leave(group);
+                }];
+            }
+        }];
+    }
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        completion(result);
+    });
+}
+
++ (void)isCurrentDealSaved:(NSString *)identifier withCompletion:(void(^)(_Bool hasDeal, NSError *error))completion {
+    PFUser *user = [PFUser currentUser];
+    PFRelation *relation = [user relationForKey:@"savedDeals"];
+    [[relation query] findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (objects.count > 0) {
+            for (PFObject *obj in objects) {
+                if ([obj.objectId isEqualToString:identifier]) {
+                    completion(YES, nil);
+                    return;
+                }
+            }
+            completion(NO, nil);
+        }
+        else {
+            completion(NO, error);
         }
     }];
 }
@@ -342,6 +423,61 @@
             completion(nil);
         }
     }];
+}
+
++ (void)fetchRecentItems:(void(^)(NSArray *items,NSError *error))completion {
+    PFUser *user = [PFUser currentUser];
+    PFRelation *relation = [user relationForKey:@"recentItems"];
+    PFQuery *query = [relation query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (objects.count > 0) {
+            [DatabaseManager createItemsFromFetchWithBlock:objects withCompletion:^(NSArray *appItems) {
+                if (appItems.count > 0) {
+                    completion(appItems, nil);
+                }
+                else {
+                    completion(appItems, error);
+                }
+            }];
+        }
+        else {
+            completion(nil, error);
+        }
+    }];
+}
+
++ (void)createItemsFromFetchWithBlock:(NSArray *)serverItems withCompletion:(void(^)(NSArray *appItems))completion {
+    NSMutableArray *result = [NSMutableArray array];
+    dispatch_group_t group = dispatch_group_create();
+    for (PFObject *obj in serverItems) {
+        Item *serverItem = [DatabaseManager createServerItemFromPFObject:obj];
+        if (serverItem != nil) {
+            dispatch_group_enter(group);
+            [DatabaseManager createItemWithBlock:serverItem withCompletion:^(AppItem *appItem, NSError *error) {
+                [result addObject:appItem];
+                dispatch_group_leave(group);
+            }];
+        }
+    }
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        completion(result);
+    });
+}
+
++ (void)updateRecentItems:(PFObject *)item withCompletion:(void(^)(NSError *error))completion {
+    PFUser *user = [PFUser currentUser];
+    PFRelation *relation = [user relationForKey:@"recentItems"];
+    if (item != nil) {
+        [relation addObject:item];
+        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                completion(nil);
+            }
+            else {
+                completion(error);
+            }
+        }];
+    }
 }
 
 @end

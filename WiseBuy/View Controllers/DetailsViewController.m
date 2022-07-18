@@ -7,6 +7,8 @@
 
 #import "DetailsViewController.h"
 #import "AlertManager.h"
+#import "JGProgressHUD.h"
+#import "DatabaseManager.h"
 
 @interface DetailsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *itemName;
@@ -14,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *sellerName;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
+
+@property BOOL alreadySaved;
 
 @end
 
@@ -29,6 +34,58 @@
     self.descriptionLabel.text = self.deal.item.information;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    
+    JGProgressHUD *progressHUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleDark];
+    progressHUD.textLabel.text = @"Loading...";
+    
+    [progressHUD showInView:self.view];
+    [self setLoadingState:YES viewController:self];
+    
+    [DatabaseManager isCurrentDealSaved:self.deal.identifier withCompletion:^(bool hasDeal, NSError * _Nonnull error) {
+        if (error) {
+            progressHUD.indicatorView = [[JGProgressHUDErrorIndicatorView alloc] init];
+        }
+        else if (hasDeal) {
+            self.alreadySaved = YES;
+            [self setSaveButtonOnDealStatus];
+        }
+        else {
+            self.alreadySaved = NO;
+            [self setSaveButtonOnDealStatus];
+        }
+        [progressHUD dismissAfterDelay:0.1 animated:YES];
+        
+        [self setLoadingState:NO viewController:self];
+    }];
+}
+
+- (void)setSaveButtonOnDealStatus {
+    if (self.alreadySaved) {
+        [self.saveButton setTitle:@"Unsave" forState:UIControlStateNormal];
+        [self.saveButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    }
+    else {
+        [self.saveButton setTitle:@"Save" forState:UIControlStateNormal];
+        [self.saveButton setTitleColor:[UIColor systemBlueColor] forState:UIControlStateNormal];
+    }
+}
+
+- (void)setLoadingState:(BOOL)isFetching viewController:(UIViewController *)vc {
+    if (isFetching) {
+        vc.view.userInteractionEnabled = NO;
+        vc.view.alpha = 0.5f;
+        [vc.navigationController setNavigationBarHidden:YES];
+        [vc.tabBarController.tabBar setHidden:YES];
+    }
+    else {
+        vc.view.userInteractionEnabled = YES;
+        [vc.navigationController setNavigationBarHidden:NO];
+        [vc.tabBarController.tabBar setHidden:NO];
+        vc.view.alpha = 1;
+    }
+}
 
 - (IBAction)onTapBuy:(id)sender {
     if ([[UIApplication sharedApplication] canOpenURL:self.deal.itemURL]) {
@@ -45,7 +102,37 @@
     }
 }
 - (IBAction)onTapSave:(id)sender {
+    NSLog(@"%d", self.alreadySaved);
+
+    if (!self.alreadySaved) {
+        [DatabaseManager saveDeal:self.deal withCompletion:^(NSError * _Nonnull error) {
+            if (error) {
+                NSLog(@"%@", error.localizedDescription);
+                [AlertManager cannotSaveDeal:self];
+            }
+            else {
+                self.alreadySaved = YES;
+                NSLog(@"%d", self.alreadySaved);
+                [self setSaveButtonOnDealStatus];
+            }
+        }];
+    }
+    else {
+        [DatabaseManager unsaveDeal:self.deal withCompletion:^(NSError * _Nonnull error) {
+            if (error) {
+                NSLog(@"%@", error.localizedDescription);
+                [AlertManager cannotSaveDeal:self];
+            }
+            else {
+                self.alreadySaved = NO;
+                [self setSaveButtonOnDealStatus];
+            }
+        }];
+    }
+    NSLog(@"%d", self.alreadySaved);
+
 }
+
 - (IBAction)onTapImage:(id)sender {
     UIImageView *fullScreenImageView = [[UIImageView alloc] initWithImage:self.itemImageView.image];
     fullScreenImageView.frame = [[UIScreen mainScreen] bounds];
