@@ -110,7 +110,6 @@
 }
 
 -(void) friendQuery:(NSString *)container {
-    // construct query
     [self.tableView reloadData];
     [self.activityIndicator startAnimating];
     PFQuery *query = [PFUser query];
@@ -126,7 +125,6 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
         if (friends != nil) {
             self.friends = friends;
-            NSLog(@"Received friends! %@", self.friends);
             [self.tableView reloadData];
             [self.activityIndicator stopAnimating];
         } else {
@@ -137,7 +135,6 @@
 }
 
 -(void) addQuery:(NSString *)container {
-    // construct query
     [self.tableView reloadData];
     [self.activityIndicator startAnimating];
     PFQuery *query = [PFUser query];
@@ -150,10 +147,8 @@
     } else {
         [query whereKey:@"username" containedIn:self.user[@"outgoingFriendRequests"]];
     }
-    // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
         if (friends != nil) {
-            // do something with the array of object returned by the call
             self.friends = friends;
             NSLog(@"Received friends! %@", self.friends);
             [self.tableView reloadData];
@@ -165,7 +160,6 @@
 }
 
 -(void) requestQuery:(NSString *)container {
-    // construct query
     [self.tableView reloadData];
     [self.activityIndicator startAnimating];
     PFQuery *query = [PFUser query];
@@ -177,10 +171,8 @@
     if(![container isEqualToString:@""]) {
         [query whereKey:@"username" containsString:container];
     }
-    // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
         if (friends != nil) {
-            // do something with the array of object returned by the call
             self.friends = friends;
             NSLog(@"Received friends! %@", self.friends);
             [self.tableView reloadData];
@@ -193,11 +185,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
  {
-    //Mkaes the animations nicer for when cells are selected
      [tableView deselectRowAtIndexPath:indexPath animated:YES];
  }
 
-// If the segment controller is changed, reload the information and requery
 - (IBAction)segChanged:(id)sender {
     if(self.segControl.selectedSegmentIndex == 1) {
         self.friends = nil;

@@ -126,8 +126,6 @@
             }
         }];
     }
-    NSLog(@"%d", self.alreadySaved);
-
 }
 
 - (IBAction)onTapImage:(id)sender {

@@ -34,7 +34,6 @@
             [requests addObject:user.username];
                         
             self.cellUser[@"incomingFriendRequests"] = [NSArray arrayWithArray:requests];
-            NSLog(@"FRIEND REQUESTED: %@", self.cellUser[@"incomingFriendRequests"]);
             
             [self postUser:user];
 
