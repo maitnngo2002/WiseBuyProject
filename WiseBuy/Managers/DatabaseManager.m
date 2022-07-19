@@ -74,7 +74,7 @@
     }];
     [DatabaseManager fetchSavedDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
         if (!error) {
-            currentUser.dealsSaved = (NSMutableArray *)deals;
+            currentUser.savedDeals = (NSMutableArray *)deals;
             completion(currentUser);
         }
     }];
@@ -152,6 +152,7 @@
     deal.itemURL = [NSURL URLWithString:serverDeal.itemURL];
     deal.price = serverDeal.price;
     deal.sellerName = serverDeal.sellerName;
+    deal.identifier = serverDeal.objectId;
     [DatabaseManager createItemWithBlock:serverDeal.item withCompletion:^(AppItem *appItem, NSError *error) {
         if (error) {
             NSLog(@"Error at createDealFromServerDealWithBlock");
@@ -248,12 +249,14 @@
 
 + (void)saveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion {
     PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationForKey:@"savedDeals"];
+    PFRelation *relation = [user relationForKey:@"dealsSaved"];
     [DatabaseManager getPFObjectFromAppDeal:appDeal withCompletion:^(PFObject *object) {
         if (object != nil) {
+            NSLog(@"codereached2");
             [relation addObject:object];
             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (succeeded) {
+                    NSLog(@"successful saved");
                     completion(nil);
                 }
                 else {
@@ -266,7 +269,7 @@
 
 + (void)unsaveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion {
     PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationForKey:@"savedDeals"];
+    PFRelation *relation = [user relationForKey:@"dealsSaved"];
     [DatabaseManager getPFObjectFromAppDeal:appDeal withCompletion:^(PFObject *object) {
         if (object != nil) {
             [relation removeObject:object];
@@ -284,11 +287,12 @@
 
 + (void)fetchSavedDeals:(void(^)(NSArray *deals, NSError *error))completion {
     PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationForKey:@"savedDeals"];
+    PFRelation *relation = [user relationForKey:@"dealsSaved"];
     PFQuery *query = [relation query];
-    [query includeKey:@"savedDeals.item"];
+    [query includeKey:@"dealsSaved.item"];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
+            NSLog(@"%@", objects[0]);
             [DatabaseManager createSavedDealsFromFetchWithBlock:objects withCompletion:^(NSArray *appDeals) {
                 completion(appDeals, nil);
             }];
@@ -338,7 +342,7 @@
 
 + (void)isCurrentDealSaved:(NSString *)identifier withCompletion:(void(^)(_Bool hasDeal, NSError *error))completion {
     PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationForKey:@"savedDeals"];
+    PFRelation *relation = [user relationForKey:@"dealsSaved"];
     [[relation query] findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
             for (PFObject *obj in objects) {

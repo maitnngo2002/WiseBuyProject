@@ -37,7 +37,7 @@
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         if (![DatabaseManager checkIfItemAlreadyExist:self.barcode]) {
                 [APIManager fetchDealsFromAPIs:self.barcode];
-            }
+        }
         dispatch_async(dispatch_get_main_queue(), ^(void){
             JGProgressHUD *progressHUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
             
@@ -49,9 +49,9 @@
             [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
                 if (deals.count > 0) {
                     self.deals = (NSMutableArray *) deals;
-                    NSLog(@"%lu", (unsigned long)self.deals.count);
 
                     [DatabaseManager fetchSavedDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+                        NSLog(@"%@", deals);
                         if (self.deals.count == 0) {
                             self.savedDeals = [NSMutableArray array];
                         }
@@ -70,8 +70,6 @@
             }];
         });
     });
-    
-    
 }
 
 - (void)setLoadingState:(BOOL)isFetching viewController:(UIViewController *)vc {
@@ -105,24 +103,47 @@
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     AppDeal *deal = self.deals[indexPath.row];
 
-    UIContextualAction *saveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Save" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [DatabaseManager saveDeal:deal withCompletion:^(NSError * _Nonnull error) {
-            NSLog(@"@save");
-            if (error) {
-                NSLog(@"%@", error.localizedDescription);
-                [AlertManager cannotSaveDeal:self];
-            }
-            
-            completionHandler(YES);
-        }];
-        
-        if (self.savedDeals.count == 0) {
-            self.savedDeals = [NSMutableArray array];
-        }
-        [self.savedDeals addObject:deal];
-        [self.tableView reloadData];
-    }];
-
+    NSLog(@"%@", deal);
+//    UIContextualAction *saveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Save" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+//        [DatabaseManager saveDeal:deal withCompletion:^(NSError * _Nonnull error) {
+//            NSLog(@"@save");
+//            if (error) {
+//                NSLog(@"%@", error.localizedDescription);
+//                [AlertManager cannotSaveDeal:self];
+//            }
+//            completionHandler(YES);
+//        }];
+//
+//        if (self.savedDeals.count == 0) {
+//            self.savedDeals = [NSMutableArray array];
+//        }
+//        [self.savedDeals addObject:deal];
+//        [self.tableView reloadData];
+//    }];
+//    saveAction.backgroundColor = [UIColor systemBlueColor];
+//
+//    UIContextualAction *unsaveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Unsave" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+//        [DatabaseManager unsaveDeal:deal withCompletion:^(NSError * _Nonnull error) {
+//            NSLog(@"unsave");
+//            if (error) {
+//                NSLog(@"%@", error.localizedDescription);
+//                [AlertManager cannotSaveDeal:self];
+//            }
+//            completionHandler(YES);
+//        }];
+//        [self removeDealWithIdentifier:deal.identifier];
+//        [self.tableView reloadData];
+//    }];
+//
+//    NSLog(@"%d", [self alreadySaved:deal]);
+//    if ([self alreadySaved:deal]) {
+//        UISwipeActionsConfiguration *actionConfigurations = [UISwipeActionsConfiguration configurationWithActions:@[unsaveAction]];
+//        return actionConfigurations;
+//    }
+//    else {
+//        UISwipeActionsConfiguration *actionConfigurations = [UISwipeActionsConfiguration configurationWithActions:@[saveAction]];
+//        return actionConfigurations;
+//    }
     UIContextualAction *unsaveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Unsave" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [DatabaseManager unsaveDeal:deal withCompletion:^(NSError * _Nonnull error) {
             if (error) {
@@ -134,7 +155,23 @@
         [self removeDealWithIdentifier:deal.identifier];
         [self.tableView reloadData];
     }];
-
+    
+    UIContextualAction *saveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Save" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        [DatabaseManager saveDeal:deal withCompletion:^(NSError * _Nonnull error) {
+            if (error) {
+                NSLog(@"%@", error.localizedDescription);
+                [AlertManager cannotSaveDeal:self];
+            }
+            completionHandler(YES);
+        }];
+        if (self.savedDeals.count == 0) {
+            self.savedDeals = [NSMutableArray array];
+        }
+        [self.savedDeals addObject:deal];
+        [self.tableView reloadData];
+    }];
+    saveAction.backgroundColor = [UIColor systemBlueColor];
+    
     if ([self alreadySaved:deal]) {
         UISwipeActionsConfiguration *actionConfigurations = [UISwipeActionsConfiguration configurationWithActions:@[unsaveAction]];
         return actionConfigurations;
@@ -143,6 +180,7 @@
         UISwipeActionsConfiguration *actionConfigurations = [UISwipeActionsConfiguration configurationWithActions:@[saveAction]];
         return actionConfigurations;
     }
+
 }
 
 - (void)removeDealWithIdentifier:(NSString *)identifier {

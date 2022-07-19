@@ -82,11 +82,7 @@
                     [self createDeal:newItem :@"Ebay" :offer[@"sellingStatus"][0][@"convertedCurrentPrice"][0][@"__value__"] :offer[@"viewItemURL"][0]];
                 }
           }
-            
-            
-            
-        dispatch_semaphore_signal(sema);
-            
+          dispatch_semaphore_signal(sema);
       }
     }];
     [dataTask resume];
@@ -188,6 +184,7 @@
               } else {
                   NSError *parseError = nil;
                   NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+                  NSLog(@"%lu", (unsigned long)responseDictionary.count);
                   if (responseDictionary.count > 0) {
                       Item *newItem = [self createItem:responseDictionary[@"0"][@"productname"] :responseDictionary[@"0"][@"storename"] :barcode :responseDictionary[@"0"][@"imageurl"]];
                       

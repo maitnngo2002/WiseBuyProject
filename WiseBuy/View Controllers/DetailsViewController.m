@@ -102,8 +102,6 @@
     }
 }
 - (IBAction)onTapSave:(id)sender {
-    NSLog(@"%d", self.alreadySaved);
-
     if (!self.alreadySaved) {
         [DatabaseManager saveDeal:self.deal withCompletion:^(NSError * _Nonnull error) {
             if (error) {
@@ -112,7 +110,6 @@
             }
             else {
                 self.alreadySaved = YES;
-                NSLog(@"%d", self.alreadySaved);
                 [self setSaveButtonOnDealStatus];
             }
         }];

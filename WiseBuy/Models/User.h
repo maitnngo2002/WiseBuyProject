@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong) NSData *profileImage;
-@property (nonatomic, strong) NSMutableArray *dealsSaved;
+@property (nonatomic, strong) NSMutableArray *savedDeals;
 
 + (NSString *)getFullName: (User *)user;
 
