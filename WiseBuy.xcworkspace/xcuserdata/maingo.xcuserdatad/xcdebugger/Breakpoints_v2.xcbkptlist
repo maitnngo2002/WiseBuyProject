@@ -334,8 +334,8 @@
             filePath = "WiseBuy/View Controllers/FindConnectionsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
             landmarkName = "-addQuery:"
             landmarkType = "7">
          </BreakpointContent>

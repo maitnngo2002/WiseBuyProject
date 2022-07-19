@@ -150,7 +150,6 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
         if (friends != nil) {
             self.friends = friends;
-            NSLog(@"Received friends! %@", self.friends);
             [self.tableView reloadData];
             [self.activityIndicator stopAnimating];
         } else {
@@ -174,7 +173,6 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
         if (friends != nil) {
             self.friends = friends;
-            NSLog(@"Received friends! %@", self.friends);
             [self.tableView reloadData];
             [self.activityIndicator stopAnimating];
         } else {
