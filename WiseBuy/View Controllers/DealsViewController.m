@@ -13,6 +13,7 @@
 #import "DetailsViewController.h"
 #import "JGProgressHUD/JGProgressHUD.h"
 #import "AlertManager.h"
+#import "ProgressHUDManager.h"
 
 @interface DealsViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -44,7 +45,7 @@
             progressHUD.textLabel.text = @"Waiting for deals to be displayed";
             [progressHUD showInView:self.view];
 
-            [self setLoadingState:YES viewController:self];
+            [ProgressHUDManager setLoadingState:YES viewController:self];
             
             [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
                 if (deals.count > 0) {
@@ -60,7 +61,7 @@
                         [self.tableView reloadData];
                         
                         [progressHUD dismissAfterDelay:0.1 animated:YES];
-                        [self setLoadingState:NO viewController:self];
+                        [ProgressHUDManager setLoadingState:NO viewController:self];
                     }];
                 }
                 else {
@@ -69,21 +70,6 @@
             }];
         });
     });
-}
-
-- (void)setLoadingState:(BOOL)isFetching viewController:(UIViewController *)vc {
-    if (isFetching) {
-        vc.view.userInteractionEnabled = NO;
-        vc.view.alpha = 0.5f;
-        [vc.navigationController setNavigationBarHidden:YES];
-        [vc.tabBarController.tabBar setHidden:YES];
-    }
-    else {
-        vc.view.userInteractionEnabled = YES;
-        [vc.navigationController setNavigationBarHidden:NO];
-        [vc.tabBarController.tabBar setHidden:NO];
-        vc.view.alpha = 1;
-    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -102,15 +88,14 @@
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     AppDeal *deal = self.deals[indexPath.row];
 
-    NSLog(@"%@", deal);
     UIContextualAction *saveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Save" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [DatabaseManager saveDeal:deal withCompletion:^(NSError * _Nonnull error) {
-            NSLog(@"@save");
             if (error) {
                 NSLog(@"%@", error.localizedDescription);
                 [AlertManager cannotSaveDeal:self];
             }
             completionHandler(YES);
+            
         }];
 
         if (self.savedDeals.count == 0) {

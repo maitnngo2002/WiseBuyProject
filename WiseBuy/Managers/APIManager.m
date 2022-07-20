@@ -26,11 +26,11 @@
         [self fetchDealsFromUPCDatabase:barcode];
         dispatch_group_leave(group);
     });
-    dispatch_group_enter(group);
-    dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
-        [self fetchDealsFromSearchUPCAPI:barcode];
-        dispatch_group_leave(group);
-    });
+//    dispatch_group_enter(group);
+//    dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
+//        [self fetchDealsFromSearchUPCAPI:barcode];
+//        dispatch_group_leave(group);
+//    });
     dispatch_group_notify(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
         dispatch_async(dispatch_get_main_queue(), ^{
         });
@@ -184,6 +184,7 @@
               } else {
                   NSError *parseError = nil;
                   NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+                  NSLog(@"%@", responseDictionary);
                   NSLog(@"%lu", (unsigned long)responseDictionary.count);
                   if (responseDictionary.count > 0) {
                       Item *newItem = [self createItem:responseDictionary[@"0"][@"productname"] :responseDictionary[@"0"][@"storename"] :barcode :responseDictionary[@"0"][@"imageurl"]];
@@ -213,7 +214,11 @@
     NSData *imageData = [NSData dataWithContentsOfURL:url];
     UIImage *img = [[UIImage alloc] initWithData:imageData];
 
-    newItem[@"image"] = [DatabaseManager getPFFileFromImage:img];
+    if (img) {
+        newItem[@"image"] = [DatabaseManager getPFFileFromImage:img];
+    } else {
+        newItem[@"image"] = [DatabaseManager getPFFileFromImage:[UIImage imageNamed:@"2x.png"]];
+    }
     
     [newItem saveInBackground];
     
@@ -236,7 +241,6 @@
     else {
         newDeal[@"price"] = price;
     }
-    
     newDeal[@"link"] = link;
     [newDeal saveInBackground];
 }

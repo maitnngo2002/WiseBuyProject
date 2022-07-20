@@ -85,7 +85,6 @@
     [itemQuery whereKey:@"barcode" equalTo:barcode];
     [itemQuery getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (object != nil) {
-            NSLog(@"%@", object);
             [DatabaseManager fetchDeals:object withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
                 if (deals.count > 0) {
                     [DatabaseManager createDealsFromFetchWithBlock:deals withCompletion:^(NSArray *appDeals) {
@@ -144,6 +143,7 @@
     } else {
         return nil;
     }
+    deal.objectId = object.objectId;
     return deal;
 }
 
@@ -153,6 +153,7 @@
     deal.price = serverDeal.price;
     deal.sellerName = serverDeal.sellerName;
     deal.identifier = serverDeal.objectId;
+
     [DatabaseManager createItemWithBlock:serverDeal.item withCompletion:^(AppItem *appItem, NSError *error) {
         if (error) {
             NSLog(@"Error at createDealFromServerDealWithBlock");
@@ -252,7 +253,6 @@
     PFRelation *relation = [user relationForKey:@"dealsSaved"];
     [DatabaseManager getPFObjectFromAppDeal:appDeal withCompletion:^(PFObject *object) {
         if (object != nil) {
-            NSLog(@"codereached2");
             [relation addObject:object];
             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (succeeded) {
@@ -291,7 +291,6 @@
     [query includeKey:@"dealsSaved.item"];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
-            NSLog(@"%@", objects[0]);
             [DatabaseManager createSavedDealsFromFetchWithBlock:objects withCompletion:^(NSArray *appDeals) {
                 completion(appDeals, nil);
             }];

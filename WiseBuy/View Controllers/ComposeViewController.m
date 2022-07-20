@@ -30,9 +30,11 @@
     post[@"itemName"] = self.itemName.text;
     post[@"price"] = self.price.text;
     post[@"sellerName"] = self.sellerName.text;
-    
+    post[@"link"] = self.buyLink.text;
+
     PFUser *currentUser = [PFUser currentUser];
-    post[@"postedBy"] = currentUser;
+    post[@"user"] = currentUser;
+    post[@"postedBy"] = currentUser.username;
     
     [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (!succeeded) {

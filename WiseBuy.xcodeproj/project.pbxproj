@@ -24,6 +24,9 @@
 		D6B0D087288647CD002E2AAA /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D086288647CD002E2AAA /* FriendCell.m */; };
 		D6B0D08D288761A1002E2AAA /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D08C288761A1002E2AAA /* Post.m */; };
 		D6B0D090288762AA002E2AAA /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D08F288762AA002E2AAA /* ComposeViewController.m */; };
+		D6B0D0932887C8AD002E2AAA /* ProgressHUDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D0922887C8AD002E2AAA /* ProgressHUDManager.m */; };
+		D6B0D0962887EAE5002E2AAA /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D0952887EAE5002E2AAA /* PostCell.m */; };
+		D6B0D09828881311002E2AAA /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6B0D09728881311002E2AAA /* UserCell.xib */; };
 		D6D4072728749EB900B34995 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4072628749EB900B34995 /* AppDelegate.m */; };
 		D6D4072A28749EB900B34995 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4072928749EB900B34995 /* SceneDelegate.m */; };
 		D6D4073028749EB900B34995 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D4072E28749EB900B34995 /* Main.storyboard */; };
@@ -104,6 +107,11 @@
 		D6B0D08C288761A1002E2AAA /* Post.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		D6B0D08E288762AA002E2AAA /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
 		D6B0D08F288762AA002E2AAA /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
+		D6B0D0912887C8AD002E2AAA /* ProgressHUDManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressHUDManager.h; sourceTree = "<group>"; };
+		D6B0D0922887C8AD002E2AAA /* ProgressHUDManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressHUDManager.m; sourceTree = "<group>"; };
+		D6B0D0942887EAE5002E2AAA /* PostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
+		D6B0D0952887EAE5002E2AAA /* PostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
+		D6B0D09728881311002E2AAA /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		D6D4072228749EB900B34995 /* WiseBuy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiseBuy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6D4072528749EB900B34995 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D6D4072628749EB900B34995 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -220,6 +228,8 @@
 				D62913AF2874D39500CC7ABA /* APIManager.m */,
 				D62913B32874E9E000CC7ABA /* AlertManager.h */,
 				D62913B42874E9E000CC7ABA /* AlertManager.m */,
+				D6B0D0912887C8AD002E2AAA /* ProgressHUDManager.h */,
+				D6B0D0922887C8AD002E2AAA /* ProgressHUDManager.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -325,6 +335,9 @@
 				D67B9D892885654100130189 /* ItemCollectionViewCell.m */,
 				D6B0D085288647CD002E2AAA /* FriendCell.h */,
 				D6B0D086288647CD002E2AAA /* FriendCell.m */,
+				D6B0D0942887EAE5002E2AAA /* PostCell.h */,
+				D6B0D0952887EAE5002E2AAA /* PostCell.m */,
+				D6B0D09728881311002E2AAA /* UserCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -439,6 +452,7 @@
 			files = (
 				D6DC767A287D8E6B000E08A4 /* 2x.png in Resources */,
 				D629139F2874BAA500CC7ABA /* Keys.plist in Resources */,
+				D6B0D09828881311002E2AAA /* UserCell.xib in Resources */,
 				D6D4073528749EBB00B34995 /* LaunchScreen.storyboard in Resources */,
 				D6D4073228749EBB00B34995 /* Assets.xcassets in Resources */,
 				D6D4073028749EB900B34995 /* Main.storyboard in Resources */,
@@ -589,10 +603,12 @@
 				D6D4072A28749EB900B34995 /* SceneDelegate.m in Sources */,
 				D67B9D842884CD9200130189 /* RecommendationFeedViewController.m in Sources */,
 				D62913B52874E9E000CC7ABA /* AlertManager.m in Sources */,
+				D6B0D0932887C8AD002E2AAA /* ProgressHUDManager.m in Sources */,
 				D6F206B128764D2100EE72FD /* DealCell.m in Sources */,
 				D62913AD2874D38D00CC7ABA /* DatabaseManager.m in Sources */,
 				D69854882874B11D00F79721 /* SettingsViewController.m in Sources */,
 				D6D4075C2874A64900B34995 /* LoginViewController.m in Sources */,
+				D6B0D0962887EAE5002E2AAA /* PostCell.m in Sources */,
 				D62913B02874D39500CC7ABA /* APIManager.m in Sources */,
 				D6D5AD2B2881E33A00CF359B /* UserCell.m in Sources */,
 				D6D407652874A66F00B34995 /* DetailsViewController.m in Sources */,

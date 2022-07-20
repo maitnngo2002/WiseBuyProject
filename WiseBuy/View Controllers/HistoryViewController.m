@@ -13,6 +13,7 @@
 #import "ItemCollectionViewCell.h"
 #import "AppItem.h"
 #import "AppDeal.h"
+#import "ProgressHUDManager.h"
 
 @interface HistoryViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchResultsUpdating>
 
@@ -29,11 +30,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    
     JGProgressHUD *progressHUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleDark];
     progressHUD.textLabel.text = @"Fetching history";
     [progressHUD showInView:self.view];
-    [self setLoadingState:YES viewController:self];
+
+    [ProgressHUDManager setLoadingState:YES viewController:self];
+    
     [DatabaseManager fetchRecentItems:^(NSArray * _Nonnull items, NSError * _Nonnull error) {
         if (items.count > 0) {
             self.items = (NSMutableArray *) items;
@@ -42,7 +48,7 @@
             progressHUD.indicatorView = [[JGProgressHUDSuccessIndicatorView alloc] init];
         }
         [progressHUD dismissAfterDelay:0.1 animated:YES];
-        [self setLoadingState:NO viewController:self];
+        [ProgressHUDManager setLoadingState:NO viewController:self];
     }];
     
     [DatabaseManager fetchAllDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
@@ -58,21 +64,6 @@
     self.navigationItem.titleView = self.searchController.searchBar;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.definesPresentationContext = YES;
-}
-
-- (void)setLoadingState:(BOOL)isFetching viewController:(UIViewController *)vc {
-    if (isFetching) {
-        vc.view.userInteractionEnabled = NO;
-        vc.view.alpha = 0.5f;
-        [vc.navigationController setNavigationBarHidden:YES];
-        [vc.tabBarController.tabBar setHidden:YES];
-    }
-    else {
-        vc.view.userInteractionEnabled = YES;
-        [vc.navigationController setNavigationBarHidden:NO];
-        [vc.tabBarController.tabBar setHidden:NO];
-        vc.view.alpha = 1;
-    }
 }
 
 - (void)viewDidLayoutSubviews {

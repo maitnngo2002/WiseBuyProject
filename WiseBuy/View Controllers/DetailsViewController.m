@@ -9,6 +9,7 @@
 #import "AlertManager.h"
 #import "JGProgressHUD.h"
 #import "DatabaseManager.h"
+#import "ProgressHUDManager.h"
 
 @interface DetailsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *itemName;
@@ -41,7 +42,7 @@
     progressHUD.textLabel.text = @"Loading...";
     
     [progressHUD showInView:self.view];
-    [self setLoadingState:YES viewController:self];
+    [ProgressHUDManager setLoadingState:YES viewController:self];
     
     [DatabaseManager isCurrentDealSaved:self.deal.identifier withCompletion:^(bool hasDeal, NSError * _Nonnull error) {
         if (error) {
@@ -57,7 +58,7 @@
         }
         [progressHUD dismissAfterDelay:0.1 animated:YES];
         
-        [self setLoadingState:NO viewController:self];
+        [ProgressHUDManager setLoadingState:NO viewController:self];
     }];
 }
 
@@ -69,21 +70,6 @@
     else {
         [self.saveButton setTitle:@"Save" forState:UIControlStateNormal];
         [self.saveButton setTitleColor:[UIColor systemBlueColor] forState:UIControlStateNormal];
-    }
-}
-
-- (void)setLoadingState:(BOOL)isFetching viewController:(UIViewController *)vc {
-    if (isFetching) {
-        vc.view.userInteractionEnabled = NO;
-        vc.view.alpha = 0.5f;
-        [vc.navigationController setNavigationBarHidden:YES];
-        [vc.tabBarController.tabBar setHidden:YES];
-    }
-    else {
-        vc.view.userInteractionEnabled = YES;
-        [vc.navigationController setNavigationBarHidden:NO];
-        [vc.tabBarController.tabBar setHidden:NO];
-        vc.view.alpha = 1;
     }
 }
 
