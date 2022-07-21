@@ -95,6 +95,11 @@
                     [AlertManager dealsNotFoundAlert:vc errorType:NoDealFoundError];
                 }
             }];
+            [DatabaseManager updateRecentItems:object withCompletion:^(NSError * _Nonnull error) {
+                if (error) {
+                    [AlertManager dealsNotFoundAlert:vc errorType:NoDealFoundError];
+                }
+            }];
         }
         else {
             completion(nil, error);

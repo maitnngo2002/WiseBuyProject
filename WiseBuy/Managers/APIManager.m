@@ -26,11 +26,11 @@
         [self fetchDealsFromUPCDatabase:barcode];
         dispatch_group_leave(group);
     });
-//    dispatch_group_enter(group);
-//    dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
-//        [self fetchDealsFromSearchUPCAPI:barcode];
-//        dispatch_group_leave(group);
-//    });
+    dispatch_group_enter(group);
+    dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
+        [self fetchDealsFromSearchUPCAPI:barcode];
+        dispatch_group_leave(group);
+    });
     dispatch_group_notify(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
         dispatch_async(dispatch_get_main_queue(), ^{
         });
@@ -48,9 +48,9 @@
         securityName = [[NSUserDefaults standardUserDefaults] stringForKey:@"appSecurityName"];
     }
     
-    NSString *appSecurityName = securityName;
-    NSString *firstHalfBaseURL = @"https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByProduct&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=";
-    NSString *secondHalfBaseURL = @"&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=2&productId.@type=ReferenceID&productId=";
+    NSString *const appSecurityName = securityName;
+    NSString *const firstHalfBaseURL = @"https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByProduct&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=";
+    NSString *const secondHalfBaseURL = @"&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=2&productId.@type=ReferenceID&productId=";
 
     NSString *fullBaseURL = [NSString stringWithFormat:@"%@%@%@", firstHalfBaseURL, appSecurityName, secondHalfBaseURL];
     
@@ -92,9 +92,9 @@
 + (void)fetchDealsFromUPCDatabase:(NSString *)barcode{
     dispatch_semaphore_t sema = dispatch_semaphore_create(0);
     
-    NSString *baseURL = @"https://api.upcitemdb.com/prod/v1/lookup?upc=";
+    NSString *const baseURL = @"https://api.upcitemdb.com/prod/v1/lookup?upc=";
 
-    NSString *fullBaseURL = [NSString stringWithFormat:@"%@%@", baseURL, barcode];
+    NSString *const fullBaseURL = [NSString stringWithFormat:@"%@%@", baseURL, barcode];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:fullBaseURL]
       cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -156,9 +156,9 @@
         accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"access_Token"];
     }
     
-    NSString *accessTokenStr = accessToken;
-    NSString *upcQuery = @"&upc=";
-    NSString *baseURL = @"https://www.searchupc.com/handlers/upcsearch.ashx?request_type=3&access_token=";
+    NSString *const accessTokenStr = accessToken;
+    NSString *const upcQuery = @"&upc=";
+    NSString *const baseURL = @"https://www.searchupc.com/handlers/upcsearch.ashx?request_type=3&access_token=";
     NSString *fullURL = [NSString stringWithFormat:@"%@%@%@%@", baseURL, accessTokenStr, upcQuery, barcode];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:fullURL]
       cachePolicy:NSURLRequestUseProtocolCachePolicy

@@ -76,9 +76,7 @@
 - (IBAction)onTapBuy:(id)sender {
     if ([[UIApplication sharedApplication] canOpenURL:self.deal.itemURL]) {
          [UIApplication.sharedApplication openURL:self.deal.itemURL options:[NSDictionary dictionary] completionHandler:^(BOOL success) {
-             if (success) {
-             }
-             else {
+             if (!success) {
                  [AlertManager cannotOpenLink:self];
              }
          }];
@@ -142,15 +140,5 @@
         self.view.alpha = 1;
     }];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

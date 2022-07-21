@@ -21,6 +21,8 @@
 
 @end
 
+static NSString *const registerSegue = @"registerSegue";
+
 @implementation RegisterViewController
 
 - (IBAction)onTapRegister:(id)sender {
@@ -49,7 +51,7 @@
     
     [DatabaseManager registerUser:newUser withCompletion:^(BOOL success, NSError *error) {
         if (success) {
-            [self performSegueWithIdentifier:@"registerSegue" sender:nil];
+            [self performSegueWithIdentifier:registerSegue sender:nil];
             [self resetFields];
         }
         else {

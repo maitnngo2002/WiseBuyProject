@@ -23,6 +23,8 @@
 
 @end
 
+static NSString *const detailsSegue = @"detailsSegue";
+
 @implementation DealsViewController
 
 -(void)viewDidLoad {
@@ -40,38 +42,41 @@
                 [APIManager fetchDealsFromAPIs:self.barcode];
         }
         dispatch_async(dispatch_get_main_queue(), ^(void){
-            JGProgressHUD *progressHUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
-            
-            progressHUD.textLabel.text = @"Waiting for deals to be displayed";
-            [progressHUD showInView:self.view];
-
-            [ProgressHUDManager setLoadingState:YES viewController:self];
-            
-            [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
-                if (deals.count > 0) {
-                    self.deals = (NSMutableArray *) deals;
-
-                    [DatabaseManager fetchSavedDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
-                        if (self.deals.count == 0) {
-                            self.savedDeals = [NSMutableArray array];
-                        }
-                        else {
-                            self.savedDeals = (NSMutableArray *) deals;
-                        }
-                        [self.tableView reloadData];
-                        
-                        [progressHUD dismissAfterDelay:0.1 animated:YES];
-                        [ProgressHUDManager setLoadingState:NO viewController:self];
-                    }];
-                }
-                else {
-                    NSLog(@"error %@", error.localizedDescription);
-                }
-            }];
+            [self queryItem];
         });
     });
 }
 
+- (void)queryItem{
+    JGProgressHUD *progressHUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
+    
+    progressHUD.textLabel.text = @"Waiting for deals to be displayed";
+    [progressHUD showInView:self.view];
+
+    [ProgressHUDManager setLoadingState:YES viewController:self];
+    
+    [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+        if (deals.count > 0) {
+            self.deals = (NSMutableArray *) deals;
+
+            [DatabaseManager fetchSavedDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+                if (self.deals.count == 0) {
+                    self.savedDeals = [NSMutableArray array];
+                }
+                else {
+                    self.savedDeals = (NSMutableArray *) deals;
+                }
+                [self.tableView reloadData];
+                
+                [progressHUD dismissAfterDelay:0.1 animated:YES];
+                [ProgressHUDManager setLoadingState:NO viewController:self];
+            }];
+        }
+        else {
+            NSLog(@"error %@", error.localizedDescription);
+        }
+    }];
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DealCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DealCell"];
     
@@ -152,7 +157,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-     if ([segue.identifier isEqualToString:@"detailsSegue"]) {
+     if ([segue.identifier isEqualToString:detailsSegue]) {
          UITableViewCell *tappedCell = sender;
          NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
          AppDeal *currentDeal = self.deals[indexPath.row];

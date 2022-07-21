@@ -10,30 +10,38 @@
 #import "DatabaseManager.h"
 #import "AlertManager.h"
 #import "DealCell.h"
-#import "UserCell.h"
 #import "User.h"
 #import "JGProgressHUD/JGProgressHUD.h"
 #import "ProgressHUDManager.h"
 
-@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UserCellDelegate>
+@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
+@property (weak, nonatomic) IBOutlet UILabel *fullNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dealsCountLabel;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) User *user;
+@property (strong, nonatomic) NSMutableArray *savedDeals;
 
 @end
 
 static NSString *const settingsSegue = @"settingsSegue";
 static NSString *const historySegue = @"historySegue";
+static NSString *const savedDealSegue = @"savedDealSegue";
 
 @implementation ProfileViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"UserCell" bundle:nil]  forCellReuseIdentifier:@"UserCell"];
-
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapProfileImage:)];
+    [self.profileImageView addGestureRecognizer:tapRecognizer];
+    [self.profileImageView setUserInteractionEnabled:YES];
 
 }
 
@@ -44,9 +52,12 @@ static NSString *const historySegue = @"historySegue";
     progressHUD.textLabel.text = @"Fetching profile...";
     [progressHUD showInView:self.view];
     [ProgressHUDManager setLoadingState:YES viewController:self];
+    
     [DatabaseManager getCurrentUser:^(User * _Nonnull user) {
          if (user) {
+             self.savedDeals = user.savedDeals;
              [self setUser:user];
+             
              [self.tableView reloadData];
              progressHUD.indicatorView = [[JGProgressHUDSuccessIndicatorView alloc] init];
          }
@@ -58,25 +69,24 @@ static NSString *const historySegue = @"historySegue";
 
 - (void)setUser:(User *)user {
     _user = user;
+    self.profileImageView.image = [UIImage imageWithData:_user.profileImage];
+    self.fullNameLabel.text = [NSString stringWithFormat:@"%@%@", _user.firstName, _user.lastName];
+    self.usernameLabel.text = _user.username;
+    self.dealsCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)_user.savedDeals.count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        UserCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"UserCell"];
-        cell.delegate = self;
-        [cell setUser:_user];
-        return cell;
-    }
-    else {
-        DealCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DealCell"];
-        AppDeal *deal = _user.savedDeals[indexPath.row - 1];
-        [cell setDeal:deal];
-        return cell;
-    }
+    DealCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DealCell"];
+    AppDeal *deal = self.savedDeals[indexPath.row];
+//        cell.itemName.text = deal.item.name;
+//    cell.sellerName.text = deal.sellerName;
+//    cell.price.text = deal.price.stringValue;
+//    [cell setDeal:deal];
+    return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _user.savedDeals.count + 1;
+    return self.savedDeals.count;
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -96,8 +106,8 @@ static NSString *const historySegue = @"historySegue";
     
 }
 
-- (void)userCell:(UserCell *)userCell didTapProfileImage:(UIImage *)image {
-    UIImageView *fullScreenImageView = [[UIImageView alloc] initWithImage:userCell.profileImageView.image];
+- (void)didTapProfileImage:(UIImage *)image {
+    UIImageView *fullScreenImageView = [[UIImageView alloc] initWithImage:self.profileImageView.image];
     fullScreenImageView.frame = [[UIScreen mainScreen] bounds];
     fullScreenImageView.backgroundColor = [UIColor blackColor];
     fullScreenImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -168,14 +178,15 @@ static NSString *const historySegue = @"historySegue";
     return newImage;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:savedDealSegue]) {
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        AppDeal *currentDeal = _user.savedDeals[indexPath.row];
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.deal = currentDeal;
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
-*/
 
 @end

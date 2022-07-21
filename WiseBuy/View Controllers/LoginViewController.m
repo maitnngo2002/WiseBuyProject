@@ -15,6 +15,8 @@
 
 @end
 
+static NSString *const loginSegue = @"loginSegue";
+
 @implementation LoginViewController
 
 - (IBAction)onSignInTap:(id)sender {
@@ -32,7 +34,7 @@
     
     [DatabaseManager loginUser:username password:password withCompletion:^(BOOL success, NSError * _Nonnull error) {
         if (success) {
-            [self performSegueWithIdentifier:@"loginSegue" sender:nil];
+            [self performSegueWithIdentifier:loginSegue sender:nil];
         }
         else {
             [AlertManager loginAlert:ServerError errorString: error.localizedDescription viewController:self];

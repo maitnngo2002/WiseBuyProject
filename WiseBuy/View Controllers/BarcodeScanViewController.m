@@ -167,7 +167,7 @@ NSString *const dealsSegue = @"dealsSegue";
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"dealsSegue"]) {
+    if ([segue.identifier isEqualToString:dealsSegue]) {
         DealsViewController *dealsController = [segue destinationViewController];
         dealsController.barcode = self.barcode;
         self.alreadyScanned = YES;

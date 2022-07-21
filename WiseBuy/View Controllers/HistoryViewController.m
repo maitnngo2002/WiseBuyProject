@@ -26,6 +26,8 @@
 
 @end
 
+static NSString *const itemHistorySegue = @"itemHistorySegue";
+
 @implementation HistoryViewController
 
 - (void)viewDidLoad {
@@ -117,6 +119,20 @@
         }
         
         [self.collectionView reloadData];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UICollectionViewCell *tappedCell = sender;
+    NSIndexPath *indexPath = [self.collectionView indexPathForCell:tappedCell];
+    AppItem *currentItem = self.filteredItems[indexPath.row];
+    
+    if ([segue.identifier isEqualToString:itemHistorySegue] && [self itemHasDeals:currentItem]) {
+        DealsViewController *dealsController = [segue destinationViewController];
+        dealsController.barcode = currentItem.barcode;
+    }
+    else {
+        [AlertManager dealsNotFoundAlert:self errorType:NoDealFoundError];
     }
 }
 

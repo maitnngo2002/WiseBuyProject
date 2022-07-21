@@ -16,6 +16,8 @@
 
 @end
 
+static NSString *const connectionSegue = @"connectionSegue";
+
 @implementation RecommendationFeedViewController
 
 - (void)viewDidLoad {
@@ -75,7 +77,7 @@
 //
 //    cell.userImageView.image = img;
     cell.usernameLabel.text = post.username;
-    cell.userFullNameLabel.text = [[user[0][@"first_name"] stringByAppendingString:@" "] stringByAppendingString:user[0][@"last_name"]];
+    cell.userFullNameLabel.text = [NSString stringWithFormat:@"%@%@", user[0][@"first_name"], user[0][@"last_name"]];
     cell.itemNameLabel.text = post.itemName;
     cell.priceLabel.text = post.price;
     cell.sellerLabel.text = post.sellerName;
@@ -85,7 +87,7 @@
 }
 
 - (IBAction)didTapFindConnections:(id)sender {
-    [self performSegueWithIdentifier:@"connectionSegue" sender:sender];
+    [self performSegueWithIdentifier:connectionSegue sender:sender];
 }
 
 /*
