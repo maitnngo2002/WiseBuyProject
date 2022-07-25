@@ -23,7 +23,7 @@
 
 @end
 
-static NSString *const detailsSegue = @"detailsSegue";
+static NSString *const kDetailsSegue = @"detailsSegue";
 
 @implementation DealsViewController
 
@@ -79,9 +79,10 @@ static NSString *const detailsSegue = @"detailsSegue";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DealCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DealCell"];
-    
-    AppDeal *deal = self.deals[indexPath.row];
-    [cell setDeal:deal];
+    if (self.deals.count > 0) {
+        AppDeal *deal = self.deals[indexPath.row];
+        [cell setDeal:deal];
+    }
     
     return cell;
 }
@@ -157,7 +158,7 @@ static NSString *const detailsSegue = @"detailsSegue";
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-     if ([segue.identifier isEqualToString:detailsSegue]) {
+     if ([segue.identifier isEqualToString:kDetailsSegue]) {
          UITableViewCell *tappedCell = sender;
          NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
          AppDeal *currentDeal = self.deals[indexPath.row];

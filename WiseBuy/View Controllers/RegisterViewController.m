@@ -21,7 +21,7 @@
 
 @end
 
-static NSString *const registerSegue = @"registerSegue";
+static NSString *const kRegisterSegue = @"registerSegue";
 
 @implementation RegisterViewController
 
@@ -51,7 +51,7 @@ static NSString *const registerSegue = @"registerSegue";
     
     [DatabaseManager registerUser:newUser withCompletion:^(BOOL success, NSError *error) {
         if (success) {
-            [self performSegueWithIdentifier:registerSegue sender:nil];
+            [self performSegueWithIdentifier:kRegisterSegue sender:nil];
             [self resetFields];
         }
         else {

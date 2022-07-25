@@ -16,7 +16,7 @@
 
 @end
 
-static NSString *const connectionSegue = @"connectionSegue";
+static NSString *const kConnectionSegue = @"connectionSegue";
 
 @implementation RecommendationFeedViewController
 
@@ -61,43 +61,46 @@ static NSString *const connectionSegue = @"connectionSegue";
     
     Post *post = self.posts[indexPath.row];
     
-    PFQuery *query = [PFUser query];
-    [query includeKey:@"first_name"];
-    [query includeKey:@"last_name"];
-    [query includeKey:@"image"];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        PFQuery *query = [PFUser query];
+        [query includeKey:@"first_name"];
+        [query includeKey:@"last_name"];
+        [query includeKey:@"image"];
 
-    [query whereKey:@"objectId" equalTo:post.user.objectId];
-    NSArray *user = query.findObjects;
-    NSLog(@"%@", user[0][@"image"]);
-    
-    // TODO: fix this later
-//    NSURL *url = [NSURL URLWithString:user[0][@"image"]];
-//    NSData *data = [NSData dataWithContentsOfURL:url];
-//    UIImage *img = [[UIImage alloc] initWithData:data];
-//
-//    cell.userImageView.image = img;
-    cell.usernameLabel.text = post.username;
-    cell.userFullNameLabel.text = [NSString stringWithFormat:@"%@%@", user[0][@"first_name"], user[0][@"last_name"]];
-    cell.itemNameLabel.text = post.itemName;
-    cell.priceLabel.text = post.price;
-    cell.sellerLabel.text = post.sellerName;
-    cell.linkLabel.text = post.itemLink;
+        [query whereKey:@"objectId" equalTo:post.user.objectId];
+        NSArray *user = query.findObjects;
+
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            if (user) {
+                PFFileObject *userImage = user[0][@"image"];
+                NSURL *url = [NSURL URLWithString:userImage.url];
+                NSData *data = [NSData dataWithContentsOfURL:url];
+                UIImage *img = [[UIImage alloc] initWithData:data];
+
+                cell.userImageView.image = img;
+                cell.usernameLabel.text = post.username;
+                cell.userFullNameLabel.text = [NSString stringWithFormat:@"%@%@", user[0][@"first_name"], user[0][@"last_name"]];
+
+            }
+            cell.itemNameLabel.text = post.itemName;
+            cell.priceLabel.text = post.price;
+            cell.sellerLabel.text = post.sellerName;
+            cell.linkLabel.text = @"amazon.com"; // TODO: fix this later
+            
+            NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"amazon.com"];
+            [str addAttribute: NSLinkAttributeName value: @"http://www.google.com" range: NSMakeRange(0, str.length)];
+            cell.linkLabel.attributedText = str;
+            
+        });
+    });
     
     return cell;
 }
 
+
 - (IBAction)didTapFindConnections:(id)sender {
-    [self performSegueWithIdentifier:connectionSegue sender:sender];
+    [self performSegueWithIdentifier:kConnectionSegue sender:sender];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

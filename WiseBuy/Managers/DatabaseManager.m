@@ -34,7 +34,7 @@
     newUser[@"first_name"] = user.firstName;
     newUser[@"last_name"] = user.lastName;
     newUser[@"image"] = [DatabaseManager getPFFileFromImageData:user.profileImage];
-
+    
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
         if (error) {
             NSLog(@"Error: %@", error.localizedDescription);
@@ -158,7 +158,7 @@
     deal.price = serverDeal.price;
     deal.sellerName = serverDeal.sellerName;
     deal.identifier = serverDeal.objectId;
-
+    
     [DatabaseManager createItemWithBlock:serverDeal.item withCompletion:^(AppItem *appItem, NSError *error) {
         if (error) {
             NSLog(@"Error at createDealFromServerDealWithBlock");
@@ -186,7 +186,7 @@
         serverItem.image = object[@"image"];
     }
     serverItem.objectId = object.objectId;
-
+    
     return serverItem;
 }
 
@@ -208,7 +208,7 @@
 }
 
 + (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image {
- 
+    
     if (!image) {
         return nil;
     }
@@ -227,7 +227,7 @@
 }
 
 + (void)fetchDeals:(PFObject *)item withCompletion:(void(^)(NSArray *deals ,NSError *error))completion {
-
+    
     PFQuery *dealsQuery = [Deal query];
     [dealsQuery includeKey:@"item"];
     [dealsQuery whereKey:@"item" equalTo:item];
@@ -293,7 +293,7 @@
     PFUser *user = [PFUser currentUser];
     PFRelation *relation = [user relationForKey:@"dealsSaved"];
     PFQuery *query = [relation query];
-    [query includeKey:@"dealsSaved.item"];
+    [query includeKey:@"item"];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
             [DatabaseManager createSavedDealsFromFetchWithBlock:objects withCompletion:^(NSArray *appDeals) {

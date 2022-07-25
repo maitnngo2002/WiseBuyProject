@@ -26,9 +26,7 @@
 
 @end
 
-static NSString *const settingsSegue = @"settingsSegue";
-static NSString *const historySegue = @"historySegue";
-static NSString *const savedDealSegue = @"savedDealSegue";
+static NSString *const kSavedDealSegue = @"savedDealSegue";
 
 @implementation ProfileViewController
 
@@ -77,11 +75,9 @@ static NSString *const savedDealSegue = @"savedDealSegue";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DealCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DealCell"];
-    AppDeal *deal = self.savedDeals[indexPath.row];
-//        cell.itemName.text = deal.item.name;
-//    cell.sellerName.text = deal.sellerName;
-//    cell.price.text = deal.price.stringValue;
-//    [cell setDeal:deal];
+    AppDeal *deal = _user.savedDeals[indexPath.row];
+
+    [cell setDeal:deal];
     return cell;
 }
 
@@ -90,7 +86,7 @@ static NSString *const savedDealSegue = @"savedDealSegue";
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AppDeal *deal = _user.savedDeals[indexPath.row - 1];
+    AppDeal *deal = _user.savedDeals[indexPath.row];
     UIContextualAction *unsaveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Unsave" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [DatabaseManager unsaveDeal:deal withCompletion:^(NSError * _Nonnull error) {
             if (error) {
@@ -98,7 +94,8 @@ static NSString *const savedDealSegue = @"savedDealSegue";
                 [AlertManager cannotSaveDeal:self];
             }
         }];
-        [self.user.savedDeals removeObjectAtIndex:indexPath.row - 1];
+        [self.user.savedDeals removeObjectAtIndex:indexPath.row];
+        self.dealsCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.user.savedDeals.count];
         [self.tableView reloadData];
     }];
     UISwipeActionsConfiguration *actionConfigurations = [UISwipeActionsConfiguration configurationWithActions:@[unsaveAction]];
@@ -179,7 +176,7 @@ static NSString *const savedDealSegue = @"savedDealSegue";
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:savedDealSegue]) {
+    if ([segue.identifier isEqualToString:kSavedDealSegue]) {
         UITableViewCell *tappedCell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
         AppDeal *currentDeal = _user.savedDeals[indexPath.row];

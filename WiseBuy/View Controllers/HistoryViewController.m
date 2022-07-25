@@ -26,7 +26,7 @@
 
 @end
 
-static NSString *const itemHistorySegue = @"itemHistorySegue";
+static NSString *const kItemHistorySegue = @"itemHistorySegue";
 
 @implementation HistoryViewController
 
@@ -126,8 +126,7 @@ static NSString *const itemHistorySegue = @"itemHistorySegue";
     UICollectionViewCell *tappedCell = sender;
     NSIndexPath *indexPath = [self.collectionView indexPathForCell:tappedCell];
     AppItem *currentItem = self.filteredItems[indexPath.row];
-    
-    if ([segue.identifier isEqualToString:itemHistorySegue] && [self itemHasDeals:currentItem]) {
+    if ([segue.identifier isEqualToString:kItemHistorySegue] && [self itemHasDeals:currentItem]) {
         DealsViewController *dealsController = [segue destinationViewController];
         dealsController.barcode = currentItem.barcode;
     }

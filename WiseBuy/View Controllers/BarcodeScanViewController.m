@@ -10,7 +10,7 @@
 #import <MLKit.h>
 #import "AlertManager.h"
 #import "DealsViewController.h"
-#import "APIManager.h"
+
 @interface BarcodeScanViewController () <AVCaptureVideoDataOutputSampleBufferDelegate>
 @property (weak, nonatomic) IBOutlet UIView *scanView;
 @property (nonatomic) AVCaptureSession *captureSession;
@@ -23,7 +23,7 @@
 
 @end
 
-NSString *const dealsSegue = @"dealsSegue";
+NSString *const kDealsSegue = @"dealsSegue";
 
 @implementation BarcodeScanViewController
 
@@ -121,7 +121,7 @@ NSString *const dealsSegue = @"dealsSegue";
         }
         if (barcodes.count > 0 && !self.alreadyScanned) {
             self.barcode = barcodes.firstObject.rawValue;
-            [self performSegueWithIdentifier:dealsSegue sender:nil];
+            [self performSegueWithIdentifier:kDealsSegue sender:nil];
         }
         else {
             return;
@@ -167,7 +167,7 @@ NSString *const dealsSegue = @"dealsSegue";
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:dealsSegue]) {
+    if ([segue.identifier isEqualToString:kDealsSegue]) {
         DealsViewController *dealsController = [segue destinationViewController];
         dealsController.barcode = self.barcode;
         self.alreadyScanned = YES;

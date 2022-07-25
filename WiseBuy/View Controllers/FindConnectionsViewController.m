@@ -66,8 +66,11 @@
     cell.nameLabel.text = [NSString stringWithFormat:@"%@%@", friend[@"first_name"] , friend[@"last_name"]];
     cell.usernameLabel.text = friend[@"username"];
     
-    // TODO: Assign the profileImageView later
-    // cell.profileImageView.image = [UIImage imageNamed:cell.cellUser[@"image"]];
+    PFFileObject *userImage = cell.cellUser[@"image"];
+    NSURL *url = [NSURL URLWithString:userImage.url];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    UIImage *img = [[UIImage alloc] initWithData:data];
+    cell.profileImageView.image = img;
     
     if(self.segControl.selectedSegmentIndex == 1) {
         [cell.addFriendButton setTitle:@"Remove" forState:UIControlStateNormal];
