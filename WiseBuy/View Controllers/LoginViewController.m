@@ -15,7 +15,7 @@
 
 @end
 
-static NSString *const loginSegue = @"loginSegue";
+static NSString *const kLoginSegue = @"loginSegue";
 
 @implementation LoginViewController
 
@@ -34,7 +34,7 @@ static NSString *const loginSegue = @"loginSegue";
     
     [DatabaseManager loginUser:username password:password withCompletion:^(BOOL success, NSError * _Nonnull error) {
         if (success) {
-            [self performSegueWithIdentifier:loginSegue sender:nil];
+            [self performSegueWithIdentifier:kLoginSegue sender:nil];
         }
         else {
             [AlertManager loginAlert:ServerError errorString: error.localizedDescription viewController:self];

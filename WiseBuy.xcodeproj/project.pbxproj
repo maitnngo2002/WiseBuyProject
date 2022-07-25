@@ -26,6 +26,10 @@
 		D6B0D090288762AA002E2AAA /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D08F288762AA002E2AAA /* ComposeViewController.m */; };
 		D6B0D0932887C8AD002E2AAA /* ProgressHUDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D0922887C8AD002E2AAA /* ProgressHUDManager.m */; };
 		D6B0D0962887EAE5002E2AAA /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D0952887EAE5002E2AAA /* PostCell.m */; };
+		D6B0D09C2889F4E5002E2AAA /* APIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D09B2889F4E5002E2AAA /* APIHelper.m */; };
+		D6B0D09F2889F4F0002E2AAA /* EbayAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D09E2889F4F0002E2AAA /* EbayAPI.m */; };
+		D6B0D0A22889F4FA002E2AAA /* UPCDatabaseAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D0A12889F4FA002E2AAA /* UPCDatabaseAPI.m */; };
+		D6B0D0A52889F521002E2AAA /* SearchUPCAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D0A42889F521002E2AAA /* SearchUPCAPI.m */; };
 		D6D4072728749EB900B34995 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4072628749EB900B34995 /* AppDelegate.m */; };
 		D6D4072A28749EB900B34995 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D4072928749EB900B34995 /* SceneDelegate.m */; };
 		D6D4073028749EB900B34995 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D4072E28749EB900B34995 /* Main.storyboard */; };
@@ -42,7 +46,6 @@
 		D6D407692874A81700B34995 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D407682874A81700B34995 /* ProfileViewController.m */; };
 		D6DC7673287CA03A000E08A4 /* AppDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DC7672287CA03A000E08A4 /* AppDeal.m */; };
 		D6DC7676287CA042000E08A4 /* AppItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DC7675287CA042000E08A4 /* AppItem.m */; };
-		D6DC767A287D8E6B000E08A4 /* 2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6DC7679287D8E6B000E08A4 /* 2x.png */; };
 		D6F206B128764D2100EE72FD /* DealCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6F206B028764D2100EE72FD /* DealCell.m */; };
 		F17D94E2900B6E954BBB80AC /* Pods_WiseBuy_WiseBuyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A7B8A1134FC6BEBF85060B3 /* Pods_WiseBuy_WiseBuyUITests.framework */; };
 		F84FBA8A4FB5229C31A4BDD4 /* Pods_WiseBuyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92EF19107C0D1C1240BE074 /* Pods_WiseBuyTests.framework */; };
@@ -109,6 +112,14 @@
 		D6B0D0922887C8AD002E2AAA /* ProgressHUDManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressHUDManager.m; sourceTree = "<group>"; };
 		D6B0D0942887EAE5002E2AAA /* PostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
 		D6B0D0952887EAE5002E2AAA /* PostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
+		D6B0D09A2889F4E5002E2AAA /* APIHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIHelper.h; sourceTree = "<group>"; };
+		D6B0D09B2889F4E5002E2AAA /* APIHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIHelper.m; sourceTree = "<group>"; };
+		D6B0D09D2889F4F0002E2AAA /* EbayAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EbayAPI.h; sourceTree = "<group>"; };
+		D6B0D09E2889F4F0002E2AAA /* EbayAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EbayAPI.m; sourceTree = "<group>"; };
+		D6B0D0A02889F4FA002E2AAA /* UPCDatabaseAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UPCDatabaseAPI.h; sourceTree = "<group>"; };
+		D6B0D0A12889F4FA002E2AAA /* UPCDatabaseAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UPCDatabaseAPI.m; sourceTree = "<group>"; };
+		D6B0D0A32889F521002E2AAA /* SearchUPCAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUPCAPI.h; sourceTree = "<group>"; };
+		D6B0D0A42889F521002E2AAA /* SearchUPCAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchUPCAPI.m; sourceTree = "<group>"; };
 		D6D4072228749EB900B34995 /* WiseBuy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WiseBuy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6D4072528749EB900B34995 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D6D4072628749EB900B34995 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -138,7 +149,6 @@
 		D6DC7672287CA03A000E08A4 /* AppDeal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDeal.m; sourceTree = "<group>"; };
 		D6DC7674287CA042000E08A4 /* AppItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppItem.h; sourceTree = "<group>"; };
 		D6DC7675287CA042000E08A4 /* AppItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppItem.m; sourceTree = "<group>"; };
-		D6DC7679287D8E6B000E08A4 /* 2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2x.png; path = "../../../Documents/GitHub/Food-Scanner-Swift-App/FoodScan/Assets.xcassets/edit.imageset/2x.png"; sourceTree = "<group>"; };
 		D6F206AF28764D2100EE72FD /* DealCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DealCell.h; sourceTree = "<group>"; };
 		D6F206B028764D2100EE72FD /* DealCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DealCell.m; sourceTree = "<group>"; };
 		E92EF19107C0D1C1240BE074 /* Pods_WiseBuyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WiseBuyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -229,6 +239,21 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		D6B0D0992889F4CA002E2AAA /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				D6B0D09A2889F4E5002E2AAA /* APIHelper.h */,
+				D6B0D09B2889F4E5002E2AAA /* APIHelper.m */,
+				D6B0D09D2889F4F0002E2AAA /* EbayAPI.h */,
+				D6B0D09E2889F4F0002E2AAA /* EbayAPI.m */,
+				D6B0D0A02889F4FA002E2AAA /* UPCDatabaseAPI.h */,
+				D6B0D0A12889F4FA002E2AAA /* UPCDatabaseAPI.m */,
+				D6B0D0A32889F521002E2AAA /* SearchUPCAPI.h */,
+				D6B0D0A42889F521002E2AAA /* SearchUPCAPI.m */,
+			);
+			path = APIs;
+			sourceTree = "<group>";
+		};
 		D6D4071928749EB900B34995 = {
 			isa = PBXGroup;
 			children = (
@@ -254,7 +279,7 @@
 		D6D4072428749EB900B34995 /* WiseBuy */ = {
 			isa = PBXGroup;
 			children = (
-				D6DC7679287D8E6B000E08A4 /* 2x.png */,
+				D6B0D0992889F4CA002E2AAA /* APIs */,
 				D6F206B228764D2A00EE72FD /* Views */,
 				D62913AA2874D37B00CC7ABA /* Managers */,
 				D62913A02874D11B00CC7ABA /* Models */,
@@ -442,7 +467,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6DC767A287D8E6B000E08A4 /* 2x.png in Resources */,
 				D629139F2874BAA500CC7ABA /* Keys.plist in Resources */,
 				D6D4073528749EBB00B34995 /* LaunchScreen.storyboard in Resources */,
 				D6D4073228749EBB00B34995 /* Assets.xcassets in Resources */,
@@ -575,12 +599,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				D67B9D8A2885654100130189 /* ItemCollectionViewCell.m in Sources */,
+				D6B0D0A52889F521002E2AAA /* SearchUPCAPI.m in Sources */,
 				D62913A92874D15000CC7ABA /* Item.m in Sources */,
 				D62913A32874D13B00CC7ABA /* Deal.m in Sources */,
+				D6B0D09F2889F4F0002E2AAA /* EbayAPI.m in Sources */,
 				D6B0D090288762AA002E2AAA /* ComposeViewController.m in Sources */,
 				D6D4075F2874A65200B34995 /* RegisterViewController.m in Sources */,
 				D6D4072728749EB900B34995 /* AppDelegate.m in Sources */,
 				D6D407692874A81700B34995 /* ProfileViewController.m in Sources */,
+				D6B0D09C2889F4E5002E2AAA /* APIHelper.m in Sources */,
 				D67B9D8728851A0700130189 /* FindConnectionsViewController.m in Sources */,
 				D6B0D087288647CD002E2AAA /* FriendCell.m in Sources */,
 				D69854852874B0C300F79721 /* HistoryViewController.m in Sources */,
@@ -592,6 +619,7 @@
 				D6D407622874A65F00B34995 /* BarcodeScanViewController.m in Sources */,
 				D62913A62874D14300CC7ABA /* User.m in Sources */,
 				D6D4072A28749EB900B34995 /* SceneDelegate.m in Sources */,
+				D6B0D0A22889F4FA002E2AAA /* UPCDatabaseAPI.m in Sources */,
 				D67B9D842884CD9200130189 /* RecommendationFeedViewController.m in Sources */,
 				D62913B52874E9E000CC7ABA /* AlertManager.m in Sources */,
 				D6B0D0932887C8AD002E2AAA /* ProgressHUDManager.m in Sources */,

@@ -15,7 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *itemNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sellerLabel;
-@property (weak, nonatomic) IBOutlet UILabel *linkLabel;
+@property (weak, nonatomic) IBOutlet UITextView *linkLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *userFullNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 

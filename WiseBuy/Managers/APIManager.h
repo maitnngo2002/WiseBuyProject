@@ -7,6 +7,9 @@
 
 #import <Foundation/Foundation.h>
 #import "Deal.h"
+#import "EbayAPI.h"
+#import "UPCDatabaseAPI.h"
+#import "SearchUPCAPI.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
