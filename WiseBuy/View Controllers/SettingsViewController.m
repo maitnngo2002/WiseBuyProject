@@ -14,10 +14,6 @@
 
 @implementation SettingsViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
 - (IBAction)didTapLogOut:(id)sender {
     [AlertManager logoutAlert:self];
 }

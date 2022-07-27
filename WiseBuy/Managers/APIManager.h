@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Deal.h"
 #import "EbayAPI.h"
 #import "UPCDatabaseAPI.h"
 #import "SearchUPCAPI.h"
@@ -16,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface APIManager : NSObject
 
 + (void)fetchDealsFromAPIs: (NSString *)barcode;
+@property (strong, nonatomic) NSMutableArray *apiList;
 
 @end
 

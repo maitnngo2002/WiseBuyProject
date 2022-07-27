@@ -22,9 +22,12 @@ static NSString *const kBaseURL = @"https://api.upcitemdb.com/prod/v1/lookup?upc
     if ([[NSUserDefaults standardUserDefaults] stringForKey:@"searchUPC_userKey"]) {
         userKey = [[NSUserDefaults standardUserDefaults] stringForKey:@"searchUPC_userKey"];
     }
-    NSDictionary *headers = @{
-        @"user_key": userKey
-    };
+    NSDictionary *headers = [[NSDictionary alloc] init];
+    if (userKey) {
+        headers = @{
+            @"user_key": userKey
+        };
+    }
     
     NSDictionary *responseDictionary = [APIHelper getResponseFromAPI:fullBaseURL : headers];
     if ([responseDictionary[@"items"] count]) {
@@ -33,8 +36,7 @@ static NSString *const kBaseURL = @"https://api.upcitemdb.com/prod/v1/lookup?upc
         if (count > 0) {
             Item *newItem = [APIHelper createItem:responseDictionary[@"items"][0][@"title"] :responseDictionary[@"items"][0][@"description"] :barcode :responseDictionary[@"items"][0][@"images"][0]];
             
-            int x;
-            for (x = 0; x < count; x++) {
+            for (int x = 0; x < count; x++) {
                 NSDictionary *offer = [responseDictionary[@"items"][0][@"offers"] objectAtIndex:x];
                 [APIHelper createDeal:newItem :offer[@"merchant"] :offer[@"price"] :offer[@"link"]];
             }

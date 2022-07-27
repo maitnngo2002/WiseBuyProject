@@ -38,7 +38,7 @@
     newDeal[@"sellerName"] = sellerName;
     
     if ([price isKindOfClass:[NSString class]]) {
-        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        NSNumberFormatter *f = [NSNumberFormatter new];
         f.numberStyle = NSNumberFormatterDecimalStyle;
         NSNumber *priceNumber = [f numberFromString:price];
         
@@ -75,8 +75,6 @@
         if (error) {
             NSLog(@"%@", error);
         } else {
-            
-            NSLog(@"%@", data);
             NSError *parseError = nil;
             responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
             dispatch_semaphore_signal(sema);
@@ -84,9 +82,7 @@
     }];
     [dataTask resume];
     dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-    NSLog(@"%@", responseDictionary);
     return responseDictionary;
 }
-
 
 @end
