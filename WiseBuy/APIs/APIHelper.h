@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface APIHelper : NSObject
-@property (weak, nonatomic) id<APIDelegate> delegate;
+
 + (Item *)createItem: (NSString *)name : (NSString *)description : (NSString *)barcode : (NSString *)imageUrl;
 + (void)createDeal: (Item *)item : (NSString *)sellerName : (NSString *)price : (NSString *)link;
 + (NSDictionary *)getResponseFromAPI: (NSString *)requestURL : (NSDictionary *)headers;

@@ -71,7 +71,7 @@ static NSString *const kConnectionSegue = @"connectionSegue";
         NSArray *user = query.findObjects;
 
         dispatch_async(dispatch_get_main_queue(), ^(void){
-            if (user) {
+            if (user.count > 0) {
                 PFFileObject *userImage = user[0][@"image"];
                 NSURL *url = [NSURL URLWithString:userImage.url];
                 NSData *data = [NSData dataWithContentsOfURL:url];
@@ -87,8 +87,8 @@ static NSString *const kConnectionSegue = @"connectionSegue";
             cell.sellerLabel.text = post.sellerName;
             cell.linkLabel.text = @"amazon.com"; // TODO: fix this later
             
-            NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"amazon.com"];
-            [str addAttribute: NSLinkAttributeName value: @"http://www.google.com" range: NSMakeRange(0, str.length)];
+            NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"Buy Link"];
+            [str addAttribute: NSLinkAttributeName value: post.itemLink range: NSMakeRange(0, str.length)];
             cell.linkLabel.attributedText = str;
             
         });

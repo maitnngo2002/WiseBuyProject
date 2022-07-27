@@ -30,9 +30,12 @@ static NSString *const kBaseURL = @"https://www.searchupc.com/handlers/upcsearch
     if ([[NSUserDefaults standardUserDefaults] stringForKey:@"searchUPC_userKey"]) {
         userKey = [[NSUserDefaults standardUserDefaults] stringForKey:@"searchUPC_userKey"];
     }
-    NSDictionary *headers = @{
-        @"user_key": userKey
-    };
+    NSDictionary *headers = [[NSDictionary alloc] init];
+    if (userKey) {
+        headers = @{
+            @"user_key": userKey
+        };
+    }
     
     NSDictionary *responseDictionary = [APIHelper getResponseFromAPI:fullURL :headers];
     if (![responseDictionary[@"0"][@"currency"] isEqual:@"N/A"]) { // check the first element if the deal exists
