@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, dealErrorType) {
 + (void)dealsNotFoundAlert:(UIViewController *)vc errorType:(dealErrorType)error;
 + (void)cannotOpenLink:(UIViewController *)vc;
 + (void)cannotSaveDeal:(UIViewController *)vc;
-
++ (void)cannotPostDeal:(UIViewController *)vc;
 
 @end
 
