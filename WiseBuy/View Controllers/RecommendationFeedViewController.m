@@ -66,7 +66,6 @@ static NSString *const kConnectionSegue = @"connectionSegue";
         [query includeKey:@"first_name"];
         [query includeKey:@"last_name"];
         [query includeKey:@"image"];
-
         [query whereKey:@"objectId" equalTo:post.user.objectId];
         NSArray *user = query.findObjects;
 
@@ -85,10 +84,10 @@ static NSString *const kConnectionSegue = @"connectionSegue";
             cell.itemNameLabel.text = post.itemName;
             cell.priceLabel.text = post.price;
             cell.sellerLabel.text = post.sellerName;
-            cell.linkLabel.text = @"amazon.com"; // TODO: fix this later
+            cell.linkLabel.text = post.link;
             
             NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"Buy Link"];
-            [str addAttribute: NSLinkAttributeName value: post.itemLink range: NSMakeRange(0, str.length)];
+            [str addAttribute: NSLinkAttributeName value: post.link range: NSMakeRange(0, str.length)];
             cell.linkLabel.attributedText = str;
             
         });

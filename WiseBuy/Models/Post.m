@@ -14,7 +14,7 @@
 @dynamic itemName;
 @dynamic sellerName;
 @dynamic price;
-@dynamic itemLink;
+@dynamic link;
 
 + (nonnull NSString *)parseClassName {
     return @"Post";

@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *itemName;
 @property (nonatomic, strong) NSString *sellerName;
 @property (nonatomic, strong) NSString *price;
-@property (nonatomic, strong) NSString *itemLink;
+@property (nonatomic, strong) NSString *link;
 
 @end
 
