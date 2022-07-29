@@ -25,6 +25,20 @@ static NSString *const kRegisterSegue = @"registerSegue";
 
 @implementation RegisterViewController
 
+- (void)viewDidLoad {
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tapGestureRecognizer];
+}
+
+- (void)dismissKeyboard {
+    [self.firstNameField resignFirstResponder];
+    [self.lastNameField resignFirstResponder];
+    [self.emailField resignFirstResponder];
+    [self.usernameField resignFirstResponder];
+    [self.passwordField resignFirstResponder];
+}
+
 - (IBAction)onTapRegister:(id)sender {
     [self registerUser];
 }
