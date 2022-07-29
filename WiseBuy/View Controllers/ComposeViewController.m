@@ -19,9 +19,18 @@
 @implementation ComposeViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tapGestureRecognizer];
 }
+
+- (void)dismissKeyboard {
+    [self.itemName resignFirstResponder];
+    [self.price resignFirstResponder];
+    [self.sellerName resignFirstResponder];
+    [self.buyLink resignFirstResponder];
+}
+
 - (IBAction)didTapDismiss:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
 }
