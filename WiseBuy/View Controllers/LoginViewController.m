@@ -19,6 +19,18 @@ static NSString *const kLoginSegue = @"loginSegue";
 
 @implementation LoginViewController
 
+
+- (void)viewDidLoad {
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tapGestureRecognizer];
+}
+
+- (void)dismissKeyboard {
+    [self.usernameField resignFirstResponder];
+    [self.passwordField resignFirstResponder];
+}
+
 - (IBAction)onSignInTap:(id)sender {
     [self loginUser];
 }

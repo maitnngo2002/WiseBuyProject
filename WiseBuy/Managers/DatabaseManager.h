@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)fetchRecentItems:(void(^)(NSArray *items,NSError *error))completion;
 
 + (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image;
-+ (PFFileObject *)getPFFileFromImageData: (NSData *)imageData;
 + (BOOL)checkIfItemAlreadyExist:(NSString *)barcode;
 + (void)saveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion;
 + (void)unsaveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion;

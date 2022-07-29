@@ -27,7 +27,7 @@ NSString *const kDealsSegue = @"dealsSegue";
 
 @implementation BarcodeScanViewController
 
--(void)viewDidLoad{
+- (void)viewDidLoad{
     [super viewDidLoad];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -35,7 +35,7 @@ NSString *const kDealsSegue = @"dealsSegue";
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
 }
--(void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
 
     self.alreadyScanned = NO;
@@ -43,8 +43,7 @@ NSString *const kDealsSegue = @"dealsSegue";
     [self checkPermissions];
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
      [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
@@ -110,7 +109,7 @@ NSString *const kDealsSegue = @"dealsSegue";
     [self.captureSession stopRunning];
 }
 
--(void)captureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(nonnull CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection{
+- (void)captureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(nonnull CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
     MLKVisionImage *image = [[MLKVisionImage alloc] initWithBuffer:sampleBuffer];
     image.orientation = [self imageOrientationFromDeviceOrientation:UIDevice.currentDevice.orientation cameraPosition:AVCaptureDevicePositionBack];
     
@@ -129,13 +128,12 @@ NSString *const kDealsSegue = @"dealsSegue";
     }];
 }
 
--(UIImageOrientation)imageOrientationFromDeviceOrientation:(UIDeviceOrientation)deviceOrientation
+- (UIImageOrientation)imageOrientationFromDeviceOrientation:(UIDeviceOrientation)deviceOrientation
                          cameraPosition:(AVCaptureDevicePosition)cameraPosition {
   switch (deviceOrientation) {
     case UIDeviceOrientationPortrait:
       return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationLeftMirrored
                                                             : UIImageOrientationRight;
-
     case UIDeviceOrientationLandscapeLeft:
       return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationDownMirrored
                                                             : UIImageOrientationUp;
@@ -152,7 +150,7 @@ NSString *const kDealsSegue = @"dealsSegue";
   }
 }
 
--(void)setupLivePreview {
+- (void)setupLivePreview {
     self.videoPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.captureSession];
     if (self.videoPreviewLayer) {
         self.videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;

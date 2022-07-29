@@ -7,7 +7,6 @@
 
 #import "ComposeViewController.h"
 #import "Parse/Parse.h"
-#import "AlertManager.h"
 
 @interface ComposeViewController () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *itemName;
@@ -20,9 +19,18 @@
 @implementation ComposeViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tapGestureRecognizer];
 }
+
+- (void)dismissKeyboard {
+    [self.itemName resignFirstResponder];
+    [self.price resignFirstResponder];
+    [self.sellerName resignFirstResponder];
+    [self.buyLink resignFirstResponder];
+}
+
 - (IBAction)didTapDismiss:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
 }
@@ -39,8 +47,8 @@
     
     [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (!succeeded) {
-            [AlertManager cannotPostDeal:self];
             NSLog(@"%@", error.description);
+            // TODO: Send an alert to user saying there's an error
         } else {
             [self dismissViewControllerAnimated:true completion:nil];
         }
