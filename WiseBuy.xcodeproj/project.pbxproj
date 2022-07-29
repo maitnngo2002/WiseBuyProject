@@ -15,6 +15,7 @@
 		D62913AD2874D38D00CC7ABA /* DatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913AC2874D38D00CC7ABA /* DatabaseManager.m */; };
 		D62913B02874D39500CC7ABA /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913AF2874D39500CC7ABA /* APIManager.m */; };
 		D62913B52874E9E000CC7ABA /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62913B42874E9E000CC7ABA /* AlertManager.m */; };
+		D631F2F42894903000DF7B2D /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D631F2F32894903000DF7B2D /* ComposeViewController.m */; };
 		D67B9D842884CD9200130189 /* RecommendationFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D67B9D832884CD9200130189 /* RecommendationFeedViewController.m */; };
 		D67B9D8728851A0700130189 /* FindConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D67B9D8628851A0700130189 /* FindConnectionsViewController.m */; };
 		D67B9D8A2885654100130189 /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D67B9D892885654100130189 /* ItemCollectionViewCell.m */; };
@@ -89,6 +90,7 @@
 		D62913AF2874D39500CC7ABA /* APIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIManager.m; sourceTree = "<group>"; };
 		D62913B32874E9E000CC7ABA /* AlertManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertManager.h; sourceTree = "<group>"; };
 		D62913B42874E9E000CC7ABA /* AlertManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertManager.m; sourceTree = "<group>"; };
+		D631F2F32894903000DF7B2D /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		D67B9D822884CD9200130189 /* RecommendationFeedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendationFeedViewController.h; sourceTree = "<group>"; };
 		D67B9D832884CD9200130189 /* RecommendationFeedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendationFeedViewController.m; sourceTree = "<group>"; };
 		D67B9D8528851A0700130189 /* FindConnectionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindConnectionsViewController.h; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				D67B9D8528851A0700130189 /* FindConnectionsViewController.h */,
 				D67B9D8628851A0700130189 /* FindConnectionsViewController.m */,
 				D6B0D08E288762AA002E2AAA /* ComposeViewController.h */,
+				D631F2F32894903000DF7B2D /* ComposeViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 				D6B0D09F2889F4F0002E2AAA /* EbayAPI.m in Sources */,
 				D6D4075F2874A65200B34995 /* RegisterViewController.m in Sources */,
 				D6D4072728749EB900B34995 /* AppDelegate.m in Sources */,
+				D631F2F42894903000DF7B2D /* ComposeViewController.m in Sources */,
 				D6D407692874A81700B34995 /* ProfileViewController.m in Sources */,
 				D6B0D09C2889F4E5002E2AAA /* APIHelper.m in Sources */,
 				D67B9D8728851A0700130189 /* FindConnectionsViewController.m in Sources */,
