@@ -23,7 +23,6 @@
 		D69854882874B11D00F79721 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D69854872874B11D00F79721 /* SettingsViewController.m */; };
 		D6B0D087288647CD002E2AAA /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D086288647CD002E2AAA /* FriendCell.m */; };
 		D6B0D08D288761A1002E2AAA /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D08C288761A1002E2AAA /* Post.m */; };
-		D6B0D090288762AA002E2AAA /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D08F288762AA002E2AAA /* ComposeViewController.m */; };
 		D6B0D0932887C8AD002E2AAA /* ProgressHUDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D0922887C8AD002E2AAA /* ProgressHUDManager.m */; };
 		D6B0D0962887EAE5002E2AAA /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D0952887EAE5002E2AAA /* PostCell.m */; };
 		D6B0D09C2889F4E5002E2AAA /* APIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B0D09B2889F4E5002E2AAA /* APIHelper.m */; };
@@ -107,7 +106,6 @@
 		D6B0D08B288761A1002E2AAA /* Post.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		D6B0D08C288761A1002E2AAA /* Post.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		D6B0D08E288762AA002E2AAA /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
-		D6B0D08F288762AA002E2AAA /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		D6B0D0912887C8AD002E2AAA /* ProgressHUDManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressHUDManager.h; sourceTree = "<group>"; };
 		D6B0D0922887C8AD002E2AAA /* ProgressHUDManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressHUDManager.m; sourceTree = "<group>"; };
 		D6B0D0942887EAE5002E2AAA /* PostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
@@ -339,7 +337,6 @@
 				D67B9D8528851A0700130189 /* FindConnectionsViewController.h */,
 				D67B9D8628851A0700130189 /* FindConnectionsViewController.m */,
 				D6B0D08E288762AA002E2AAA /* ComposeViewController.h */,
-				D6B0D08F288762AA002E2AAA /* ComposeViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -603,7 +600,6 @@
 				D62913A92874D15000CC7ABA /* Item.m in Sources */,
 				D62913A32874D13B00CC7ABA /* Deal.m in Sources */,
 				D6B0D09F2889F4F0002E2AAA /* EbayAPI.m in Sources */,
-				D6B0D090288762AA002E2AAA /* ComposeViewController.m in Sources */,
 				D6D4075F2874A65200B34995 /* RegisterViewController.m in Sources */,
 				D6D4072728749EB900B34995 /* AppDelegate.m in Sources */,
 				D6D407692874A81700B34995 /* ProfileViewController.m in Sources */,
