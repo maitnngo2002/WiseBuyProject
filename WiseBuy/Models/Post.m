@@ -7,6 +7,8 @@
 
 #import "Post.h"
 
+static NSString *const kPost = @"Post";
+
 @implementation Post
 
 @dynamic user;
@@ -17,7 +19,7 @@
 @dynamic link;
 
 + (nonnull NSString *)parseClassName {
-    return @"Post";
+    return kPost;
 }
 
 
