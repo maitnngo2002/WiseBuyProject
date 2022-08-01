@@ -37,14 +37,23 @@ static NSString *const kBaseURL = @"https://www.searchupc.com/handlers/upcsearch
         };
     }
     
-    NSDictionary *responseDictionary = [APIHelper getResponseFromAPI:fullURL :headers];
+    NSDictionary *responseDictionary = [APIHelper getResponseFromAPI:fullURL headers:headers];
     if (![responseDictionary[@"0"][@"currency"] isEqual:@"N/A"]) { // check the first element if the deal exists
-        Item *newItem = [APIHelper createItem:responseDictionary[@"0"][@"productname"] :responseDictionary[@"0"][@"storename"] :barcode :responseDictionary[@"0"][@"imageurl"]];
+        
+        NSString *const title = responseDictionary[@"0"][@"productname"];
+        NSString *const description = responseDictionary[@"0"][@"storename"];
+        NSString *const imageUrl = responseDictionary[@"0"][@"imageurl"];
+        
+        Item *newItem = [APIHelper createItem:title description:description barcode:barcode imageUrl:imageUrl];
         
         for (id key in responseDictionary) {
             NSDictionary *offer = [responseDictionary objectForKey:key];
             
-            [APIHelper createDeal:newItem :offer[@"storename"] :offer[@"price"] :offer[@"link"]];
+            NSString *const sellerName = offer[@"storename"];
+            NSString *const price = offer[@"price"];
+            NSString *const link = offer[@"link"];
+            
+            [APIHelper createDeal:newItem sellerName:sellerName price:price link:link];
         }
     }
 }

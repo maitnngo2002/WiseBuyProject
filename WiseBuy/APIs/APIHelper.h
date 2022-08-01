@@ -19,9 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface APIHelper : NSObject
 
-+ (Item *)createItem: (NSString *)name : (NSString *)description : (NSString *)barcode : (NSString *)imageUrl;
-+ (void)createDeal: (Item *)item : (NSString *)sellerName : (NSString *)price : (NSString *)link;
-+ (NSDictionary *)getResponseFromAPI: (NSString *)requestURL : (NSDictionary *)headers;
++ (Item *)createItem: (NSString *)name description:(NSString *) description barcode:(NSString *) barcode imageUrl:(NSString *) imageUrl;
++ (void)createDeal: (Item *)item sellerName:(NSString *) sellerName price:(NSString *) price link:(NSString *) link;
++ (NSDictionary *)getResponseFromAPI: (NSString *)requestURL headers:(NSDictionary *) headers;
 
 @end
 

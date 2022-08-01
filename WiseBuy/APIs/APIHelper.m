@@ -11,7 +11,7 @@
 
 @implementation APIHelper
 
-+ (Item *)createItem: (NSString *)name : (NSString *)description : (NSString *)barcode : (NSString *)imageUrl {
++ (Item *)createItem: (NSString *)name description:(NSString *) description barcode:(NSString *) barcode imageUrl:(NSString *) imageUrl {
     Item *newItem = [Item new];
     newItem[@"name"] = name;
     newItem[@"description"] = description;
@@ -31,8 +31,7 @@
     return newItem;
 }
 
-+ (void)createDeal: (Item *)item : (NSString *)sellerName : (NSString *)price : (NSString *)link {
-    Deal *newDeal = [Deal new];
++ (void)createDeal: (Item *)item sellerName:(NSString *) sellerName price:(NSString *) price link:(NSString *) link {    Deal *newDeal = [Deal new];
     
     newDeal[@"item"] = item;
     newDeal[@"sellerName"] = sellerName;
@@ -51,7 +50,7 @@
     [newDeal saveInBackground];
 }
 
-+ (NSDictionary *)getResponseFromAPI: (NSString *)requestURL : (NSDictionary *)headers {
++ (NSDictionary *)getResponseFromAPI: (NSString *)requestURL headers:(NSDictionary *) headers {
     
     dispatch_semaphore_t sema = dispatch_semaphore_create(0);
 

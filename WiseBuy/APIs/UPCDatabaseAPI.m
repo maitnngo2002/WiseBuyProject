@@ -29,16 +29,24 @@ static NSString *const kBaseURL = @"https://api.upcitemdb.com/prod/v1/lookup?upc
         };
     }
     
-    NSDictionary *responseDictionary = [APIHelper getResponseFromAPI:fullBaseURL : headers];
+    NSDictionary *responseDictionary = [APIHelper getResponseFromAPI:fullBaseURL headers:headers];
     if ([responseDictionary[@"items"] count]) {
         NSInteger count = [responseDictionary[@"items"][0][@"offers"] count];
         
         if (count > 0) {
-            Item *newItem = [APIHelper createItem:responseDictionary[@"items"][0][@"title"] :responseDictionary[@"items"][0][@"description"] :barcode :responseDictionary[@"items"][0][@"images"][0]];
+            NSString *const title = responseDictionary[@"items"][0][@"title"];
+            NSString *const description = responseDictionary[@"items"][0][@"description"];
+            NSString *const imageUrl = responseDictionary[@"items"][0][@"images"][0];
+            
+            Item *newItem = [APIHelper createItem:title description:description barcode:barcode imageUrl:imageUrl];
             
             for (int x = 0; x < count; x++) {
                 NSDictionary *offer = [responseDictionary[@"items"][0][@"offers"] objectAtIndex:x];
-                [APIHelper createDeal:newItem :offer[@"merchant"] :offer[@"price"] :offer[@"link"]];
+                NSString *const sellerName = offer[@"merchant"];
+                NSString *const price = offer[@"price"];
+                NSString *const link = offer[@"link"];
+                
+                [APIHelper createDeal:newItem sellerName:sellerName price:price link:link];
             }
         }
     }
