@@ -20,6 +20,21 @@
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @end
 
+static NSString *const kFriendCellIdentifier = @"FriendCell";
+static NSString *const kAdd = @"Add";
+static NSString *const kRemove = @"Remove";
+static NSString *const kCancel = @"Cancel";
+static NSString *const kAccept = @"Accept";
+static NSString *const kFriendList = @"friendList";
+static NSString *const kOutgoingFriendRequests = @"outgoingFriendRequests";
+static NSString *const kIncomingFriendRequests = @"incomingFriendRequests";
+static NSString *const kUsername = @"username";
+static NSString *const kName = @"name";
+static NSString *const kFirstName = @"first_name";
+static NSString *const kLastName = @"last_name";
+static NSString *const kImage = @"image";
+static NSString *const kLoadFriends = @"loadFriends";
+
 @implementation FindConnectionsViewController
 
 - (void)viewDidLoad {
@@ -33,7 +48,7 @@
     
     self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadFriends) name:@"loadFriends" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadFriends) name:kLoadFriends object:nil];
     
     [self setupActivityIndicator];
     
@@ -60,52 +75,52 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FriendCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"FriendCell"];
+    FriendCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kFriendCellIdentifier];
     PFUser *friend = self.friends[indexPath.row];
     cell.cellUser = friend;
-    cell.nameLabel.text = [NSString stringWithFormat:@"%@%@", friend[@"first_name"] , friend[@"last_name"]];
-    cell.usernameLabel.text = friend[@"username"];
+    cell.nameLabel.text = [NSString stringWithFormat:@"%@%@", friend[kFirstName] , friend[kLastName]];
+    cell.usernameLabel.text = friend[kUsername];
     
-    PFFileObject *userImage = cell.cellUser[@"image"];
+    PFFileObject *userImage = cell.cellUser[kImage];
     NSURL *url = [NSURL URLWithString:userImage.url];
     NSData *data = [NSData dataWithContentsOfURL:url];
     UIImage *img = [[UIImage alloc] initWithData:data];
     cell.profileImageView.image = img;
     
     if(self.segControl.selectedSegmentIndex == 1) {
-        [cell.addFriendButton setTitle:@"Remove" forState:UIControlStateNormal];
+        [cell.addFriendButton setTitle:kRemove forState:UIControlStateNormal];
         [cell.addFriendButton setTintColor:[UIColor systemRedColor]];
         cell.chosenMode = 1;
     } else if (self.segControl.selectedSegmentIndex == 0) {
-        [cell.addFriendButton setTitle:@"Add" forState:UIControlStateNormal];
+        [cell.addFriendButton setTitle:kAdd forState:UIControlStateNormal];
         cell.chosenMode = 0;
-        if([self.user[@"outgoingFriendRequests"] containsObject:friend.username]) {
+        if ([self.user[kOutgoingFriendRequests] containsObject:friend.username]) {
             cell.addFriendButton.tintColor = [UIColor systemTealColor];
-            [cell.addFriendButton setTitle:@"Cancel" forState:UIControlStateNormal];
+            [cell.addFriendButton setTitle:kCancel forState:UIControlStateNormal];
         } else {
             [cell.addFriendButton setTintColor:[UIColor systemIndigoColor]];
         }
     } else {
-        [cell.addFriendButton setTitle:@"Accept" forState:UIControlStateNormal];
+        [cell.addFriendButton setTitle:kAccept forState:UIControlStateNormal];
         [cell.addFriendButton setTintColor:[UIColor systemOrangeColor]];
         cell.chosenMode = 2;
     }
     
-    if(self.segControl.selectedSegmentIndex == 0) {
-        [cell.addFriendButton setTitle:@"Add" forState:UIControlStateNormal];
+    if (self.segControl.selectedSegmentIndex == 0) {
+        [cell.addFriendButton setTitle:kAdd forState:UIControlStateNormal];
         cell.chosenMode = 0;
-        if([self.user[@"outgoingFriendRequests"] containsObject:friend.username]) {
+        if ([self.user[kOutgoingFriendRequests] containsObject:friend.username]) {
             cell.addFriendButton.tintColor = [UIColor systemTealColor];
-            [cell.addFriendButton setTitle:@"Cancel" forState:UIControlStateNormal];
+            [cell.addFriendButton setTitle:kCancel forState:UIControlStateNormal];
         } else {
             [cell.addFriendButton setTintColor:[UIColor systemIndigoColor]];
         }
     } else if (self.segControl.selectedSegmentIndex == 1) {
-        [cell.addFriendButton setTitle:@"Remove" forState:UIControlStateNormal];
+        [cell.addFriendButton setTitle:kRemove forState:UIControlStateNormal];
         [cell.addFriendButton setTintColor:[UIColor systemRedColor]];
         cell.chosenMode = 1;
     } else {
-        [cell.addFriendButton setTitle:@"Accept" forState:UIControlStateNormal];
+        [cell.addFriendButton setTitle:kAccept forState:UIControlStateNormal];
         [cell.addFriendButton setTintColor:[UIColor systemOrangeColor]];
         cell.chosenMode = 2;
     }
@@ -116,14 +131,14 @@
     [self.tableView reloadData];
     [self.activityIndicator startAnimating];
     PFQuery *query = [PFUser query];
-    query.limit = [self.user[@"friendList"] count];
-    [query includeKey:@"username"];
-    [query whereKey:@"username" containedIn:self.user[@"friendList"]];
-    [query includeKey:@"name"];
+    query.limit = [self.user[kFriendList] count];
+    [query includeKey:kUsername];
+    [query whereKey:kUsername containedIn:self.user[kFriendList]];
+    [query includeKey:kName];
 
     if(![container isEqualToString:@""]) {
-        [query whereKey:@"username" containsString:container];
-        [query whereKey:@"name" containsString:container];
+        [query whereKey:kUsername containsString:container];
+        [query whereKey:kName containsString:container];
     }
     [query findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
         if (friends != nil) {
@@ -142,13 +157,13 @@
     [self.activityIndicator startAnimating];
     PFQuery *query = [PFUser query];
     query.limit = 20;
-    [query includeKey:@"username"];
-    [query whereKey:@"username" notContainedIn:self.user[@"friendList"]];
-    [query whereKey:@"username" notEqualTo:self.user.username];
+    [query includeKey:kUsername];
+    [query whereKey:kUsername notContainedIn:self.user[kFriendList]];
+    [query whereKey:kUsername notEqualTo:self.user.username];
     if(![container isEqualToString:@""]) {
-        [query whereKey:@"username" containsString:container];
+        [query whereKey:kUsername containsString:container];
     } else {
-        [query whereKey:@"username" containedIn:self.user[@"outgoingFriendRequests"]];
+        [query whereKey:kUsername containedIn:self.user[kOutgoingFriendRequests]];
     }
     [query findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
         if (friends != nil) {
@@ -165,13 +180,13 @@
     [self.tableView reloadData];
     [self.activityIndicator startAnimating];
     PFQuery *query = [PFUser query];
-    query.limit = 50;
-    [query includeKey:@"username"];
-    [query whereKey:@"username" notContainedIn:self.user[@"friendList"]];
-    [query whereKey:@"username" notEqualTo:self.user.username];
-    [query whereKey:@"username" containedIn:self.user[@"incomingFriendRequests"]];
+    query.limit = 20;
+    [query includeKey:kUsername];
+    [query whereKey:kUsername notContainedIn:self.user[kFriendList]];
+    [query whereKey:kUsername notEqualTo:self.user.username];
+    [query whereKey:kUsername containedIn:self.user[kIncomingFriendRequests]];
     if(![container isEqualToString:@""]) {
-        [query whereKey:@"username" containsString:container];
+        [query whereKey:kUsername containsString:container];
     }
     [query findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
         if (friends != nil) {

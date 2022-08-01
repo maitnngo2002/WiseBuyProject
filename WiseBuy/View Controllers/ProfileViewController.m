@@ -27,6 +27,8 @@
 @end
 
 static NSString *const kSavedDealSegue = @"savedDealSegue";
+static NSString *const kDealCellIdentifier = @"DealCell";
+static NSString *const kUnsave = @"Unsave";
 
 @implementation ProfileViewController
 
@@ -68,13 +70,13 @@ static NSString *const kSavedDealSegue = @"savedDealSegue";
 - (void)setUser:(User *)user {
     _user = user;
     self.profileImageView.image = [UIImage imageWithData:_user.profileImage];
-    self.fullNameLabel.text = [NSString stringWithFormat:@"%@%@", _user.firstName, _user.lastName];
+    self.fullNameLabel.text = [User getFullName:user];
     self.usernameLabel.text = _user.username;
     self.dealsCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)_user.savedDeals.count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    DealCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DealCell"];
+    DealCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kDealCellIdentifier];
     AppDeal *deal = _user.savedDeals[indexPath.row];
 
     [cell setDeal:deal];
@@ -87,7 +89,7 @@ static NSString *const kSavedDealSegue = @"savedDealSegue";
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     AppDeal *deal = _user.savedDeals[indexPath.row];
-    UIContextualAction *unsaveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Unsave" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+    UIContextualAction *unsaveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:kUnsave handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [DatabaseManager unsaveDeal:deal withCompletion:^(NSError * _Nonnull error) {
             if (error) {
                 NSLog(@"%@", error.localizedDescription);
