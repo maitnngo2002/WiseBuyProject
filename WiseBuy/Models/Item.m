@@ -7,6 +7,8 @@
 
 #import "Item.h"
 
+static NSString *const kItem = @"Item";
+
 @implementation Item
 
 @dynamic barcode;
@@ -15,6 +17,6 @@
 @dynamic information;
 
 + (nonnull NSString *)parseClassName {
-    return @"Item";
+    return kItem;
 }
 @end

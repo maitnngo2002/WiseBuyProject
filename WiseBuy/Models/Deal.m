@@ -7,6 +7,8 @@
 
 #import "Deal.h"
 
+static NSString *const kDeal = @"Deal";
+
 @implementation Deal
 
 @dynamic sellerName;
@@ -15,7 +17,7 @@
 @dynamic item;
 
 + (nonnull NSString *)parseClassName {
-    return @"Deal";
+    return kDeal;
 }
 
 @end
