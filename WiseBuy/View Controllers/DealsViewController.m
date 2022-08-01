@@ -24,6 +24,10 @@
 @end
 
 static NSString *const kDetailsSegue = @"detailsSegue";
+static NSString *const kProgressHUDText = @"Waiting for deals to be displayed";
+static NSString *const kDealCellIdentifier = @"DealCell";
+static NSString *const kSave = @"Save";
+static NSString *const kUnsave = @"Unsave";
 
 @implementation DealsViewController
 
@@ -39,7 +43,7 @@ static NSString *const kDetailsSegue = @"detailsSegue";
 
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         if (![DatabaseManager checkIfItemAlreadyExist:self.barcode]) {
-                [APIManager fetchDealsFromAPIs:self.barcode];
+            [APIManager fetchDealsFromAPIs:self.barcode];
         }
         dispatch_async(dispatch_get_main_queue(), ^(void){
             [self queryItem];
@@ -50,7 +54,7 @@ static NSString *const kDetailsSegue = @"detailsSegue";
 - (void)queryItem{
     JGProgressHUD *progressHUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
     
-    progressHUD.textLabel.text = @"Waiting for deals to be displayed";
+    progressHUD.textLabel.text = kProgressHUDText;
     [progressHUD showInView:self.view];
 
     [ProgressHUDManager setLoadingState:YES viewController:self];
@@ -78,7 +82,7 @@ static NSString *const kDetailsSegue = @"detailsSegue";
     }];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    DealCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DealCell"];
+    DealCell *cell = [tableView dequeueReusableCellWithIdentifier:kDealCellIdentifier];
     if (self.deals.count > 0) {
         AppDeal *deal = self.deals[indexPath.row];
         [cell setDeal:deal];
@@ -94,7 +98,7 @@ static NSString *const kDetailsSegue = @"detailsSegue";
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     AppDeal *deal = self.deals[indexPath.row];
 
-    UIContextualAction *saveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Save" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+    UIContextualAction *saveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:kSave handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [DatabaseManager saveDeal:deal withCompletion:^(NSError * _Nonnull error) {
             if (error) {
                 NSLog(@"%@", error.localizedDescription);
@@ -112,7 +116,7 @@ static NSString *const kDetailsSegue = @"detailsSegue";
     }];
     saveAction.backgroundColor = [UIColor systemBlueColor];
 
-    UIContextualAction *unsaveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Unsave" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+    UIContextualAction *unsaveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:kUnsave handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [DatabaseManager unsaveDeal:deal withCompletion:^(NSError * _Nonnull error) {
             if (error) {
                 NSLog(@"%@", error.localizedDescription);

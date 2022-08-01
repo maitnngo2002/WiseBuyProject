@@ -17,6 +17,18 @@
 @end
 
 static NSString *const kConnectionSegue = @"connectionSegue";
+static NSString *const kPostCellIdentifier = @"PostCell";
+static NSString *const kPost = @"Post";
+static NSString *const kCreateAt = @"createdAt";
+static NSString *const kItemName = @"itemName";
+static NSString *const kPrice = @"price";
+static NSString *const kSellerName = @"sellerName";
+static NSString *const kPostedBy = @"postedBy";
+static NSString *const kFriendList = @"friendList";
+static NSString *const kFirstName = @"first_name";
+static NSString *const kLastName = @"last_name";
+static NSString *const kImage = @"image";
+static NSString *const kObjectId = @"objectId";
 
 @implementation RecommendationFeedViewController
 
@@ -34,13 +46,13 @@ static NSString *const kConnectionSegue = @"connectionSegue";
 
 -(void) queryPosts {
     PFUser *user = [PFUser currentUser];
-    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
-    [query orderByDescending:@"createdAt"];
-    [query includeKey:@"itemName"];
-    [query includeKey:@"price"];
-    [query includeKey:@"sellerName"];
-    [query includeKey:@"postedBy"];
-    [query whereKey:@"postedBy" containedIn:user[@"friendList"]];
+    PFQuery *query = [PFQuery queryWithClassName:kPost];
+    [query orderByDescending:kCreateAt];
+    [query includeKey:kItemName];
+    [query includeKey:kPrice];
+    [query includeKey:kSellerName];
+    [query includeKey:kPostedBy];
+    [query whereKey:kPostedBy containedIn:user[kFriendList]];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable posts, NSError * _Nullable error) {
         if (posts) {
@@ -57,28 +69,28 @@ static NSString *const kConnectionSegue = @"connectionSegue";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
+    PostCell *cell = [tableView dequeueReusableCellWithIdentifier:kPostCellIdentifier];
     
     Post *post = self.posts[indexPath.row];
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         PFQuery *query = [PFUser query];
-        [query includeKey:@"first_name"];
-        [query includeKey:@"last_name"];
-        [query includeKey:@"image"];
-        [query whereKey:@"objectId" equalTo:post.user.objectId];
+        [query includeKey:kFirstName];
+        [query includeKey:kLastName];
+        [query includeKey:kImage];
+        [query whereKey:kObjectId equalTo:post.user.objectId];
         NSArray *user = query.findObjects;
 
         dispatch_async(dispatch_get_main_queue(), ^(void){
             if (user.count > 0) {
-                PFFileObject *userImage = user[0][@"image"];
+                PFFileObject *userImage = user[0][kImage];
                 NSURL *url = [NSURL URLWithString:userImage.url];
                 NSData *data = [NSData dataWithContentsOfURL:url];
                 UIImage *img = [[UIImage alloc] initWithData:data];
 
                 cell.userImageView.image = img;
                 cell.usernameLabel.text = post.username;
-                cell.userFullNameLabel.text = [NSString stringWithFormat:@"%@%@", user[0][@"first_name"], user[0][@"last_name"]];
+                cell.userFullNameLabel.text = [NSString stringWithFormat:@"%@%@", user[0][kFirstName], user[0][kLastName]];
 
             }
             cell.itemNameLabel.text = post.itemName;

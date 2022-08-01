@@ -27,6 +27,7 @@
 @end
 
 static NSString *const kItemHistorySegue = @"itemHistorySegue";
+static NSString *const kItemCollectionViewCellIdentifier = @"ItemCollectionViewCell";
 
 @implementation HistoryViewController
 
@@ -90,7 +91,7 @@ static NSString *const kItemHistorySegue = @"itemHistorySegue";
 }
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    ItemCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ItemCollectionViewCell" forIndexPath:indexPath];
+    ItemCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kItemCollectionViewCellIdentifier forIndexPath:indexPath];
     AppItem *currentItem = self.filteredItems[indexPath.row];
     [cell setItem:currentItem];
     return cell;

@@ -7,6 +7,7 @@
 
 #import "ComposeViewController.h"
 #import "Parse/Parse.h"
+#import "AlertManager.h"
 
 @interface ComposeViewController () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *itemName;
@@ -15,6 +16,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *buyLink;
 
 @end
+static NSString *const kPostClass = @"Post";
+static NSString *const kItemName = @"itemName";
+static NSString *const kPrice = @"price";
+static NSString *const kSellerName = @"sellerName";
+static NSString *const kLink = @"link";
+static NSString *const kUser = @"user";
+static NSString *const kPostedBy = @"postedBy";
 
 @implementation ComposeViewController
 
@@ -35,34 +43,24 @@
     [self dismissViewControllerAnimated:true completion:nil];
 }
 - (IBAction)didTapPost:(id)sender {
-    PFObject *post = [PFObject objectWithClassName:@"Post"];
-    post[@"itemName"] = self.itemName.text;
-    post[@"price"] = self.price.text;
-    post[@"sellerName"] = self.sellerName.text;
-    post[@"link"] = self.buyLink.text;
+    PFObject *post = [PFObject objectWithClassName:kPostClass];
+    post[kItemName] = self.itemName.text;
+    post[kPrice] = self.price.text;
+    post[kSellerName] = self.sellerName.text;
+    post[kLink] = self.buyLink.text;
 
     PFUser *currentUser = [PFUser currentUser];
-    post[@"user"] = currentUser;
-    post[@"postedBy"] = currentUser.username;
+    post[kUser] = currentUser;
+    post[kPostedBy] = currentUser.username;
     
     [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (!succeeded) {
+            [AlertManager cannotPostDeal:self];
             NSLog(@"%@", error.description);
-            // TODO: Send an alert to user saying there's an error
         } else {
             [self dismissViewControllerAnimated:true completion:nil];
         }
     }];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

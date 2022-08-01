@@ -10,7 +10,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FindConnectionsViewController : UIViewController
-
+typedef NS_ENUM(NSInteger, errorType) {
+    InputValidationError,
+    LoginErrorMissingInput,
+    ServerError
+};
 @end
 
 NS_ASSUME_NONNULL_END

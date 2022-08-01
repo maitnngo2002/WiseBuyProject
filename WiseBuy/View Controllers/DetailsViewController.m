@@ -23,6 +23,10 @@
 
 @end
 
+static NSString *const kSave = @"Save";
+static NSString *const kUnsave = @"Unsave";
+static NSString *const kProgressHUDText = @"Loading...";
+
 @implementation DetailsViewController
 
 - (void)viewDidLoad {
@@ -39,7 +43,7 @@
     [super viewWillAppear:YES];
     
     JGProgressHUD *progressHUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleDark];
-    progressHUD.textLabel.text = @"Loading...";
+    progressHUD.textLabel.text = kProgressHUDText;
     
     [progressHUD showInView:self.view];
     [ProgressHUDManager setLoadingState:YES viewController:self];
@@ -64,11 +68,11 @@
 
 - (void)setSaveButtonOnDealStatus {
     if (self.alreadySaved) {
-        [self.saveButton setTitle:@"Unsave" forState:UIControlStateNormal];
+        [self.saveButton setTitle:kUnsave forState:UIControlStateNormal];
         [self.saveButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     }
     else {
-        [self.saveButton setTitle:@"Save" forState:UIControlStateNormal];
+        [self.saveButton setTitle:kSave forState:UIControlStateNormal];
         [self.saveButton setTitleColor:[UIColor systemBlueColor] forState:UIControlStateNormal];
     }
 }
