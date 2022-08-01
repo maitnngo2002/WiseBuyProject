@@ -12,6 +12,23 @@
 #import "SceneDelegate.h"
 #import "User.h"
 
+static NSString *const kLoginViewController = @"LoginViewController";
+static NSString *const kSellerName = @"sellerName";
+static NSString *const kItem = @"item";
+static NSString *const kName = @"name";
+static NSString *const kInformation = @"information";
+static NSString *const kBarcode = @"barcode";
+static NSString *const kPrice = @"price";
+static NSString *const kLink = @"link";
+static NSString *const kImage = @"image";
+static NSString *const kInfo = @"info";
+static NSString *const kDealsSaved = @"dealsSaved";
+static NSString *const kRecentItems = @"recentItems";
+static NSString *const kFirstName = @"first_name";
+static NSString *const kLastName = @"last_name";
+static NSString *const kEmail = @"email";
+static NSString *const kUsername = @"username";
+
 @implementation DatabaseManager
 
 +(void)loginUser:(NSString *)username password:(NSString *)password withCompletion:(void(^)(BOOL success, NSError *error))completion {
@@ -31,9 +48,9 @@
     newUser.username = user.username;
     newUser.password = user.password;
     newUser.email = user.email;
-    newUser[@"first_name"] = user.firstName;
-    newUser[@"last_name"] = user.lastName;
-    newUser[@"image"] = [DatabaseManager getPFFileFromImageData:user.profileImage];
+    newUser[kFirstName] = user.firstName;
+    newUser[kLastName] = user.lastName;
+    newUser[kImage] = [DatabaseManager getPFFileFromImageData:user.profileImage];
     
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
         if (error) {
@@ -46,8 +63,8 @@
 + (void)logoutUser:(UIViewController *)vc {
     SceneDelegate *sceneDelegate = (SceneDelegate *) vc.view.window.windowScene.delegate;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UINavigationController *initialNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"InitialNavigationController"];
-    sceneDelegate.window.rootViewController = initialNavigationController;
+    UIViewController *initialViewController = [storyboard instantiateViewControllerWithIdentifier:kLoginViewController];
+    sceneDelegate.window.rootViewController = initialViewController;
     
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
         if (error != nil) {
@@ -62,11 +79,11 @@
 + (void)getCurrentUser:(void(^)(User *user))completion {
     PFUser *user = [PFUser currentUser];
     User *currentUser = [User new];
-    currentUser.firstName = user[@"first_name"];
-    currentUser.lastName = user[@"last_name"];
-    currentUser.email = user[@"email"];
-    currentUser.username = user[@"username"];
-    PFFileObject *profileImage = user[@"image"];
+    currentUser.firstName = user[kFirstName];
+    currentUser.lastName = user[kLastName];
+    currentUser.email = user[kEmail];
+    currentUser.username = user[kUsername];
+    PFFileObject *profileImage = user[kImage];
     [profileImage getDataInBackgroundWithBlock:^(NSData * _Nullable imageData, NSError * _Nullable error) {
         if (!error) {
             currentUser.profileImage = imageData;
@@ -82,7 +99,7 @@
 
 + (void)fetchItem:(NSString *)barcode viewController:(UIViewController *)vc withCompletion:(void(^)(NSArray *deals,NSError *error))completion {
     PFQuery *itemQuery = [Item query];
-    [itemQuery whereKey:@"barcode" equalTo:barcode];
+    [itemQuery whereKey:kBarcode equalTo:barcode];
     [itemQuery getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (object != nil) {
             [DatabaseManager fetchDeals:object withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
@@ -128,23 +145,23 @@
 
 + (Deal *)createDealFromObject:(PFObject *)object {
     Deal *deal = [Deal new];
-    if (object[@"sellerName"] != nil && [object[@"sellerName"] isKindOfClass:[NSString class]]) {
-        deal.sellerName = object[@"sellerName"];
+    if (object[kSellerName] != nil && [object[kSellerName] isKindOfClass:[NSString class]]) {
+        deal.sellerName = object[kSellerName];
     } else {
         return nil;
     }
-    if (object[@"price"] != nil && [object[@"price"] isKindOfClass:[NSNumber class]]) {
-        deal.price = object[@"price"];
+    if (object[kPrice] != nil && [object[kPrice] isKindOfClass:[NSNumber class]]) {
+        deal.price = object[kPrice];
     } else {
         return nil;
     }
-    if (object[@"item"] != nil && [object[@"item"] isKindOfClass:[PFObject class]]) {
-        deal.item = [DatabaseManager createServerItemFromPFObject:object[@"item"]];
+    if (object[kItem] != nil && [object[kItem] isKindOfClass:[PFObject class]]) {
+        deal.item = [DatabaseManager createServerItemFromPFObject:object[kItem]];
     } else {
         return nil;
     }
-    if (object[@"link"] != nil && [object[@"link"] isKindOfClass:[NSString class]]) {
-        deal.itemURL = object[@"link"];
+    if (object[kLink] != nil && [object[kLink] isKindOfClass:[NSString class]]) {
+        deal.itemURL = object[kLink];
     } else {
         return nil;
     }
@@ -173,17 +190,17 @@
 + (Item *)createServerItemFromPFObject:(PFObject *)object {
     Item *serverItem = [Item new];
     
-    if (object[@"name"] != nil && [object[@"name"] isKindOfClass:[NSString class]]) {
-        serverItem.name = object[@"name"];
+    if (object[kName] != nil && [object[kName] isKindOfClass:[NSString class]]) {
+        serverItem.name = object[kName];
     }
-    if (object[@"information"] != nil && [object[@"information"] isKindOfClass:[NSString class]]) {
-        serverItem.information = object[@"information"];
+    if (object[kInformation] != nil && [object[kInformation] isKindOfClass:[NSString class]]) {
+        serverItem.information = object[kInformation];
     }
-    if (object[@"barcode"] != nil && [object[@"barcode"] isKindOfClass:[NSString class]]) {
-        serverItem.barcode = object[@"barcode"];
+    if (object[kBarcode] != nil && [object[kBarcode] isKindOfClass:[NSString class]]) {
+        serverItem.barcode = object[kBarcode];
     }
-    if (object[@"image"] != nil) {
-        serverItem.image = object[@"image"];
+    if (object[kImage] != nil) {
+        serverItem.image = object[kImage];
     }
     serverItem.objectId = object.objectId;
     
@@ -229,8 +246,8 @@
 + (void)fetchDeals:(PFObject *)item withCompletion:(void(^)(NSArray *deals ,NSError *error))completion {
     
     PFQuery *dealsQuery = [Deal query];
-    [dealsQuery includeKey:@"item"];
-    [dealsQuery whereKey:@"item" equalTo:item];
+    [dealsQuery includeKey:kItem];
+    [dealsQuery whereKey:kItem equalTo:item];
     
     [dealsQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
@@ -244,7 +261,7 @@
 
 + (BOOL)checkIfItemAlreadyExist:(NSString *)barcode {
     PFQuery *itemQuery = [Item query];
-    [itemQuery whereKey:@"barcode" equalTo:barcode];
+    [itemQuery whereKey:kBarcode equalTo:barcode];
     
     if ([itemQuery countObjects ] > 0) {
         return YES;
@@ -255,7 +272,7 @@
 
 + (void)saveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion {
     PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationForKey:@"dealsSaved"];
+    PFRelation *relation = [user relationForKey:kDealsSaved];
     [DatabaseManager getPFObjectFromAppDeal:appDeal withCompletion:^(PFObject *object) {
         if (object != nil) {
             [relation addObject:object];
@@ -273,7 +290,7 @@
 
 + (void)unsaveDeal:(AppDeal *)appDeal withCompletion:(void(^)(NSError *error))completion {
     PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationForKey:@"dealsSaved"];
+    PFRelation *relation = [user relationForKey:kDealsSaved];
     [DatabaseManager getPFObjectFromAppDeal:appDeal withCompletion:^(PFObject *object) {
         if (object != nil) {
             [relation removeObject:object];
@@ -291,9 +308,9 @@
 
 + (void)fetchSavedDeals:(void(^)(NSArray *deals, NSError *error))completion {
     PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationForKey:@"dealsSaved"];
+    PFRelation *relation = [user relationForKey:kDealsSaved];
     PFQuery *query = [relation query];
-    [query includeKey:@"item"];
+    [query includeKey:kItem];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
             [DatabaseManager createSavedDealsFromFetchWithBlock:objects withCompletion:^(NSArray *appDeals) {
@@ -309,8 +326,8 @@
 
 + (void)fetchAllDeals:(void(^)(NSArray *deals ,NSError *error))completion {
     PFQuery *dealsQuery = [Deal query];
-    [dealsQuery includeKey:@"item"];
-    [dealsQuery orderByAscending:@"price"];
+    [dealsQuery includeKey:kItem];
+    [dealsQuery orderByAscending:kPrice];
     
     [dealsQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
@@ -345,7 +362,7 @@
 
 + (void)isCurrentDealSaved:(NSString *)identifier withCompletion:(void(^)(_Bool hasDeal, NSError *error))completion {
     PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationForKey:@"dealsSaved"];
+    PFRelation *relation = [user relationForKey:kDealsSaved];
     [[relation query] findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
             for (PFObject *obj in objects) {
@@ -364,26 +381,26 @@
 
 + (void)createDealFromObjectWithBlock:(PFObject *)object withCompletion:(void(^)(Deal *deal))completion {
     Deal *deal = [Deal new];
-    if (object[@"sellerName"] != nil && [object[@"sellerName"] isKindOfClass:[NSString class]]) {
-        deal.sellerName = object[@"sellerName"];
+    if (object[kSellerName] != nil && [object[kSellerName] isKindOfClass:[NSString class]]) {
+        deal.sellerName = object[kSellerName];
     }
     else {
         completion(nil);
     }
-    if (object[@"price"] != nil && [object[@"price"] isKindOfClass:[NSNumber class]]) {
-        deal.price = object[@"price"];
+    if (object[kPrice] != nil && [object[kPrice] isKindOfClass:[NSNumber class]]) {
+        deal.price = object[kPrice];
     }
     else {
         completion(nil);
     }
-    if (object[@"link"] != nil && [object[@"link"] isKindOfClass:[NSString class]]) {
-        deal.itemURL = object[@"link"];
+    if (object[kLink] != nil && [object[kLink] isKindOfClass:[NSString class]]) {
+        deal.itemURL = object[kLink];
     }
     else {
         completion(nil);
     }
-    if (object[@"item"] != nil && [object[@"item"] isKindOfClass:[PFObject class]]) {
-        [DatabaseManager createServerItemFromPFObjectWithBlock:object[@"item"] withCompletion:^(Item *item) {
+    if (object[kItem] != nil && [object[kItem] isKindOfClass:[PFObject class]]) {
+        [DatabaseManager createServerItemFromPFObjectWithBlock:object[kItem] withCompletion:^(Item *item) {
             if (item != nil) {
                 deal.item = item;
                 deal.objectId = object.objectId;
@@ -403,17 +420,17 @@
     Item *serverItem = [Item new];
     PFQuery *itemQuery = [Item query];
     [itemQuery getObjectInBackgroundWithId:serverObject.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        if (object[@"name"] != nil && [object[@"name"] isKindOfClass:[NSString class]]) {
-            serverItem.name = object[@"name"];
+        if (object[kName] != nil && [object[kName] isKindOfClass:[NSString class]]) {
+            serverItem.name = object[kName];
         }
-        if (object[@"info"] != nil && [object[@"info"] isKindOfClass:[NSString class]]) {
-            serverItem.information = object[@"info"];
+        if (object[kInfo] != nil && [object[kInfo] isKindOfClass:[NSString class]]) {
+            serverItem.information = object[kInfo];
         }
-        if (object[@"barcode"] != nil && [object[@"barcode"] isKindOfClass:[NSString class]]) {
-            serverItem.barcode = object[@"barcode"];
+        if (object[kBarcode] != nil && [object[kBarcode] isKindOfClass:[NSString class]]) {
+            serverItem.barcode = object[kBarcode];
         }
-        if (object[@"image"] != nil) {
-            serverItem.image = object[@"image"];
+        if (object[kImage] != nil) {
+            serverItem.image = object[kImage];
         }
         serverItem.objectId = object.objectId;
         completion(serverItem);
@@ -434,7 +451,7 @@
 
 + (void)fetchRecentItems:(void(^)(NSArray *items,NSError *error))completion {
     PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationForKey:@"recentItems"];
+    PFRelation *relation = [user relationForKey:kRecentItems];
     PFQuery *query = [relation query];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
@@ -473,7 +490,7 @@
 
 + (void)updateRecentItems:(PFObject *)item withCompletion:(void(^)(NSError *error))completion {
     PFUser *user = [PFUser currentUser];
-    PFRelation *relation = [user relationForKey:@"recentItems"];
+    PFRelation *relation = [user relationForKey:kRecentItems];
     if (item != nil) {
         [relation addObject:item];
         [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
