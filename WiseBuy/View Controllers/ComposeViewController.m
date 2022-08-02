@@ -33,10 +33,7 @@ static NSString *const kPostedBy = @"postedBy";
 }
 
 - (void)dismissKeyboard {
-    [self.itemName resignFirstResponder];
-    [self.price resignFirstResponder];
-    [self.sellerName resignFirstResponder];
-    [self.buyLink resignFirstResponder];
+    [self.view endEditing:YES];
 }
 
 - (IBAction)didTapDismiss:(id)sender {

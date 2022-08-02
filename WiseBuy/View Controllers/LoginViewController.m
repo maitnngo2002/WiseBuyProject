@@ -27,8 +27,7 @@ static NSString *const kLoginSegue = @"loginSegue";
 }
 
 - (void)dismissKeyboard {
-    [self.usernameField resignFirstResponder];
-    [self.passwordField resignFirstResponder];
+    [self.view endEditing:YES];
 }
 
 - (IBAction)onSignInTap:(id)sender {
