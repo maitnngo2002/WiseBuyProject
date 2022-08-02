@@ -32,11 +32,7 @@ static NSString *const kRegisterSegue = @"registerSegue";
 }
 
 - (void)dismissKeyboard {
-    [self.firstNameField resignFirstResponder];
-    [self.lastNameField resignFirstResponder];
-    [self.emailField resignFirstResponder];
-    [self.usernameField resignFirstResponder];
-    [self.passwordField resignFirstResponder];
+    [self.view endEditing:YES];
 }
 
 - (IBAction)onTapRegister:(id)sender {
