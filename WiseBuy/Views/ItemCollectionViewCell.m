@@ -11,7 +11,11 @@
 
 - (void)setItem:(AppItem *)item {
     _item = item;
-    self.itemImageView.image = [UIImage imageWithData:item.image];
+    NSURL *url = [NSURL URLWithString:item.image.url];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    UIImage *image = [UIImage imageWithData:data];
+    
+    self.itemImageView.image = image;
 }
 
 @end
