@@ -32,7 +32,6 @@ This application scans items' barcodes and displays most popular deals found on 
 * User can add/remove friends
 * User can see a feed of deals posted by his/her friends
 * User can search their scanning history
-* User can change the money currency
 
 ### 2. Screen Archetypes
 
