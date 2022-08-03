@@ -8,6 +8,7 @@
 #import "UPCDatabaseAPI.h"
 
 static NSString *const kBaseURL = @"https://api.upcitemdb.com/prod/v1/lookup?upc=";
+static NSString *const kSearchUPCUserKey = @"upcDatabase_userKey";
 
 @implementation UPCDatabaseAPI
 
@@ -17,10 +18,10 @@ static NSString *const kBaseURL = @"https://api.upcitemdb.com/prod/v1/lookup?upc
     
     NSString *const path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *const dict = [NSDictionary dictionaryWithContentsOfFile: path];
-    NSString *userKey = [dict objectForKey: @"searchUPC_userKey"];
+    NSString *userKey = [dict objectForKey: kSearchUPCUserKey];
     
-    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"searchUPC_userKey"]) {
-        userKey = [[NSUserDefaults standardUserDefaults] stringForKey:@"searchUPC_userKey"];
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:kSearchUPCUserKey]) {
+        userKey = [[NSUserDefaults standardUserDefaults] stringForKey:kSearchUPCUserKey];
     }
     NSDictionary *headers = [[NSDictionary alloc] init];
     if (userKey) {
