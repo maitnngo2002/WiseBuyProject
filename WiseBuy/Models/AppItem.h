@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@import Parse;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *information;
 @property (nonatomic, strong) NSString *barcode;
-@property (nonatomic, strong) NSData *image;
+@property (nonatomic, strong) PFFileObject *image;
 @property (nonatomic, strong) NSString *identifier;
 
 @end

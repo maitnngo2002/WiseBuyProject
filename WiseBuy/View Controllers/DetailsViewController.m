@@ -32,7 +32,10 @@ static NSString *const kProgressHUDText = @"Loading...";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.itemImageView.image = [UIImage imageWithData:self.deal.item.image];
+    NSURL *url = [NSURL URLWithString:self.deal.item.image.url];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    UIImage *image = [UIImage imageWithData:data];
+    self.itemImageView.image = image;
     self.itemName.text = self.deal.item.name;
     self.sellerName.text = self.deal.sellerName;
     self.priceLabel.text = [NSNumberFormatter localizedStringFromNumber:self.deal.price numberStyle:NSNumberFormatterCurrencyStyle];

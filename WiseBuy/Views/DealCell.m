@@ -6,15 +6,16 @@
 //
 
 #import "DealCell.h"
-#import "Parse/Parse.h"
-#import "Item.h"
-#import "DatabaseManager.h"
 
 @implementation DealCell
 
 - (void)setDeal:(AppDeal *)deal {
     _deal = deal;
-    self.itemImage.image = [UIImage imageWithData:_deal.item.image];
+    
+    NSURL *url = [NSURL URLWithString:deal.item.image.url];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    UIImage *image = [UIImage imageWithData:data];
+    self.itemImage.image = image;
     self.itemName.text = _deal.item.name;
     self.sellerName.text = _deal.sellerName;
     self.price.text = [DealCell formattedPrice:_deal.price];
