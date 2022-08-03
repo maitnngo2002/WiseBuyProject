@@ -20,9 +20,9 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
 @property (strong, nonatomic) UISearchController *searchController;
-@property (strong, nonatomic) NSArray *deals;
+@property (strong, nonatomic) NSArray<Deal *> *deals;
 @property (strong, nonatomic) NSMutableArray *items;
-@property (strong, nonatomic) NSArray *filteredItems;
+@property (strong, nonatomic) NSArray<AppItem *> *filteredItems;
 
 @end
 
@@ -43,7 +43,7 @@ static NSString *const kItemCollectionViewCellIdentifier = @"ItemCollectionViewC
 
     [ProgressHUDManager setLoadingState:YES viewController:self];
     
-    [DatabaseManager fetchRecentItems:^(NSArray * _Nonnull items, NSError * _Nonnull error) {
+    [DatabaseManager fetchRecentItems:^(NSArray<Item *> * _Nonnull items, NSError * _Nonnull error) {
         if (items.count > 0) {
             self.items = (NSMutableArray *) items;
             self.filteredItems = self.items;
@@ -54,7 +54,7 @@ static NSString *const kItemCollectionViewCellIdentifier = @"ItemCollectionViewC
         [ProgressHUDManager setLoadingState:NO viewController:self];
     }];
     
-    [DatabaseManager fetchAllDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+    [DatabaseManager fetchAllDeals:^(NSArray<Deal *> * _Nonnull deals, NSError * _Nonnull error) {
         if (deals.count > 0) {
             self.deals = deals;
         }

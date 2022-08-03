@@ -9,10 +9,14 @@
 #import "Parse/Parse.h"
 #import "PostCell.h"
 #import "Post.h"
+#import "AlertManager.h"
+#import "ProgressHUDManager.h"
+#import "JGProgressHUD/JGProgressHUD.h"
 
 @interface RecommendationFeedViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray *posts;
+@property (nonatomic, strong) NSArray<Post *> *posts;
+@property (nonatomic, strong) NSURL *buyLink;
 
 @end
 
@@ -29,6 +33,7 @@ static NSString *const kFirstName = @"first_name";
 static NSString *const kLastName = @"last_name";
 static NSString *const kImage = @"image";
 static NSString *const kObjectId = @"objectId";
+static NSString *const kProgressHUDText = @"Loading Posts...";
 
 @implementation RecommendationFeedViewController
 
@@ -45,6 +50,14 @@ static NSString *const kObjectId = @"objectId";
 }
 
 -(void) queryPosts {
+    
+    JGProgressHUD *progressHUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleLight];
+    
+    progressHUD.textLabel.text = kProgressHUDText;
+    [progressHUD showInView:self.view];
+
+    [ProgressHUDManager setLoadingState:YES viewController:self];
+    
     PFUser *user = [PFUser currentUser];
     PFQuery *query = [PFQuery queryWithClassName:kPost];
     [query orderByDescending:kCreateAt];
@@ -54,10 +67,12 @@ static NSString *const kObjectId = @"objectId";
     [query includeKey:kPostedBy];
     [query whereKey:kPostedBy containedIn:user[kFriendList]];
     
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable posts, NSError * _Nullable error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray<Post *> * _Nullable posts, NSError * _Nullable error) {
         if (posts) {
             self.posts = posts;
             [self.tableView reloadData];
+            [progressHUD dismissAfterDelay:0.1 animated:YES];
+            [ProgressHUDManager setLoadingState:NO viewController:self];
         } else {
             NSLog(@"%@", error.description);
         }
@@ -93,21 +108,27 @@ static NSString *const kObjectId = @"objectId";
                 cell.userFullNameLabel.text = [NSString stringWithFormat:@"%@%@", user[0][kFirstName], user[0][kLastName]];
 
             }
-            cell.itemNameLabel.text = post.itemName;
-            cell.priceLabel.text = post.price;
-            cell.sellerLabel.text = post.sellerName;
-            cell.linkLabel.text = post.link;
-            
-            NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"Buy Link"];
-            [str addAttribute: NSLinkAttributeName value: post.link range: NSMakeRange(0, str.length)];
-            cell.linkLabel.attributedText = str;
-            
+            [cell setPost:post];
+            self.buyLink = [NSURL URLWithString:post.link];
+
         });
     });
     
     return cell;
 }
 
+- (IBAction)didTapBuy:(id)sender {
+    if ([[UIApplication sharedApplication] canOpenURL:self.buyLink]) {
+         [UIApplication.sharedApplication openURL:self.buyLink options:[NSDictionary dictionary] completionHandler:^(BOOL success) {
+             if (!success) {
+                 [AlertManager cannotOpenLink:self];
+             }
+         }];
+     }
+    else {
+        [AlertManager cannotOpenLink:self];
+    }
+}
 
 - (IBAction)didTapFindConnections:(id)sender {
     [self performSegueWithIdentifier:kConnectionSegue sender:sender];

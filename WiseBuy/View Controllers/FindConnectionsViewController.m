@@ -76,53 +76,56 @@ static NSString *const kLoadFriends = @"loadFriends";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FriendCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kFriendCellIdentifier];
-    PFUser *friend = self.friends[indexPath.row];
-    cell.cellUser = friend;
-    cell.nameLabel.text = [NSString stringWithFormat:@"%@%@", friend[kFirstName] , friend[kLastName]];
-    cell.usernameLabel.text = friend[kUsername];
-    
-    PFFileObject *userImage = cell.cellUser[kImage];
-    NSURL *url = [NSURL URLWithString:userImage.url];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    UIImage *img = [[UIImage alloc] initWithData:data];
-    cell.profileImageView.image = img;
-    
-    if(self.segControl.selectedSegmentIndex == 1) {
-        [cell.addFriendButton setTitle:kRemove forState:UIControlStateNormal];
-        [cell.addFriendButton setTintColor:[UIColor systemRedColor]];
-        cell.chosenMode = 1;
-    } else if (self.segControl.selectedSegmentIndex == 0) {
-        [cell.addFriendButton setTitle:kAdd forState:UIControlStateNormal];
-        cell.chosenMode = 0;
-        if ([self.user[kOutgoingFriendRequests] containsObject:friend.username]) {
-            cell.addFriendButton.tintColor = [UIColor systemTealColor];
-            [cell.addFriendButton setTitle:kCancel forState:UIControlStateNormal];
+    if (self.friends > 0) {
+        PFUser *friend = self.friends[indexPath.row];
+        cell.cellUser = friend;
+        cell.nameLabel.text = [NSString stringWithFormat:@"%@%@", friend[kFirstName] , friend[kLastName]];
+        cell.usernameLabel.text = friend[kUsername];
+        
+        PFFileObject *userImage = cell.cellUser[kImage];
+        NSURL *url = [NSURL URLWithString:userImage.url];
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        UIImage *img = [[UIImage alloc] initWithData:data];
+        cell.profileImageView.image = img;
+        
+        if (self.segControl.selectedSegmentIndex == 1) {
+            [cell.addFriendButton setTitle:kRemove forState:UIControlStateNormal];
+            [cell.addFriendButton setTintColor:[UIColor systemRedColor]];
+            cell.chosenMode = 1;
+            
+        } else if (self.segControl.selectedSegmentIndex == 0) {
+            [cell.addFriendButton setTitle:kAdd forState:UIControlStateNormal];
+            cell.chosenMode = 0;
+            if ([self.user[kOutgoingFriendRequests] containsObject:friend.username]) {
+                cell.addFriendButton.tintColor = [UIColor systemTealColor];
+                [cell.addFriendButton setTitle:kCancel forState:UIControlStateNormal];
+            } else {
+                [cell.addFriendButton setTintColor:[UIColor systemIndigoColor]];
+            }
         } else {
-            [cell.addFriendButton setTintColor:[UIColor systemIndigoColor]];
+            [cell.addFriendButton setTitle:kAccept forState:UIControlStateNormal];
+            [cell.addFriendButton setTintColor:[UIColor systemOrangeColor]];
+            cell.chosenMode = 2;
         }
-    } else {
-        [cell.addFriendButton setTitle:kAccept forState:UIControlStateNormal];
-        [cell.addFriendButton setTintColor:[UIColor systemOrangeColor]];
-        cell.chosenMode = 2;
-    }
-    
-    if (self.segControl.selectedSegmentIndex == 0) {
-        [cell.addFriendButton setTitle:kAdd forState:UIControlStateNormal];
-        cell.chosenMode = 0;
-        if ([self.user[kOutgoingFriendRequests] containsObject:friend.username]) {
-            cell.addFriendButton.tintColor = [UIColor systemTealColor];
-            [cell.addFriendButton setTitle:kCancel forState:UIControlStateNormal];
+        
+        if (self.segControl.selectedSegmentIndex == 0) {
+            [cell.addFriendButton setTitle:kAdd forState:UIControlStateNormal];
+            cell.chosenMode = 0;
+            if ([self.user[kOutgoingFriendRequests] containsObject:friend.username]) {
+                cell.addFriendButton.tintColor = [UIColor systemTealColor];
+                [cell.addFriendButton setTitle:kCancel forState:UIControlStateNormal];
+            } else {
+                [cell.addFriendButton setTintColor:[UIColor systemIndigoColor]];
+            }
+        } else if (self.segControl.selectedSegmentIndex == 1) {
+            [cell.addFriendButton setTitle:kRemove forState:UIControlStateNormal];
+            [cell.addFriendButton setTintColor:[UIColor systemRedColor]];
+            cell.chosenMode = 1;
         } else {
-            [cell.addFriendButton setTintColor:[UIColor systemIndigoColor]];
+            [cell.addFriendButton setTitle:kAccept forState:UIControlStateNormal];
+            [cell.addFriendButton setTintColor:[UIColor systemOrangeColor]];
+            cell.chosenMode = 2;
         }
-    } else if (self.segControl.selectedSegmentIndex == 1) {
-        [cell.addFriendButton setTitle:kRemove forState:UIControlStateNormal];
-        [cell.addFriendButton setTintColor:[UIColor systemRedColor]];
-        cell.chosenMode = 1;
-    } else {
-        [cell.addFriendButton setTitle:kAccept forState:UIControlStateNormal];
-        [cell.addFriendButton setTintColor:[UIColor systemOrangeColor]];
-        cell.chosenMode = 2;
     }
     return cell;
 }
@@ -140,7 +143,7 @@ static NSString *const kLoadFriends = @"loadFriends";
         [query whereKey:kUsername containsString:container];
         [query whereKey:kName containsString:container];
     }
-    [query findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray<User *> *friends, NSError *error) {
         if (friends != nil) {
             self.friends = friends;
             [self.tableView reloadData];
@@ -165,7 +168,7 @@ static NSString *const kLoadFriends = @"loadFriends";
     } else {
         [query whereKey:kUsername containedIn:self.user[kOutgoingFriendRequests]];
     }
-    [query findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray<User *> *friends, NSError *error) {
         if (friends != nil) {
             self.friends = friends;
             [self.tableView reloadData];
@@ -188,7 +191,7 @@ static NSString *const kLoadFriends = @"loadFriends";
     if(![container isEqualToString:@""]) {
         [query whereKey:kUsername containsString:container];
     }
-    [query findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray<User *> *friends, NSError *error) {
         if (friends != nil) {
             self.friends = friends;
             [self.tableView reloadData];

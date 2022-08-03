@@ -59,11 +59,11 @@ static NSString *const kUnsave = @"Unsave";
 
     [ProgressHUDManager setLoadingState:YES viewController:self];
     
-    [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+    [DatabaseManager fetchItem:self.barcode viewController:self withCompletion:^(NSArray<Deal *> * _Nonnull deals, NSError * _Nonnull error) {
         if (deals.count > 0) {
             self.deals = (NSMutableArray *) deals;
 
-            [DatabaseManager fetchSavedDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+            [DatabaseManager fetchSavedDeals:^(NSArray<Deal *> * _Nonnull deals, NSError * _Nonnull error) {
                 if (self.deals.count == 0) {
                     self.savedDeals = [NSMutableArray array];
                 }
