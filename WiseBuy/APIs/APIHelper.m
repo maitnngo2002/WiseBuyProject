@@ -9,20 +9,29 @@
 #import "DatabaseManager.h"
 #import "Parse/Parse.h"
 
+static NSString *const kName = @"name";
+static NSString *const kDescription = @"description";
+static NSString *const kBarcode = @"barcode";
+static NSString *const kImage = @"image";
+static NSString *const kSellerNmae = @"sellerName";
+static NSString *const kPrice = @"price";
+static NSString *const kLink = @"link";
+static NSString *const kItem = @"item";
+
 @implementation APIHelper
 
 + (Item *)createItem: (NSString *)name description:(NSString *) description barcode:(NSString *) barcode imageUrl:(NSString *) imageUrl {
     Item *newItem = [Item new];
-    newItem[@"name"] = name;
-    newItem[@"description"] = description;
-    newItem[@"barcode"] = barcode;
+    newItem[kName] = name;
+    newItem[kDescription] = description;
+    newItem[kBarcode] = barcode;
     
     NSURL *url = [NSURL URLWithString:imageUrl];
     NSData *imageData = [NSData dataWithContentsOfURL:url];
     UIImage *img = [[UIImage alloc] initWithData:imageData];
     
     if (img) {
-        newItem[@"image"] = [DatabaseManager getPFFileFromImage:img];
+        newItem[kImage] = [DatabaseManager getPFFileFromImage:img];
     }
     if (![DatabaseManager checkIfItemAlreadyExist:barcode]) {
         [newItem saveInBackground];
@@ -33,20 +42,20 @@
 
 + (void)createDeal: (Item *)item sellerName:(NSString *) sellerName price:(NSString *) price link:(NSString *) link {    Deal *newDeal = [Deal new];
     
-    newDeal[@"item"] = item;
-    newDeal[@"sellerName"] = sellerName;
+    newDeal[kItem] = item;
+    newDeal[kSellerNmae] = sellerName;
     
     if ([price isKindOfClass:[NSString class]]) {
         NSNumberFormatter *f = [NSNumberFormatter new];
         f.numberStyle = NSNumberFormatterDecimalStyle;
         NSNumber *priceNumber = [f numberFromString:price];
         
-        newDeal[@"price"] = priceNumber;
+        newDeal[kPrice] = priceNumber;
     }
     else {
-        newDeal[@"price"] = price;
+        newDeal[kPrice] = price;
     }
-    newDeal[@"link"] = link;
+    newDeal[kLink] = link;
     [newDeal saveInBackground];
 }
 

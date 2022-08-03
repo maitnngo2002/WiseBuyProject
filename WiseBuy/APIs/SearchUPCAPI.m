@@ -9,6 +9,8 @@
 
 static NSString *const kUpcQuery = @"&upc=";
 static NSString *const kBaseURL = @"https://www.searchupc.com/handlers/upcsearch.ashx?request_type=3&access_token=";
+static NSString *const kAccessToken = @"access_Token";
+static NSString *const kSearchUPCUserKey = @"searchUPC_userKey";
 
 @implementation SearchUPCAPI
 
@@ -16,19 +18,19 @@ static NSString *const kBaseURL = @"https://www.searchupc.com/handlers/upcsearch
     
     NSString *const path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *const dict = [NSDictionary dictionaryWithContentsOfFile: path];
-    NSString *accessToken = [dict objectForKey: @"access_Token"];
+    NSString *accessToken = [dict objectForKey:kAccessToken];
     NSString *const accessTokenStr = accessToken;
     
-    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"access_Token"]) {
-        accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"access_Token"];
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:kAccessToken]) {
+        accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:kAccessToken];
     }
     
     NSString *fullURL = [NSString stringWithFormat:@"%@%@%@%@", kBaseURL, accessTokenStr, kUpcQuery, barcode];
     
-    NSString *userKey = [dict objectForKey: @"searchUPC_userKey"];
+    NSString *userKey = [dict objectForKey: kSearchUPCUserKey];
     
-    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"searchUPC_userKey"]) {
-        userKey = [[NSUserDefaults standardUserDefaults] stringForKey:@"searchUPC_userKey"];
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:kSearchUPCUserKey]) {
+        userKey = [[NSUserDefaults standardUserDefaults] stringForKey:kSearchUPCUserKey];
     }
     NSDictionary *headers = [[NSDictionary alloc] init];
     if (userKey) {

@@ -89,7 +89,7 @@ static NSString *const kUsername = @"username";
             currentUser.profileImage = imageData;
         }
     }];
-    [DatabaseManager fetchSavedDeals:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+    [DatabaseManager fetchSavedDeals:^(NSArray<Deal *> * _Nonnull deals, NSError * _Nonnull error) {
         if (!error) {
             currentUser.savedDeals = (NSMutableArray *)deals;
             completion(currentUser);
@@ -97,14 +97,14 @@ static NSString *const kUsername = @"username";
     }];
 }
 
-+ (void)fetchItem:(NSString *)barcode viewController:(UIViewController *)vc withCompletion:(void(^)(NSArray *deals,NSError *error))completion {
++ (void)fetchItem:(NSString *)barcode viewController:(UIViewController *)vc withCompletion:(void(^)(NSArray<Deal *> *deals,NSError *error))completion {
     PFQuery *itemQuery = [Item query];
     [itemQuery whereKey:kBarcode equalTo:barcode];
     [itemQuery getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (object != nil) {
-            [DatabaseManager fetchDeals:object withCompletion:^(NSArray * _Nonnull deals, NSError * _Nonnull error) {
+            [DatabaseManager fetchDeals:object withCompletion:^(NSArray<Deal *> * _Nonnull deals, NSError * _Nonnull error) {
                 if (deals.count > 0) {
-                    [DatabaseManager createDealsFromFetchWithBlock:deals withCompletion:^(NSArray *appDeals) {
+                    [DatabaseManager createDealsFromFetchWithBlock:deals withCompletion:^(NSArray<Deal *> *appDeals) {
                         completion(appDeals, nil);
                     }];
                 }
@@ -125,7 +125,7 @@ static NSString *const kUsername = @"username";
     }];
 }
 
-+ (void)createDealsFromFetchWithBlock:(NSArray *)serverDeals withCompletion:(void(^)(NSArray *appDeals))completion{
++ (void)createDealsFromFetchWithBlock:(NSArray<Deal *> *)serverDeals withCompletion:(void(^)(NSArray<Deal *> *appDeals))completion{
     NSMutableArray *result = [NSMutableArray array];
     dispatch_group_t group = dispatch_group_create();
     for (PFObject *obj in serverDeals) {
@@ -213,12 +213,12 @@ static NSString *const kUsername = @"username";
     item.name = serverItem.name;
     item.information = serverItem.information;
     item.identifier = serverItem.objectId;
+    item.image = serverItem.image;
     [serverItem.image getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
         if (error) {
             completion(nil,error);
         }
         else {
-            item.image = data;
             completion(item, nil);
         }
     }];
@@ -243,13 +243,13 @@ static NSString *const kUsername = @"username";
     return [PFFileObject fileObjectWithName:@"image.png" data:imageData];
 }
 
-+ (void)fetchDeals:(PFObject *)item withCompletion:(void(^)(NSArray *deals ,NSError *error))completion {
++ (void)fetchDeals:(PFObject *)item withCompletion:(void(^)(NSArray<Deal *> *deals ,NSError *error))completion {
     
     PFQuery *dealsQuery = [Deal query];
     [dealsQuery includeKey:kItem];
     [dealsQuery whereKey:kItem equalTo:item];
     
-    [dealsQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+    [dealsQuery findObjectsInBackgroundWithBlock:^(NSArray<Deal *> * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
             completion(objects, nil);
         }
@@ -306,14 +306,14 @@ static NSString *const kUsername = @"username";
     }];
 }
 
-+ (void)fetchSavedDeals:(void(^)(NSArray *deals, NSError *error))completion {
++ (void)fetchSavedDeals:(void(^)(NSArray<Deal *> *deals, NSError *error))completion {
     PFUser *user = [PFUser currentUser];
     PFRelation *relation = [user relationForKey:kDealsSaved];
     PFQuery *query = [relation query];
     [query includeKey:kItem];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray<Deal *> * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
-            [DatabaseManager createSavedDealsFromFetchWithBlock:objects withCompletion:^(NSArray *appDeals) {
+            [DatabaseManager createSavedDealsFromFetchWithBlock:objects withCompletion:^(NSArray<Deal *> *appDeals) {
                 completion(appDeals, nil);
             }];
             completion(objects, nil);
@@ -324,14 +324,14 @@ static NSString *const kUsername = @"username";
     }];
 }
 
-+ (void)fetchAllDeals:(void(^)(NSArray *deals ,NSError *error))completion {
++ (void)fetchAllDeals:(void(^)(NSArray<Deal *> *deals ,NSError *error))completion {
     PFQuery *dealsQuery = [Deal query];
     [dealsQuery includeKey:kItem];
     [dealsQuery orderByAscending:kPrice];
     
-    [dealsQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+    [dealsQuery findObjectsInBackgroundWithBlock:^(NSArray<Deal *> * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
-            [DatabaseManager createDealsFromFetchWithBlock:objects withCompletion:^(NSArray *appDeals) {
+            [DatabaseManager createDealsFromFetchWithBlock:objects withCompletion:^(NSArray<Deal *> *appDeals) {
                 completion(appDeals, nil);
             }];
         }
@@ -341,7 +341,7 @@ static NSString *const kUsername = @"username";
     }];
 }
 
-+ (void)createSavedDealsFromFetchWithBlock:(NSArray *)serverDeals withCompletion:(void(^)(NSArray *appDeals))completion{
++ (void)createSavedDealsFromFetchWithBlock:(NSArray<Deal *> *)serverDeals withCompletion:(void(^)(NSArray<Deal *> *appDeals))completion{
     NSMutableArray *result = [NSMutableArray array];
     dispatch_group_t group = dispatch_group_create();
     for (PFObject *obj in serverDeals) {
@@ -363,7 +363,7 @@ static NSString *const kUsername = @"username";
 + (void)isCurrentDealSaved:(NSString *)identifier withCompletion:(void(^)(_Bool hasDeal, NSError *error))completion {
     PFUser *user = [PFUser currentUser];
     PFRelation *relation = [user relationForKey:kDealsSaved];
-    [[relation query] findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+    [[relation query] findObjectsInBackgroundWithBlock:^(NSArray<Deal *> * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
             for (PFObject *obj in objects) {
                 if ([obj.objectId isEqualToString:identifier]) {
@@ -449,13 +449,13 @@ static NSString *const kUsername = @"username";
     }];
 }
 
-+ (void)fetchRecentItems:(void(^)(NSArray *items,NSError *error))completion {
++ (void)fetchRecentItems:(void(^)(NSArray<Item *> *items,NSError *error))completion {
     PFUser *user = [PFUser currentUser];
     PFRelation *relation = [user relationForKey:kRecentItems];
     PFQuery *query = [relation query];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
-            [DatabaseManager createItemsFromFetchWithBlock:objects withCompletion:^(NSArray *appItems) {
+            [DatabaseManager createItemsFromFetchWithBlock:objects withCompletion:^(NSArray<Item *> *appItems) {
                 if (appItems.count > 0) {
                     completion(appItems, nil);
                 }
@@ -470,7 +470,7 @@ static NSString *const kUsername = @"username";
     }];
 }
 
-+ (void)createItemsFromFetchWithBlock:(NSArray *)serverItems withCompletion:(void(^)(NSArray *appItems))completion {
++ (void)createItemsFromFetchWithBlock:(NSArray<Item *> *)serverItems withCompletion:(void(^)(NSArray<Item *> *appItems))completion {
     NSMutableArray *result = [NSMutableArray array];
     dispatch_group_t group = dispatch_group_create();
     for (PFObject *obj in serverItems) {
