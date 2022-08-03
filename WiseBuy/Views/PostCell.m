@@ -9,4 +9,10 @@
 
 @implementation PostCell
 
+- (void)setPost:(Post *)post {    
+    self.itemNameLabel.text = post.itemName;
+    self.priceLabel.text = post.price;
+    self.sellerLabel.text = post.sellerName;
+}
+
 @end
