@@ -405,16 +405,16 @@
             <objects>
                 <viewController id="aQr-V3-OWH" customClass="ComposeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QzX-2l-DYQ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bEe-8t-WZc">
-                                <rect key="frame" x="148" y="154" width="200" height="34"/>
+                                <rect key="frame" x="148" y="186" width="200" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="isL-CI-954">
-                                <rect key="frame" x="148" y="251" width="200" height="34"/>
+                                <rect key="frame" x="148" y="283" width="200" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -427,25 +427,25 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wx7-S3-p4I">
-                                <rect key="frame" x="20" y="167" width="85" height="21"/>
+                                <rect key="frame" x="20" y="199" width="85" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Price: ($)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFl-7u-efY">
-                                <rect key="frame" x="20" y="258" width="80" height="21"/>
+                                <rect key="frame" x="20" y="269" width="80" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller name:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rnQ-Cr-R0n">
-                                <rect key="frame" x="20" y="343" width="101" height="20.5"/>
+                                <rect key="frame" x="20" y="353" width="101" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Buy Link:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Uk-Ck-Pqr">
-                                <rect key="frame" x="20" y="436.5" width="101" height="21"/>
+                                <rect key="frame" x="20" y="426" width="101" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -492,7 +492,7 @@
                     <navigationItem key="navigationItem" id="gOD-K1-NaI">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="U6H-2t-wqS">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="NUg-5I-m1J">
-                                <rect key="frame" x="20" y="11" width="92" height="34.5"/>
+                                <rect key="frame" x="20" y="5" width="92" height="34.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Dismiss"/>
@@ -503,7 +503,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="HJQ-ff-RNy">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="gWQ-GU-Y27">
-                                <rect key="frame" x="302" y="11" width="92" height="34.5"/>
+                                <rect key="frame" x="302" y="5" width="92" height="34.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Share"/>
@@ -666,7 +666,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Post"/>
                                 <connections>
-                                    <segue destination="f47-NC-u7V" kind="presentation" id="aCf-Vb-JpW"/>
+                                    <segue destination="f47-NC-u7V" kind="presentation" modalPresentationStyle="fullScreen" id="aCf-Vb-JpW"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -681,7 +681,7 @@
                                 </connections>
                             </button>
                             <connections>
-                                <segue destination="116-Vt-xrN" kind="presentation" identifier="connectionSegue" id="epI-d8-hXR"/>
+                                <segue destination="116-Vt-xrN" kind="presentation" identifier="connectionSegue" modalPresentationStyle="fullScreen" id="epI-d8-hXR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -698,11 +698,11 @@
             <objects>
                 <viewController id="116-Vt-xrN" customClass="FindConnectionsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="khx-1g-Gfb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ktr-Mj-rXE">
-                                <rect key="frame" x="0.0" y="177" width="414" height="665"/>
+                                <rect key="frame" x="0.0" y="177" width="414" height="685"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendCell" rowHeight="85" id="wC3-cL-Uvb" customClass="FriendCell">
@@ -856,10 +856,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aDP-Cq-fog">
-                                <rect key="frame" x="132" y="150" width="150" height="150"/>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="aDP-Cq-fog">
+                                <rect key="frame" x="132" y="151.5" width="150" height="147"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="nla-1j-KBk"/>
+                                    <constraint firstAttribute="height" constant="150" id="ytF-fO-N4C"/>
+                                </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="h7u-aa-mR0" appends="YES" id="HRb-yn-Cbg"/>
                                 </connections>
@@ -922,7 +926,7 @@
                         <outlet property="passwordField" destination="c2j-8F-da2" id="We4-tE-QMO"/>
                         <outlet property="profileImage" destination="aDP-Cq-fog" id="QBL-J1-0Np"/>
                         <outlet property="usernameField" destination="Spv-3p-LLX" id="Lky-OY-RgG"/>
-                        <segue destination="sHv-2Q-J6d" kind="presentation" identifier="registerSegue" id="O6z-yW-iyv"/>
+                        <segue destination="sHv-2Q-J6d" kind="presentation" identifier="registerSegue" modalPresentationStyle="fullScreen" id="O6z-yW-iyv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yEQ-cV-IIg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1223,7 +1227,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="f47-NC-u7V" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DNc-4z-Q25">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1239,10 +1243,11 @@
     <inferredMetricsTieBreakers>
         <segue reference="QzF-qF-glc"/>
         <segue reference="8pl-QL-cgL"/>
-        <segue reference="5RV-yV-aN8"/>
+        <segue reference="O6z-yW-iyv"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="person" catalog="system" width="128" height="117"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
