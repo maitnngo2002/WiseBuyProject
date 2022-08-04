@@ -75,17 +75,22 @@ static NSString *const kRegisterSegue = @"registerSegue";
     self.usernameField.text = @"";
     self.passwordField.text = @"";
     self.emailField.text = @"";
-    self.profileImage.image = [UIImage imageNamed: @""];
+    self.profileImage.image = [UIImage imageNamed: @"person.circle.fill"];
 }
 
 -(BOOL) inputFieldsAreEmpty {
     return [self.firstNameField.text isEqual:@""]  || [self.lastNameField.text isEqual:@""]  || [self.emailField.text isEqual:@""] || [self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""];
 }
 
--(BOOL)inputFieldsContainSpacesOrNewLines {
-    NSCharacterSet *charSet = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+- (BOOL)inputFieldsContainSpacesOrNewLines {
+    NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     NSCharacterSet *newLineSet = [NSCharacterSet newlineCharacterSet];
-    return [[self.firstNameField.text stringByTrimmingCharactersInSet:charSet] length] < [self.usernameField.text length] || [[self.usernameField.text stringByTrimmingCharactersInSet:charSet] length] < [self.passwordField.text length]   || [[self.passwordField.text stringByTrimmingCharactersInSet:charSet] length] < [self.firstNameField.text length] || [[self.emailField.text stringByTrimmingCharactersInSet:charSet] length] < [self.emailField.text length]         || [[self.lastNameField.text stringByTrimmingCharactersInSet:newLineSet] length] < [self.lastNameField.text length];
+    
+    return [[self.usernameField.text stringByTrimmingCharactersInSet:set] length] < [self.usernameField.text length]   ||
+    [[self.passwordField.text stringByTrimmingCharactersInSet:set] length] < [self.passwordField.text length]   ||
+    [[self.firstNameField.text stringByTrimmingCharactersInSet:set] length] < [self.firstNameField.text length] ||
+    [[self.emailField.text stringByTrimmingCharactersInSet:set] length] < [self.emailField.text length]         ||
+    [[self.lastNameField.text stringByTrimmingCharactersInSet:newLineSet] length] < [self.lastNameField.text length];
 }
 
 -(void)chooseImage{

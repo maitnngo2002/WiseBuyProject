@@ -98,7 +98,7 @@ static NSString *const kUsername = @"username";
 }
 
 + (void)fetchItem:(NSString *)barcode viewController:(UIViewController *)vc withCompletion:(void(^)(NSArray<Deal *> *deals,NSError *error))completion {
-    PFQuery *itemQuery = [Item query];
+    PFQuery<Item *> *itemQuery = [Item query];
     [itemQuery whereKey:kBarcode equalTo:barcode];
     [itemQuery getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (object != nil) {
@@ -245,7 +245,7 @@ static NSString *const kUsername = @"username";
 
 + (void)fetchDeals:(PFObject *)item withCompletion:(void(^)(NSArray<Deal *> *deals ,NSError *error))completion {
     
-    PFQuery *dealsQuery = [Deal query];
+    PFQuery<Deal *> *dealsQuery = [Deal query];
     [dealsQuery includeKey:kItem];
     [dealsQuery whereKey:kItem equalTo:item];
     
@@ -260,7 +260,7 @@ static NSString *const kUsername = @"username";
 }
 
 + (BOOL)checkIfItemAlreadyExist:(NSString *)barcode {
-    PFQuery *itemQuery = [Item query];
+    PFQuery<Item *> *itemQuery = [Item query];
     [itemQuery whereKey:kBarcode equalTo:barcode];
     
     if ([itemQuery countObjects ] > 0) {
@@ -309,7 +309,7 @@ static NSString *const kUsername = @"username";
 + (void)fetchSavedDeals:(void(^)(NSArray<Deal *> *deals, NSError *error))completion {
     PFUser *user = [PFUser currentUser];
     PFRelation *relation = [user relationForKey:kDealsSaved];
-    PFQuery *query = [relation query];
+    PFQuery<Deal *> *query = [relation query];
     [query includeKey:kItem];
     [query findObjectsInBackgroundWithBlock:^(NSArray<Deal *> * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
@@ -325,7 +325,7 @@ static NSString *const kUsername = @"username";
 }
 
 + (void)fetchAllDeals:(void(^)(NSArray<Deal *> *deals ,NSError *error))completion {
-    PFQuery *dealsQuery = [Deal query];
+    PFQuery<Deal *> *dealsQuery = [Deal query];
     [dealsQuery includeKey:kItem];
     [dealsQuery orderByAscending:kPrice];
     
@@ -418,7 +418,7 @@ static NSString *const kUsername = @"username";
 
 + (void)createServerItemFromPFObjectWithBlock:(PFObject *)serverObject withCompletion:(void(^)(Item *item))completion {
     Item *serverItem = [Item new];
-    PFQuery *itemQuery = [Item query];
+    PFQuery<Item *> *itemQuery = [Item query];
     [itemQuery getObjectInBackgroundWithId:serverObject.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (object[kName] != nil && [object[kName] isKindOfClass:[NSString class]]) {
             serverItem.name = object[kName];
@@ -438,7 +438,7 @@ static NSString *const kUsername = @"username";
 }
 
 + (void)getPFObjectFromAppDeal:(AppDeal *)appDeal withCompletion:(void(^)(PFObject *object))completion {
-    PFQuery *dealQuery = [Deal query];
+    PFQuery<Deal *> *dealQuery = [Deal query];
     [dealQuery getObjectInBackgroundWithId:appDeal.identifier block:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (!error) {
             completion(object);
@@ -452,7 +452,7 @@ static NSString *const kUsername = @"username";
 + (void)fetchRecentItems:(void(^)(NSArray<Item *> *items,NSError *error))completion {
     PFUser *user = [PFUser currentUser];
     PFRelation *relation = [user relationForKey:kRecentItems];
-    PFQuery *query = [relation query];
+    PFQuery<Item *> *query = [relation query];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (objects.count > 0) {
             [DatabaseManager createItemsFromFetchWithBlock:objects withCompletion:^(NSArray<Item *> *appItems) {

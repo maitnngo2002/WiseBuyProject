@@ -71,7 +71,7 @@ static NSString *const kProgressHUDText = @"Loading Posts...";
         if (posts) {
             self.posts = posts;
             [self.tableView reloadData];
-            [progressHUD dismissAfterDelay:0.1 animated:YES];
+            [progressHUD dismissAfterDelay:0.0 animated:YES];
             [ProgressHUDManager setLoadingState:NO viewController:self];
         } else {
             NSLog(@"%@", error.description);
