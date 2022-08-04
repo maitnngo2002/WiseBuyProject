@@ -72,7 +72,7 @@ static NSString *const kUnsave = @"Unsave";
                 }
                 [self.tableView reloadData];
                 
-                [progressHUD dismissAfterDelay:0.1 animated:YES];
+                [progressHUD dismissAfterDelay:0.0 animated:YES];
                 [ProgressHUDManager setLoadingState:NO viewController:self];
             }];
         }
