@@ -26,6 +26,9 @@ static NSString *const kCannotOpenLinkAlertMessage = @"An error ocurred when red
 static NSString *const kCannotSaveDealAlertTitle = @"Error saving the deal";
 static NSString *const kCannotSaveDealOrPostDealAlertMessage = @"An occur occurred. Please try again.";
 static NSString *const kCannotPostDealAlertTitle = @"Error posting the deal";
+static NSString *const kPostDealMissingFields = @"Missing fields. Please ensure you have filled in all the required fields";
+static NSString *const kInvalidUrl = @"Invalid URL. Please enter a valid buy link";
+static NSString *const kInvalidPriceInputAlert = @"Invalid price value. Please enter a valid price number";
 
 @implementation AlertManager
 
@@ -134,10 +137,10 @@ static NSString *const kCannotPostDealAlertTitle = @"Error posting the deal";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:kCannotSaveDealAlertTitle
                                                                    message:kCannotSaveDealOrPostDealAlertMessage
                                                             preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:kCancel
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:kOk
                                                             style:UIAlertActionStyleCancel
                                                           handler:nil];
-    [alert addAction:cancelAction];
+    [alert addAction:okAction];
     [vc presentViewController:alert animated:YES completion:nil];
 }
 
@@ -145,10 +148,43 @@ static NSString *const kCannotPostDealAlertTitle = @"Error posting the deal";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:kCannotPostDealAlertTitle
                                                                    message:kCannotSaveDealOrPostDealAlertMessage
                                                             preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:kCancel
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:kOk
                                                             style:UIAlertActionStyleCancel
                                                           handler:nil];
-    [alert addAction:cancelAction];
+    [alert addAction:okAction];
+    [vc presentViewController:alert animated:YES completion:nil];
+}
+
++ (void)postDealAlert:(UIViewController *)vc {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:kCannotPostDealAlertTitle
+                                                                   message:kPostDealMissingFields
+                                                            preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:kOk
+                                                            style:UIAlertActionStyleCancel
+                                                          handler:nil];
+    [alert addAction:okAction];
+    [vc presentViewController:alert animated:YES completion:nil];
+}
+
++ (void)invalidUrlAlert:(UIViewController *)vc {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:kCannotPostDealAlertTitle
+                                                                   message:kInvalidUrl
+                                                            preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:kOk
+                                                            style:UIAlertActionStyleCancel
+                                                          handler:nil];
+    [alert addAction:okAction];
+    [vc presentViewController:alert animated:YES completion:nil];
+}
+
++ (void)invalidPriceInputAlert:(UIViewController *)vc {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:kCannotPostDealAlertTitle
+                                                                   message:kInvalidPriceInputAlert
+                                                            preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:kOk
+                                                            style:UIAlertActionStyleCancel
+                                                          handler:nil];
+    [alert addAction:okAction];
     [vc presentViewController:alert animated:YES completion:nil];
 }
 

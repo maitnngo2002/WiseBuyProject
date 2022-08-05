@@ -39,7 +39,21 @@ static NSString *const kPostedBy = @"postedBy";
 - (IBAction)didTapDismiss:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
 }
+
 - (IBAction)didTapPost:(id)sender {
+
+    if ([self inputFieldsAreEmpty]) {
+        [AlertManager postDealAlert:self];
+        return;
+    }
+    if (![self isValidPriceInput]) {
+        [AlertManager invalidPriceInputAlert:self];
+    }
+    if (![self isValidUrl]) {
+        [AlertManager invalidUrlAlert:self];
+        return;
+    }
+    
     PFObject *post = [PFObject objectWithClassName:kPostClass];
     post[kItemName] = self.itemName.text;
     post[kPrice] = self.price.text;
@@ -58,6 +72,24 @@ static NSString *const kPostedBy = @"postedBy";
             [self dismissViewControllerAnimated:true completion:nil];
         }
     }];
+}
+
+- (BOOL) inputFieldsAreEmpty {
+    return [self.itemName.text isEqual:@""]  || [self.price.text isEqual:@""]  || [self.sellerName.text isEqual:@""] || [self.buyLink.text isEqual:@""];
+}
+
+- (BOOL) isValidUrl {
+    NSURL *url = [NSURL URLWithString:self.buyLink.text];
+    if (url && url.scheme && url.host)
+    {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL) isValidPriceInput {
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    return [f numberFromString:self.price.text] != nil;
 }
 
 @end
