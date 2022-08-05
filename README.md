@@ -19,7 +19,7 @@ This application scans items' barcodes and displays most popular deals found on 
 **Required Must-have Stories**
 
 * User can register for an account
-* User can log in/ sign up for an account
+* User can log in/log out for an account
 * User can use the phone camera to scan the barcode
 * User can see the deals related to that item
 * User can see the details of a deal
