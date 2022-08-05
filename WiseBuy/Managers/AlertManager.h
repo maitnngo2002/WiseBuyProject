@@ -30,6 +30,9 @@ typedef NS_ENUM(NSInteger, dealErrorType) {
 + (void)cannotOpenLink:(UIViewController *)vc;
 + (void)cannotSaveDeal:(UIViewController *)vc;
 + (void)cannotPostDeal:(UIViewController *)vc;
++ (void)postDealAlert:(UIViewController *)vc;
++ (void)invalidUrlAlert:(UIViewController *)vc;
++ (void)invalidPriceInputAlert:(UIViewController *)vc;
 
 @end
 
