@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray<Post *> *posts;
 @property (nonatomic, strong) NSURL *buyLink;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -42,6 +43,13 @@ static NSString *const kProgressHUDText = @"Loading Posts...";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self
+                         action:@selector(queryPosts)
+                         forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -72,7 +80,9 @@ static NSString *const kProgressHUDText = @"Loading Posts...";
             self.posts = posts;
             [self.tableView reloadData];
             [progressHUD dismissAfterDelay:0.0 animated:YES];
+            [self.refreshControl endRefreshing];
             [ProgressHUDManager setLoadingState:NO viewController:self];
+
         } else {
             NSLog(@"%@", error.description);
         }
